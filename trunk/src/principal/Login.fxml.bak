@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="arch" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="139.0" prefWidth="233.0" xmlns:fx="http://javafx.com/fxml" fx:controller="principal.Login">
+  <children>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="SILVER" height="139.0" stroke="#003d99" strokeType="INSIDE" strokeWidth="3.2" width="233.0" />
+    <Text disable="true" fill="#0083cc" layoutX="39.0" layoutY="36.0" opacity="0.52" stroke="BLACK" strokeLineCap="BUTT" strokeWidth="0.8" text="BHGerVendas" textAlignment="CENTER">
+      <effect>
+        <DropShadow color="WHITE" />
+      </effect>
+      <font>
+        <Font name="Biondi" size="20.0" />
+      </font>
+    </Text>
+    <TextField fx:id="login" focusTraversable="true" layoutX="56.0" layoutY="60.0" prefWidth="122.0" promptText="login">
+      <effect>
+        <DropShadow />
+      </effect>
+    </TextField>
+    <PasswordField fx:id="password" layoutX="56.0" layoutY="93.0" prefWidth="122.0" promptText="senha">
+      <effect>
+        <DropShadow />
+      </effect>
+    </PasswordField>
+  </children>
+</AnchorPane>

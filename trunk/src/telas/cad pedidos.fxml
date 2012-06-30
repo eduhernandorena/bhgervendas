@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <Button layoutX="635.0" layoutY="30.0" mnemonicParsing="false" prefWidth="109.0" text="Limpar" />
+    <TextField layoutX="610.0" layoutY="519.0" prefWidth="129.0" promptText="Valor Parcelas" />
+    <MenuBar prefWidth="754.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Cadastros">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Viagem" />
+            <MenuItem mnemonicParsing="false" text="Produtos" />
+            <MenuItem mnemonicParsing="false" text="Clientes" />
+            <MenuItem mnemonicParsing="false" text="Fornecedores" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane id="AnchorPane" layoutY="24.0" />
+    <TextField layoutX="14.0" layoutY="30.0" prefWidth="115.0" promptText="Código" />
+    <TextField layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
+    <ComboBox layoutX="14.0" layoutY="88.0" prefHeight="21.0" prefWidth="363.0" promptText="Fornecedor">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <ComboBox layoutX="14.0" layoutY="116.0" prefHeight="21.0" prefWidth="363.0" promptText="Cliente">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <TableView layoutX="14.0" layoutY="147.0" prefHeight="337.0" prefWidth="725.0">
+      <columns>
+        <TableColumn prefWidth="90.0" text="Código" />
+        <TableColumn prefWidth="200.0" text="Descrição" />
+        <TableColumn prefWidth="90.0" text="Nro NFe" />
+        <TableColumn prefWidth="100.0" text="Referência" />
+        <TableColumn prefWidth="94.0" text="Tamanho" />
+        <TableColumn prefWidth="150.0" text="Preço" />
+      </columns>
+    </TableView>
+    <TextField layoutX="14.0" layoutY="519.0" prefWidth="200.0" promptText="Valor Total" />
+    <TextField layoutX="539.0" layoutY="519.0" prefWidth="61.0" promptText="Nro" />
+    <ComboBox layoutX="282.0" layoutY="519.0" prefHeight="21.0" prefWidth="191.0" promptText="Forma de Pagamento">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <CheckBox layoutX="392.0" layoutY="91.0" mnemonicParsing="false" text="Pedido Oriundo de Encomenda" />
+    <TextField layoutX="392.0" layoutY="115.0" prefWidth="186.0" promptText="Código da Encomenda" />
+    <Button layoutX="582.0" layoutY="116.0" mnemonicParsing="false" prefWidth="157.0" text="Buscar Encomenda" />
+    <Button layoutX="14.0" layoutY="485.0" mnemonicParsing="false" prefWidth="129.0" text="Novo Produto" />
+    <Separator disable="true" layoutX="14.0" layoutY="512.0" prefWidth="725.0" />
+    <Button defaultButton="true" layoutX="515.0" layoutY="30.0" mnemonicParsing="false" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
+  </children>
+</AnchorPane>
