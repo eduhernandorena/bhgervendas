@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <MenuBar prefWidth="754.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Cadastros">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Viagem" />
+            <MenuItem mnemonicParsing="false" text="Produtos" />
+            <MenuItem mnemonicParsing="false" text="Clientes" />
+            <MenuItem mnemonicParsing="false" text="Fornecedores" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane id="AnchorPane" layoutY="24.0">
+      <children>
+        <AnchorPane fx:id="cad" prefHeight="530.0" prefWidth="754.0" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

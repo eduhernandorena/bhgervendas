@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.TelaPrincipalController">
+  <children>
+    <TabPane fx:id="tabPane" cache="true" cacheHint="SPEED" depthTest="ENABLE" layoutY="24.0" pickOnBounds="true" prefHeight="576.0" prefWidth="800.0" rotateGraphic="true" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab closable="false" text="Cliente">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="376.0" prefWidth="569.0">
+              <children>
+                <TableView fx:id="tbClientes" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Código" />
+                    <TableColumn prefWidth="180.0" text="Nome" />
+                    <TableColumn prefWidth="75.0" text="Telefone" />
+                    <TableColumn prefWidth="75.0" text="Celular" />
+                    <TableColumn prefWidth="162.0" text="Endereço" />
+                  </columns>
+                </TableView>
+              </children>
+              <padding>
+                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+              </padding>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" text="Fornecedor">
+          <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tbFornecedor" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Código" />
+                    <TableColumn prefWidth="250.0" text="Nome" />
+                    <TableColumn prefWidth="75.0" text="Telefone" />
+                    <TableColumn prefWidth="75.0" text="Celular" />
+                    <TableColumn prefWidth="92.0" text="Endereço" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" text="Produtos">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tbProdutos" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" text="Pedidos">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tbPedidos" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" text="Viagens">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView id="tbViegans" fx:id="tbViagens" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" text="Encomendas">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tbEncomendas" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                    <TableColumn prefWidth="75.0" text="Column X" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+    <MenuBar prefWidth="800.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="Novo">
+          <items>
+            <MenuItem id="menuItem1" mnemonicParsing="false" onAction="#openCad" text="Abrir Cadastro" fx:id="openCad" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Editar">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Editar Registro" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Relatório">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Emitir Relatório" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Ajuda">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Sobre" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </children>
+</AnchorPane>
