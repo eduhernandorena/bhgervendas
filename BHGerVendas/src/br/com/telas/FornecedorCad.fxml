@@ -17,7 +17,7 @@
       </menus>
     </MenuBar>
     <TextField fx:id="txtCod" layoutX="14.0" layoutY="33.0" prefWidth="83.0" promptText="Código" />
-    <ComboBox fx:id="cmbTpEntidade" disable="true" layoutX="107.0" layoutY="34.0" prefHeight="21.0" prefWidth="161.0" promptText="Cliente" value="Cliente">
+    <ComboBox fx:id="cmbTpEntidade" disable="true" layoutX="107.0" layoutY="34.0" prefHeight="21.0" prefWidth="161.0" value="Fornecedor" promptText="Fornecedor">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Cliente" />

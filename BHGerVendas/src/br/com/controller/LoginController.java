@@ -32,10 +32,12 @@ public class LoginController {
     protected boolean valida() {
         if (txtUser.getText().isEmpty()) {
             txtError.setText("Campo Usuário não poder ser nulo");
+            txtError.requestFocus();
             return false;
         }
         if (txtPasswd.getText().isEmpty()) {
             txtError.setText("Campo Senha não poder ser nulo");
+            txtPasswd.requestFocus();
             return false;
         }
 

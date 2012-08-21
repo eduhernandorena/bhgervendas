@@ -96,7 +96,7 @@ public class Principal extends Application {
 
     public void gotoProdutosCad() {
         try {
-            replaceSceneContentCad("ProdutoCad.fxml", "Cadastro de Produtos");
+            replaceSceneProdutoCad("ProdutoCad.fxml", "Cadastro de Produtos");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,7 +120,7 @@ public class Principal extends Application {
 
     public void gotoPedidoCad() {
         try {
-            replaceSceneContentCad("PedidoCad.fxml", "Cadastro de Viagens");
+            replaceSceneContentCad("PedidosCad.fxml", "Cadastro de Viagens");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -145,6 +145,14 @@ public class Principal extends Application {
     private void replaceSceneContentCad(String fxml, String title) throws Exception {
         Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/" + fxml), null, new JavaFXBuilderFactory());
         Scene scene = new Scene(page, 754, 555);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("BHGerVendas -- " + title);
+    }
+    
+    private void replaceSceneProdutoCad(String fxml, String title) throws Exception {
+        Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/" + fxml), null, new JavaFXBuilderFactory());
+        Scene scene = new Scene(page, 474, 175);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("BHGerVendas -- " + title);
