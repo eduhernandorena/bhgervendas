@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ViagemController">
   <children>
-    <Button layoutX="635.0" layoutY="30.0" mnemonicParsing="false" prefWidth="109.0" text="Limpar" />
+    <Button layoutX="635.0" layoutY="30.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
     <MenuBar prefWidth="754.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
@@ -38,12 +38,12 @@
       </menus>
     </MenuBar>
     <AnchorPane id="AnchorPane" layoutY="24.0" />
-    <TextField layoutX="14.0" layoutY="30.0" prefWidth="115.0" promptText="Código" />
-    <TextField layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
-    <Button defaultButton="true" layoutX="515.0" layoutY="30.0" mnemonicParsing="false" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
-    <TextField layoutX="138.0" layoutY="58.0" prefWidth="115.0" promptText="Hora" />
-    <TextField layoutX="262.0" layoutY="58.0" prefWidth="241.0" promptText="Local" />
-    <TextField layoutX="515.0" layoutY="58.0" prefWidth="229.0" promptText="Guia" />
+    <TextField fx:id="txtCod" layoutX="14.0" layoutY="30.0" prefWidth="115.0" promptText="Código" />
+    <TextField fx:id="txtData" layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
+    <Button defaultButton="true" layoutX="515.0" layoutY="30.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
+    <TextField fx:id="txtHora" layoutX="138.0" layoutY="58.0" prefWidth="115.0" promptText="Hora" />
+    <TextField fx:id="txtLocal" layoutX="262.0" layoutY="58.0" prefWidth="241.0" promptText="Local" />
+    <TextField fx:id="txtGuia" layoutX="515.0" layoutY="58.0" prefWidth="229.0" promptText="Guia" />
     <TableView layoutX="14.0" layoutY="119.0" prefHeight="200.0" prefWidth="730.0">
       <columns>
         <TableColumn prefWidth="90.0" text="Código" />
@@ -54,8 +54,8 @@
         <TableColumn prefWidth="150.0" text="Preço" />
       </columns>
     </TableView>
-    <TextField layoutX="14.0" layoutY="89.0" prefWidth="115.0" promptText="Qtde de Produtos" />
-    <TextField layoutX="138.0" layoutY="89.0" prefWidth="115.0" promptText="Valor Total" />
+    <TextField fx:id="txtQtde" layoutX="14.0" layoutY="89.0" prefWidth="115.0" promptText="Qtde de Produtos" />
+    <TextField fx:id="txtValor" layoutX="138.0" layoutY="89.0" prefWidth="115.0" promptText="Valor Total" />
     <Separator layoutX="14.0" layoutY="332.0" prefWidth="730.0" />
     <TableView layoutX="14.0" layoutY="344.0" prefHeight="173.0" prefWidth="730.0">
       <columns>
@@ -65,6 +65,7 @@
         <TableColumn prefWidth="120.0" text="Pedido" />
       </columns>
     </TableView>
-    <Button layoutX="16.0" layoutY="518.0" mnemonicParsing="false" prefWidth="115.0" text="Nova Encomenda" />
+    <Button fx:id="btEncomenda" layoutX="16.0" layoutY="524.0" mnemonicParsing="false" prefWidth="115.0" text="Nova Encomenda" />
+    <Button layoutX="394.0" layoutY="30.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" />
   </children>
 </AnchorPane>
