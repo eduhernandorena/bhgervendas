@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.EncomendaController">
   <children>
     <Button id="btBusca" fx:id="btBuscaPedido" layoutX="77.0" layoutY="52.0" mnemonicParsing="false" prefWidth="76.0" text="Buscar" />
     <TextField fx:id="txtCodViagem" editable="false" layoutX="14.0" layoutY="81.0" prefWidth="55.0" promptText="Viagem" />

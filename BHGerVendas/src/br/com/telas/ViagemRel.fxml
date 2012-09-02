@@ -9,10 +9,10 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="203.0" prefWidth="286.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" prefHeight="203.0" prefWidth="286.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.RelController">
   <children>
-    <TextField layoutX="34.0" layoutY="45.0" prefWidth="100.0" promptText="Data Inicial" />
-    <ComboBox layoutX="34.0" layoutY="79.0" prefHeight="21.0" prefWidth="219.0" promptText="Selecione o local...">
+    <TextField fx:id="txtDtInicio" layoutX="34.0" layoutY="45.0" prefWidth="100.0" promptText="Data Inicial" />
+    <ComboBox fx:id="cmbLocal" layoutX="34.0" layoutY="79.0" prefHeight="21.0" prefWidth="219.0" promptText="Selecione o local...">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -21,7 +21,7 @@
         </FXCollections>
       </items>
     </ComboBox>
-    <TextField layoutX="153.0" layoutY="45.0" prefWidth="100.0" promptText="Data Final" />
+    <TextField fx:id="txtDtFinal" layoutX="153.0" layoutY="45.0" prefWidth="100.0" promptText="Data Final" />
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="14.0" prefWidth="219.0" text="Relatório de Viagens" textAlignment="CENTER" wrapText="true">
       <effect>
         <Glow level="0.3952380952380952" />
@@ -31,7 +31,7 @@
       </font>
     </Label>
     <Separator layoutX="3.0" layoutY="37.0" prefWidth="286.0" />
-    <ComboBox layoutX="34.0" layoutY="107.0" prefHeight="21.0" prefWidth="219.0" promptText="Selecione a guia...">
+    <ComboBox fx:id="cmbGuia" layoutX="34.0" layoutY="107.0" prefHeight="21.0" prefWidth="219.0" promptText="Selecione a guia...">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -40,8 +40,7 @@
         </FXCollections>
       </items>
     </ComboBox>
-    <Button defaultButton="true" layoutX="82.0" layoutY="168.0" mnemonicParsing="false" prefWidth="123.0" text="Emitir Relatório" />
-    <ComboBox layoutX="34.0" layoutY="135.0" prefHeight="21.0" prefWidth="219.0" promptText="Ordenar por...">
+    <ComboBox fx:id="cmbOrder" layoutX="34.0" layoutY="135.0" prefHeight="21.0" prefWidth="219.0" promptText="Ordenar por...">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -50,5 +49,7 @@
         </FXCollections>
       </items>
     </ComboBox>
+    <Button id="btEmir" fx:id="btEmit" defaultButton="true" layoutX="34.0" layoutY="168.0" mnemonicParsing="false" onAction="#emitir" prefWidth="123.0" text="Emitir Relatório" />
+    <Button id="button1" fx:id="btVoltar" cancelButton="true" layoutX="174.0" layoutY="168.0" mnemonicParsing="false" onAction="#voltar" prefWidth="79.0" text="Voltar" />
   </children>
 </AnchorPane>

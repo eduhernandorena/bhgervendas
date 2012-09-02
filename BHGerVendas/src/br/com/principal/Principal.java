@@ -2,6 +2,7 @@ package br.com.principal;
 
 import br.com.controller.TelaPrincipalController;
 import br.com.ejb.bean.Usuario;
+import br.com.ejb.ejb.UsuarioDAORemote;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.ejb.EJB;
 
 /**
  *
@@ -20,6 +22,8 @@ public class Principal extends Application {
     private Stage stage;
     private Usuario loggedUser;
     private static Principal instance;
+    @EJB
+    private UsuarioDAORemote facade;
 
     public Principal() {
         instance = this;
@@ -45,14 +49,28 @@ public class Principal extends Application {
         }
     }
 
-    public boolean userLogging(String userId, String password) {
-//        if (Auth.validate(userId, password)) {
-//            loggedUser = .of(userId);
-        gotoPrincipal();
-        return true;
-//        } else {
-//            return false;
-//        }
+    public boolean userLogging(String username, String password) {
+        if (validate(username, password)) {
+            gotoPrincipal();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validate(String user, String senha) {
+        boolean userValid = false;
+        Usuario u = facade.find(user);
+        if (u != null) {
+            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
+                userValid = true;
+                loggedUser = u;
+            } else {
+                loggedUser = null;
+            }
+        }
+
+        return userValid;
     }
 
     public Usuario getLoggedUser() {
@@ -149,7 +167,7 @@ public class Principal extends Application {
         stage.setResizable(false);
         stage.setTitle("BHGerVendas -- " + title);
     }
-    
+
     private void replaceSceneProdutoCad(String fxml, String title) throws Exception {
         Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/" + fxml), null, new JavaFXBuilderFactory());
         Scene scene = new Scene(page, 474, 175);

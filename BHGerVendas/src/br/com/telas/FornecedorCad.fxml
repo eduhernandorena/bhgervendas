@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.TelaPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ClienteFornController">
   <children>
     <MenuBar prefWidth="754.0">
       <menus>
