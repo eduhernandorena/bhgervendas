@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class CidadeDAO implements CidadeDAOLocal, CidadeDAORemote {
+public class CidadeDAO implements CidadeDAORemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -30,7 +30,12 @@ public class CidadeDAO implements CidadeDAOLocal, CidadeDAORemote {
     public void remove(Cidade city) {
         em.remove(city);
     }
-    
+
+    @Override
+    public Cidade find(Long id) {
+        return em.find(Cidade.class, id);
+    }
+
     @Override
     public void findAll() {
         TypedQuery<Cidade> createNamedQuery = em.createNamedQuery("Cidade.findAll", Cidade.class);

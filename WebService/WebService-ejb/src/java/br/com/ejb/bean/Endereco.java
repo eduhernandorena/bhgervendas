@@ -35,6 +35,7 @@ public class Endereco implements Serializable {
     @Column(nullable = false)
     private String cep;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoEndereco tipoEndereco;
     @ManyToOne
     @JoinColumn(name = "cidade")

@@ -17,4 +17,6 @@ public interface CidadeDAORemote {
     public void remove(Cidade city);
 
     public void findAll();
+
+    public Cidade find(Long id);
 }

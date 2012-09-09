@@ -10,9 +10,11 @@ import javax.ejb.Remote;
 @Remote
 public interface ViagemDAORemote {
 
-    void create(Viagem viagem);
+    public void create(Viagem viagem);
 
-    void remove(Viagem viagem);
+    public void remove(Viagem viagem);
 
-    void update(Viagem viagem);
+    public void update(Viagem viagem);
+
+    public Viagem find(Long id);
 }

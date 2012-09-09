@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class ProdutoDAO implements ProdutoDAOLocal, ProdutoDAORemote {
+public class ProdutoDAO implements ProdutoDAORemote {
 
     @PersistenceContext
     private EntityManager em;

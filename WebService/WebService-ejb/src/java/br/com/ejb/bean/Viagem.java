@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Viagem.findAll", query = "SELECT v FROM Viagem v"),
     @NamedQuery(name = "Viagem.findByGuia", query = "SELECT v FROM Viagem v WHERE v.guia = :guia")
 })
+@XmlRootElement
 public class Viagem implements Serializable {
 
     @Id

@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class UfDAO implements UfDAOLocal, UfDAORemote {
+public class UfDAO implements UfDAORemote {
 
     @PersistenceContext
     private EntityManager em;

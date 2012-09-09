@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class EntidadeDAO implements EntidadeDAOLocal, EntidadeDAORemote {
+public class EntidadeDAO implements EntidadeDAORemote {
 
     @PersistenceContext
     private EntityManager em;

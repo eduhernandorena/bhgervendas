@@ -6,6 +6,7 @@ import br.com.ejb.bean.enumeration.TipoEntidade;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Entidade.findByCpfCnpj", query = "SELECT e FROM Entidade e WHERE e.cpfCnpj = :cpfCnpj"),
     @NamedQuery(name = "Entidade.findByGenero", query = "SELECT e FROM Entidade e WHERE e.genero = :genero")
 })
+@XmlRootElement
 public class Entidade implements Serializable {
 
     @Id
