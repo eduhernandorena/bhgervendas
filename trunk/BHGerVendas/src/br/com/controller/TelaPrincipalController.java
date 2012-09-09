@@ -2,6 +2,7 @@ package br.com.controller;
 
 import br.com.ejb.bean.*;
 import br.com.principal.Principal;
+import br.com.util.ClientRest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -61,6 +62,8 @@ public class TelaPrincipalController {
     }
 
     private void fillCliente() {
+        ClientRest cl = new ClientRest();
+        cl.remove("987749");
     }
 
     private void fillFornecedor() {
