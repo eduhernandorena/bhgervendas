@@ -9,5 +9,10 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface UfDAORemote {
-    void create(UF uf);
+
+    public void create(UF uf);
+
+    public void remove(UF uf);
+
+    public void update(UF uf);
 }

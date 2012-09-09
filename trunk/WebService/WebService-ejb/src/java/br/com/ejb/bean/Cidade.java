@@ -2,6 +2,7 @@ package br.com.ejb.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -13,6 +14,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Cidade.findByDesc", query = "SELECT c FROM Cidade c WHERE c.descricao = :descricao"),
     @NamedQuery(name = "Cidade.findByIbge", query = "SELECT c FROM Cidade c WHERE c.codIbge = :ibge"),
     @NamedQuery(name = "Cidade.findAll", query = "SELECT c FROM Cidade c")})
+@XmlRootElement
 public class Cidade implements Serializable {
 
     @Id
@@ -20,7 +22,7 @@ public class Cidade implements Serializable {
     private Long codIbge;
     @Column(nullable = false)
     private String descricao;
-    @JoinColumn(name = "uf")
+    @JoinColumn(name = "UF")
     @ManyToOne
     private UF uf;
 

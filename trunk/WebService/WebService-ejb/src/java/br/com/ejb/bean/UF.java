@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.persistence.*;
     @NamedQuery(name = "UF.findByDesc", query = "SELECT u FROM UF u WHERE u.descricao = :descricao"),
     @NamedQuery(name = "UF.findByIbge", query = "SELECT u FROM UF u WHERE u.codIbge = :ibge")
 })
+@XmlRootElement
 public class UF implements Serializable {
 
     @Id

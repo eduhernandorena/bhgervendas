@@ -3,6 +3,7 @@ package br.com.ejb.bean;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Produto.findByDesc", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
     @NamedQuery(name = "Produto.findByNota", query = "SELECT p FROM Produto p WHERE p.nroNota = :nroNota")
 })
+@XmlRootElement
 public class Produto implements Serializable {
     
     @Id

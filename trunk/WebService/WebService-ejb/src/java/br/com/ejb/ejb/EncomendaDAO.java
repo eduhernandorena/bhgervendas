@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class EncomendaDAO implements EncomendaDAOLocal, EncomendaDAORemote {
+public class EncomendaDAO implements EncomendaDAORemote {
 
     @PersistenceContext
     private EntityManager em;

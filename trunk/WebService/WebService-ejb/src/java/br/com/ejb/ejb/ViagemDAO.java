@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class ViagemDAO implements ViagemDAOLocal, ViagemDAORemote {
+public class ViagemDAO implements ViagemDAORemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -28,5 +28,10 @@ public class ViagemDAO implements ViagemDAOLocal, ViagemDAORemote {
     @Override
     public void remove(Viagem viagem) {
         em.remove(viagem);
+    }
+
+    @Override
+    public Viagem find(Long id) {
+        return em.find(Viagem.class, id);
     }
 }

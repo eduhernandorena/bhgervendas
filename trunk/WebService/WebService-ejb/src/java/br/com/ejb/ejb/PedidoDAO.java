@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Eduardo Hernandorena
  */
 @Stateless
-public class PedidoDAO implements PedidoDAOLocal, PedidoDAORemote {
+public class PedidoDAO implements PedidoDAORemote {
 
     @PersistenceContext
     private EntityManager em;
