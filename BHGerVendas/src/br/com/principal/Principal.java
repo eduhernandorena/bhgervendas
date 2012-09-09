@@ -11,7 +11,6 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javax.ejb.EJB;
 
 /**
  *
@@ -22,8 +21,6 @@ public class Principal extends Application {
     private Stage stage;
     private Usuario loggedUser;
     private static Principal instance;
-    @EJB
-    private UsuarioDAORemote facade;
 
     public Principal() {
         instance = this;
@@ -59,18 +56,19 @@ public class Principal extends Application {
     }
 
     private boolean validate(String user, String senha) {
-        boolean userValid = false;
-        Usuario u = facade.find(user);
-        if (u != null) {
-            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
-                userValid = true;
-                loggedUser = u;
-            } else {
-                loggedUser = null;
-            }
-        }
-
-        return userValid;
+//        boolean userValid = false;
+//        Usuario u = facade.find(user);
+//        if (u != null) {
+//            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
+//                userValid = true;
+//                loggedUser = u;
+//            } else {
+//                loggedUser = null;
+//            }
+//        }
+//
+//        return userValid;
+        return true;
     }
 
     public Usuario getLoggedUser() {
