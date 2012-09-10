@@ -3,6 +3,7 @@ package br.com.principal;
 import br.com.controller.TelaPrincipalController;
 import br.com.ejb.bean.Usuario;
 import br.com.ejb.ejb.UsuarioDAORemote;
+import br.com.ws.UsuarioRest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -56,19 +57,18 @@ public class Principal extends Application {
     }
 
     private boolean validate(String user, String senha) {
-//        boolean userValid = false;
-//        Usuario u = facade.find(user);
-//        if (u != null) {
-//            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
-//                userValid = true;
-//                loggedUser = u;
-//            } else {
-//                loggedUser = null;
-//            }
-//        }
-//
-//        return userValid;
-        return true;
+        boolean userValid = false;
+        Usuario u = new UsuarioRest().findByNome(user);
+        if (u != null) {
+            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
+                userValid = true;
+                loggedUser = u;
+            } else {
+                loggedUser = null;
+            }
+        }
+
+        return userValid;
     }
 
     public Usuario getLoggedUser() {
