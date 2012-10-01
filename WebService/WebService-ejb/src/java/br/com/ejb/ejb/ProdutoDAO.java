@@ -16,8 +16,9 @@ public class ProdutoDAO implements ProdutoDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Produto prod) {
+    public Produto create(Produto prod) {
         em.persist(prod);
+        return prod;
     }
 
     @Override

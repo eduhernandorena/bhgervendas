@@ -16,13 +16,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")
 })
+@SequenceGenerator(name = "seq_user", sequenceName = "seq_user", allocationSize = 1)
 @XmlRootElement
 public class Usuario implements Serializable {
 
     @Id
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_user")
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String nome;
     @Column(nullable = false)
     private String senha;

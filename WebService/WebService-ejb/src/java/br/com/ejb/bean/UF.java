@@ -1,7 +1,6 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,9 +26,6 @@ public class UF implements Serializable {
     private String descricao;
     @Column(nullable = false)
     private String sigla;
-    @JoinColumn(name = "cidades")
-    @OneToMany
-    private List<Cidade> cidades;
 
     public Long getCodIbge() {
         return codIbge;
@@ -55,14 +51,6 @@ public class UF implements Serializable {
         this.sigla = sigla;
     }
 
-    public List<Cidade> getCidades() {
-        return cidades;
-    }
-
-    public void setCidades(List<Cidade> cidades) {
-        this.cidades = cidades;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -81,9 +69,6 @@ public class UF implements Serializable {
         if (!Objects.equals(this.sigla, other.sigla)) {
             return false;
         }
-        if (!Objects.equals(this.cidades, other.cidades)) {
-            return false;
-        }
         return true;
     }
 
@@ -93,7 +78,6 @@ public class UF implements Serializable {
         hash = 29 * hash + Objects.hashCode(this.codIbge);
         hash = 29 * hash + Objects.hashCode(this.descricao);
         hash = 29 * hash + Objects.hashCode(this.sigla);
-        hash = 29 * hash + Objects.hashCode(this.cidades);
         return hash;
     }
 }

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -21,11 +22,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Entidade.findByCpfCnpj", query = "SELECT e FROM Entidade e WHERE e.cpfCnpj = :cpfCnpj"),
     @NamedQuery(name = "Entidade.findByGenero", query = "SELECT e FROM Entidade e WHERE e.genero = :genero")
 })
+@SequenceGenerator(name = "seq_ent", sequenceName = "seq_ent", allocationSize = 1)
 @XmlRootElement
 public class Entidade implements Serializable {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_ent")
     private Long id;
     @Column
     private Long telefone;
@@ -125,6 +127,7 @@ public class Entidade implements Serializable {
         this.obs = obs;
     }
 
+    @XmlTransient
     public List<Pedido> getPedidos() {
         return pedidos;
     }
@@ -189,6 +192,6 @@ public class Entidade implements Serializable {
 
     @Override
     public String toString() {
-        return "Nome=" + nome + ", celular=" + celular + ", telefone=" + telefone;
+        return nome;
     }
 }

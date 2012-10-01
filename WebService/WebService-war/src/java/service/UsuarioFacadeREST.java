@@ -30,8 +30,9 @@ public class UsuarioFacadeREST {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Usuario entity) {
-        dao.create(entity);
+    @Produces({"application/xml", "application/json"})
+    public Usuario create(Usuario entity) {
+        return dao.create(entity);
     }
 
     @PUT
@@ -40,17 +41,24 @@ public class UsuarioFacadeREST {
         dao.update(entity);
     }
 
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        dao.remove(dao.find(id));
-    }
+//    @DELETE
+//    @Path("{id}")
+//    public void remove(@PathParam("id") String id) {
+//        dao.remove(dao.find(id));
+//    }
+
+//    @GET
+//    @Path("{id}")
+//    @Produces({"application/xml", "application/json"})
+//    public Usuario find(@PathParam("id") String id) {
+//        return dao.find(id);
+//    }
 
     @GET
-    @Path("{id}")
+    @Path("{nome}")
     @Produces({"application/xml", "application/json"})
-    public Usuario find(@PathParam("id") String id) {
-        return dao.find(id);
+    public Usuario findByNome(@PathParam("nome") String nome) {
+        return dao.findByNome(nome);
     }
 
     @GET

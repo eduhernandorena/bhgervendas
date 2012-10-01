@@ -7,4 +7,12 @@ package br.com.ejb.bean.enumeration;
 public enum TipoEntidade {
 
     CLIENTE, FORNECEDOR;
+    
+    public boolean isCliente(){
+        if (this == CLIENTE) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

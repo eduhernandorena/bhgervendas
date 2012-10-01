@@ -12,6 +12,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  *
@@ -29,8 +30,9 @@ public class ProdutoFacadeREST {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Produto entity) {
-        dao.create(entity);
+    @Produces({"application/xml", "application/json"})
+    public Produto create(Produto entity) {
+        return dao.create(entity);
     }
 
     @PUT

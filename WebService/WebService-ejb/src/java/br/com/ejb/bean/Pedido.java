@@ -2,8 +2,10 @@ package br.com.ejb.bean;
 
 import br.com.ejb.bean.enumeration.FormaPagamento;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,11 +20,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByPrazo", query = "SELECT p FROM Pedido p WHERE p.formaPagamento = :formaPag"),
     @NamedQuery(name = "Pedido.findByFornecedor", query = "SELECT p FROM Pedido p WHERE p.fornecedor.id = :entidadeId")
 })
+@SequenceGenerator(name = "seq_ped", sequenceName = "seq_ped", allocationSize = 1)
 @XmlRootElement
 public class Pedido implements Serializable {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_ped")
     private Long codigo;
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column
@@ -42,14 +45,10 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "produtos")
     @ManyToMany
     private List<Produto> produtos;
-
-    public Entidade getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Entidade cliente) {
-        this.cliente = cliente;
-    }
+    @Column
+    private String ObsPagamento;
+    @OneToOne
+    private Viagem viagem;
 
     public Long getCodigo() {
         return codigo;
@@ -59,28 +58,20 @@ public class Pedido implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getDataCompra() {
-        return dataCompra;
+    public String getDataCompra() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataCompra);
     }
 
     public void setDataCompra(Date dataCompra) {
         this.dataCompra = dataCompra;
     }
 
-    public FormaPagamento getFormaPagamento() {
-        return formaPagamento;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public Entidade getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Entidade fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public Integer getNroParcelas() {
@@ -91,6 +82,30 @@ public class Pedido implements Serializable {
         this.nroParcelas = nroParcelas;
     }
 
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    public Entidade getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Entidade cliente) {
+        this.cliente = cliente;
+    }
+
+    public Entidade getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Entidade fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     public List<Produto> getProdutos() {
         return produtos;
     }
@@ -99,12 +114,30 @@ public class Pedido implements Serializable {
         this.produtos = produtos;
     }
 
-    public Double getValor() {
-        return valor;
+    public String getObsPagamento() {
+        return ObsPagamento;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setObsPagamento(String ObsPagamento) {
+        this.ObsPagamento = ObsPagamento;
+    }
+
+    public Viagem getViagem() {
+        return viagem;
+    }
+
+    public void setViagem(Viagem viagem) {
+        this.viagem = viagem;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.codigo);
+        hash = 59 * hash + Objects.hashCode(this.cliente);
+        hash = 59 * hash + Objects.hashCode(this.fornecedor);
+        hash = 59 * hash + Objects.hashCode(this.viagem);
+        return hash;
     }
 
     @Override
@@ -116,32 +149,18 @@ public class Pedido implements Serializable {
             return false;
         }
         final Pedido other = (Pedido) obj;
-        if (this.codigo != other.codigo && (this.codigo == null || !this.codigo.equals(other.codigo))) {
+        if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
-        if (this.dataCompra != other.dataCompra && (this.dataCompra == null || !this.dataCompra.equals(other.dataCompra))) {
+        if (!Objects.equals(this.cliente, other.cliente)) {
             return false;
         }
-        if (this.valor != other.valor && (this.valor == null || !this.valor.equals(other.valor))) {
+        if (!Objects.equals(this.fornecedor, other.fornecedor)) {
             return false;
         }
-        if (this.cliente != other.cliente && (this.cliente == null || !this.cliente.equals(other.cliente))) {
-            return false;
-        }
-        if (this.fornecedor != other.fornecedor && (this.fornecedor == null || !this.fornecedor.equals(other.fornecedor))) {
+        if (!Objects.equals(this.viagem, other.viagem)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 47 * hash + (this.codigo != null ? this.codigo.hashCode() : 0);
-        hash = 47 * hash + (this.dataCompra != null ? this.dataCompra.hashCode() : 0);
-        hash = 47 * hash + (this.valor != null ? this.valor.hashCode() : 0);
-        hash = 47 * hash + (this.cliente != null ? this.cliente.hashCode() : 0);
-        hash = 47 * hash + (this.fornecedor != null ? this.fornecedor.hashCode() : 0);
-        return hash;
     }
 }

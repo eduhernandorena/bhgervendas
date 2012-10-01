@@ -10,9 +10,11 @@ import javax.ejb.Remote;
 @Remote
 public interface EnderecoDAORemote {
 
-    void create(Endereco end);
+    Endereco create(Endereco end);
 
     void remove(Endereco end);
 
     void update(Endereco end);
+    
+    Endereco find(Long id);
 }

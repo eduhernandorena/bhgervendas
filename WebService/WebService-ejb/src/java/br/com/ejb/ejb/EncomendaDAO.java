@@ -16,8 +16,9 @@ public class EncomendaDAO implements EncomendaDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Encomenda encom) {
+    public Encomenda create(Encomenda encom) {
         em.persist(encom);
+        return encom;
     }
 
     @Override

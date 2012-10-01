@@ -19,8 +19,9 @@ public class EntidadeDAO implements EntidadeDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Entidade entit) {
+    public Entidade create(Entidade entit) {
         em.persist(entit);
+        return entit;
     }
 
     @Override
@@ -35,15 +36,20 @@ public class EntidadeDAO implements EntidadeDAORemote {
 
     @Override
     public List<Entidade> findAllCliente() {
-        TypedQuery<Entidade> createNamedQuery = em.createNamedQuery("Cidade.findByTpEntidade", Entidade.class);
+        TypedQuery<Entidade> createNamedQuery = em.createNamedQuery("Entidade.findByTpEntidade", Entidade.class);
         createNamedQuery.setParameter("tpEntidade", TipoEntidade.CLIENTE);
         return createNamedQuery.getResultList();
     }
 
     @Override
     public List<Entidade> findAllFornecedor() {
-        TypedQuery<Entidade> createNamedQuery = em.createNamedQuery("Cidade.findByTpEntidade", Entidade.class);
+        TypedQuery<Entidade> createNamedQuery = em.createNamedQuery("Entidade.findByTpEntidade", Entidade.class);
         createNamedQuery.setParameter("tpEntidade", TipoEntidade.FORNECEDOR);
         return createNamedQuery.getResultList();
+    }
+
+    @Override
+    public Entidade find(long id) {
+        return em.find(Entidade.class, id);
     }
 }
