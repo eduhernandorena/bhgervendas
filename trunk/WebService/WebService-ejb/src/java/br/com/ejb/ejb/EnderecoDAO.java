@@ -16,8 +16,9 @@ public class EnderecoDAO implements EnderecoDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Endereco end) {
+    public Endereco create(Endereco end) {
         em.persist(end);
+        return end;
     }
 
     @Override
@@ -28,5 +29,10 @@ public class EnderecoDAO implements EnderecoDAORemote {
     @Override
     public void remove(Endereco end) {
         em.remove(end);
+    }
+    
+    @Override
+    public Endereco find(Long id){
+        return em.find(Endereco.class, id);
     }
 }

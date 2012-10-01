@@ -1,6 +1,7 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,10 +17,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Encomenda.findAll", query = "SELECT e FROM Encomenda e"),
     @NamedQuery(name = "Encomenda.findByViagem", query = "SELECT e FROM Encomenda e WHERE e.viagem.id = :viagemId")
 })
+@SequenceGenerator(name = "seq_encom", sequenceName = "seq_encom", allocationSize = 1)
 public class Encomenda implements Serializable {
 
     @Id
-    @Column
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_encom")
     private Long codigo;
     @JoinColumn(name = "viagem")
     @OneToOne
@@ -39,8 +41,8 @@ public class Encomenda implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getDataCadastro() {
-        return dataCadastro;
+    public String getDataCadastro() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataCadastro);
     }
 
     public void setDataCadastro(Date dataCadastro) {

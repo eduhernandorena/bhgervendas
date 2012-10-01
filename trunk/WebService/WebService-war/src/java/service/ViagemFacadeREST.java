@@ -29,8 +29,9 @@ public class ViagemFacadeREST {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Viagem entity) {
-        dao.create(entity);
+    @Produces({"application/xml", "application/json"})
+    public Viagem create(Viagem entity) {
+        return dao.create(entity);
     }
 
     @PUT

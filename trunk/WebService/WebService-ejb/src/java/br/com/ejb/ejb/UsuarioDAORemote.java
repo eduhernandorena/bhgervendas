@@ -11,13 +11,15 @@ import javax.ejb.Remote;
 @Remote
 public interface UsuarioDAORemote {
 
-    public void create(Usuario user);
+    public Usuario create(Usuario user);
 
-    public Usuario find(String user);
+//    public Usuario find(String user);
 
     public List<Usuario> findAll();
 
     public void update(Usuario user);
 
     public void remove(Usuario user);
+
+    public Usuario findByNome(String user);
 }

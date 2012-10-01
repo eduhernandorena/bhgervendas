@@ -1,7 +1,6 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,11 +15,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Produto.findByDesc", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
     @NamedQuery(name = "Produto.findByNota", query = "SELECT p FROM Produto p WHERE p.nroNota = :nroNota")
 })
+@SequenceGenerator(name = "seq_prod", sequenceName = "seq_prod", allocationSize = 1)
 @XmlRootElement
 public class Produto implements Serializable {
     
     @Id
-    @Column
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_prod")
     private Long id;
     @Column(nullable = false)
     private Long nroNota;
@@ -36,9 +36,6 @@ public class Produto implements Serializable {
     private Double lucro;
     @Column(nullable = false)
     private String tamanho;
-    @ManyToMany(mappedBy = "produtos")
-    @JoinColumn(name = "pedidos")
-    private List<Pedido> pedidos;
 
     public Long getId() {
         return id;
@@ -102,14 +99,6 @@ public class Produto implements Serializable {
 
     public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
     }
 
     @Override

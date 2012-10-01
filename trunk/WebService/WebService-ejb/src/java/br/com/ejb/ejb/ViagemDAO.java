@@ -16,8 +16,9 @@ public class ViagemDAO implements ViagemDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Viagem viagem) {
+    public Viagem create(Viagem viagem) {
         em.persist(viagem);
+        return viagem;
     }
 
     @Override

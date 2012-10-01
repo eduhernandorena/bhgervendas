@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  *
@@ -18,17 +19,18 @@ import javax.ws.rs.PathParam;
 @Stateless
 @Path("br.com.ejb.bean.encomenda")
 public class EncomendaFacadeREST {
+
     @EJB
     private EncomendaDAORemote dao;
 
     public EncomendaFacadeREST() {
-        
     }
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Encomenda entity) {
-        dao.create(entity);
+    @Produces({"application/xml", "application/json"})
+    public Encomenda create(Encomenda entity) {
+        return dao.create(entity);
     }
 
     @PUT
@@ -44,7 +46,6 @@ public class EncomendaFacadeREST {
         enc.setCodigo(id);
         dao.remove(enc);
     }
-
 //    @GET
 //    @Path("{id}")
 //    @Produces({"application/xml", "application/json"})
@@ -58,5 +59,4 @@ public class EncomendaFacadeREST {
 //    public List<Encomenda> findAll() {
 //        return super.findAll();
 //    }
-    
 }

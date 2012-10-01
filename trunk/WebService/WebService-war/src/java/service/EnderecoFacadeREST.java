@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import br.com.ejb.bean.Endereco;
@@ -14,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  *
@@ -31,9 +28,10 @@ public class EnderecoFacadeREST {
     }
 
     @POST
+    @Produces({"application/xml", "application/json"})
     @Consumes({"application/xml", "application/json"})
-    public void create(Endereco entity) {
-        dao.create(entity);
+    public Endereco create(Endereco entity) {
+        return dao.create(entity);
     }
 
     @PUT

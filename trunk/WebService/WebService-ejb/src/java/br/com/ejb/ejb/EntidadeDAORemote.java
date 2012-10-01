@@ -11,7 +11,7 @@ import javax.ejb.Remote;
 @Remote
 public interface EntidadeDAORemote {
 
-    public void create(Entidade entit);
+    public Entidade create(Entidade entit);
 
     public Entidade update(Entidade entit);
 
@@ -20,4 +20,6 @@ public interface EntidadeDAORemote {
     public List<Entidade> findAllCliente();
 
     public List<Entidade> findAllFornecedor();
+    
+    public Entidade find(long id);
 }

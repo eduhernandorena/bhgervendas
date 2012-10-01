@@ -10,7 +10,7 @@ import javax.ejb.Remote;
 @Remote
 public interface ProdutoDAORemote {
 
-    void create(Produto prod);
+    Produto create(Produto prod);
 
     void remove(Produto prod);
 

@@ -19,10 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Endereco.findByBairro", query = "SELECT e FROM Endereco e WHERE e.bairro = :bairro"),
     @NamedQuery(name = "Endereco.findByIbge", query = "SELECT e FROM Endereco e WHERE e.cidade.codIbge = :codIbge")
 })
+@SequenceGenerator(name = "seq_end", sequenceName = "seq_end", allocationSize = 1)
 public class Endereco implements Serializable {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_end")
     private Long id;
     @Column(nullable = false)
     private String logradouro;
@@ -141,6 +142,12 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "Endereco{" + "rua=" + logradouro + ", numero=" + numero + ", cidade=" + cidade + '}';
+        String end = "";
+        end = end.concat(logradouro);
+        end = end.concat(numero != null ? ", " + numero : "S/N");
+        end = end.concat(complemento != null ? ", " + complemento : "");
+        end = end.concat(cidade != null ? " - " + cidade.getDescricao() : "");
+        end = end.concat(cidade.getUf() != null ? "/" + cidade.getUf().getSigla() : "");
+        return end;
     }
 }

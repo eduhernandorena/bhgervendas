@@ -10,7 +10,7 @@ import javax.ejb.Remote;
 @Remote
 public interface EncomendaDAORemote {
 
-    void create(Encomenda encom);
+    Encomenda create(Encomenda encom);
 
     void update(Encomenda encom);
 

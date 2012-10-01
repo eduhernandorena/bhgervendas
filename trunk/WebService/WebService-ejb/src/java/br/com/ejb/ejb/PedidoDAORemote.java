@@ -10,7 +10,7 @@ import javax.ejb.Remote;
 @Remote
 public interface PedidoDAORemote {
 
-    void create(Pedido ped);
+    Pedido create(Pedido ped);
 
     void remove(Pedido ped);
 

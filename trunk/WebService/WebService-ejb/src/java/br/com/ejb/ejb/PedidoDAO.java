@@ -16,8 +16,9 @@ public class PedidoDAO implements PedidoDAORemote {
     private EntityManager em;
 
     @Override
-    public void create(Pedido ped) {
+    public Pedido create(Pedido ped) {
         em.persist(ped);
+        return ped;
     }
 
     @Override

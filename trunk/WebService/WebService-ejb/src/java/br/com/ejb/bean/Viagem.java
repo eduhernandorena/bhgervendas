@@ -1,6 +1,7 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -16,11 +17,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Viagem.findAll", query = "SELECT v FROM Viagem v"),
     @NamedQuery(name = "Viagem.findByGuia", query = "SELECT v FROM Viagem v WHERE v.guia = :guia")
 })
+@SequenceGenerator(name = "seq_viagem", sequenceName = "seq_viagem", allocationSize = 1)
 @XmlRootElement
 public class Viagem implements Serializable {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_viagem")
     private Long id;
     @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -48,8 +50,14 @@ public class Viagem implements Serializable {
         this.id = id;
     }
 
-    public Date getDataHora() {
-        return dataHora;
+    public String getDataHora() {
+        return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(dataHora);
+    }
+    public String getData(){
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataHora);
+    }
+    public String getHora(){
+        return new SimpleDateFormat("HH:mm").format(dataHora);
     }
 
     public void setDataHora(Date dataHora) {
@@ -140,5 +148,10 @@ public class Viagem implements Serializable {
         hash = 59 * hash + (this.valor != null ? this.valor.hashCode() : 0);
         hash = 59 * hash + (this.guia != null ? this.guia.hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return localizacao + " - " +getData() + " - " + valor;
     }
 }
