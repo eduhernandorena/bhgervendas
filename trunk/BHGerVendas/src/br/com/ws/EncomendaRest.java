@@ -1,24 +1,26 @@
 package br.com.ws;
 
-import br.com.ejb.bean.Usuario;
+import br.com.ejb.bean.Encomenda;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import java.util.List;
 
 /**
  *
  * @author Eduardo Hernandorena
  */
-public class UsuarioRest {
+public class EncomendaRest {
 
     private WebResource webResource;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/WebService-war/resources";
 
-    public UsuarioRest() {
+    public EncomendaRest() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
         client = Client.create(config);
-        webResource = client.resource(BASE_URI).path("br.com.ejb.bean.usuario");
+        webResource = client.resource(BASE_URI).path("br.com.ejb.bean.encomenda");
     }
 
     public void remove(String id) throws UniformInterfaceException {
@@ -31,32 +33,27 @@ public class UsuarioRest {
         return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
     }
 
-    public <T> T findAll(Class<T> responseType) throws UniformInterfaceException {
+    public List<Encomenda> findAll() throws UniformInterfaceException {
         WebResource resource = webResource;
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Encomenda>>() {
+        });
     }
 
     public void edit(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
 
-    public Usuario create(Object requestEntity) throws UniformInterfaceException {
-        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(Usuario.class, requestEntity);
+    public Encomenda create(Object requestEntity) throws UniformInterfaceException {
+        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(Encomenda.class, requestEntity);
     }
 
-    public Usuario find(String id) throws UniformInterfaceException {
+    public <T> T find(Class<T> responseType, String id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Usuario.class);
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
     public void close() {
         client.destroy();
-    }
-
-    public Usuario findByNome(String user) {
-        WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{user}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Usuario.class);
     }
 }

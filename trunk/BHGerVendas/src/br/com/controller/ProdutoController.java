@@ -1,6 +1,8 @@
 package br.com.controller;
 
+import br.com.ejb.bean.Produto;
 import br.com.principal.Principal;
+import br.com.ws.ProdutoRest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,6 +40,7 @@ public class ProdutoController {
     private TextField txtValVenda;
     @FXML
     private TextField txtLucro;
+    private static ProdutoRest prodDAO = new ProdutoRest();
 
     public void clearCad(ActionEvent event) {
         txtCod.setText("");
@@ -53,10 +56,44 @@ public class ProdutoController {
     }
 
     public void saveCad(ActionEvent event) {
+        if (valida()) {
+            Produto prod = new Produto();
+            prod.setDescricao(txtDesc.getText());
+            prod.setNroNota(Long.valueOf(txtNfe.getText()));
+            Double pVenda = Double.valueOf(txtValVenda.getText());
+            Double pCompra = Double.valueOf(txtValCompra.getText());
+            prod.setPrecoCusto(pCompra);
+            prod.setPrecoVenda(pVenda);
+            prod.setLucro(pVenda - pCompra);
+            prod.setReferencia(txtRef.getText());
+            prod.setTamanho(txtTam.getText());
+            prodDAO.create(prod);
+        } else {
+            System.out.println("Não foi possível salvar!");
+        }
         p.gotoPrincipal();
     }
 
     public void voltar(ActionEvent event) {
         p.gotoPrincipal();
+    }
+
+    private boolean valida() {
+        return false;
+    }
+
+    public void fill(Produto prod) {
+        if (prod != null) {
+            txtCod.setText(prod.getId().toString());
+            //txtCodViagem.setText();
+            txtDesc.setText(prod.getDescricao());
+            txtNfe.setText(prod.getNroNota().toString());
+            txtRef.setText(prod.getReferencia());
+            txtTam.setText(prod.getTamanho());
+            txtValCompra.setText(prod.getPrecoCusto().toString());
+            txtValVenda.setText(prod.getPrecoVenda().toString());
+            txtLucro.setText(prod.getLucro().toString());
+            cmbTpLucro.setValue(prod.getPrecoVenda() - prod.getPrecoCusto() == prod.getLucro() ? "R$" : "%");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package br.com.ws;
 
+import br.com.ejb.bean.Cidade;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
@@ -43,10 +44,10 @@ public class CidadeRest {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(requestEntity);
     }
 
-    public <T> T find(Class<T> responseType, String id) throws UniformInterfaceException {
+    public Cidade find(String id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Cidade.class);
     }
 
     public void close() {

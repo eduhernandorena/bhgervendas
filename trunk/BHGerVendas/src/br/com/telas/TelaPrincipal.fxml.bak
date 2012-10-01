@@ -15,7 +15,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="376.0" prefWidth="569.0">
               <children>
-                <TableView fx:id="tbClientes" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClickCliente" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbClientes" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodCliente" />
                     <TableColumn prefWidth="250.0" text="Nome" fx:id="colNomeCliente" />
@@ -35,7 +35,7 @@
           <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tbFornecedor" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClickFornecedor" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbFornecedor" cache="true" cacheHint="SPEED" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClickCliente" pickOnBounds="true" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodForn" />
                     <TableColumn prefWidth="250.0" text="Nome" fx:id="colNomeForn" />
@@ -52,7 +52,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tbProdutos" onMouseClicked="#onClickProduto" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbProdutos" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodProduto" />
                     <TableColumn prefWidth="500.0" text="Descriçao" fx:id="colDescProd" />
@@ -68,7 +68,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tbPedidos" onMouseClicked="#onClickPedido" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbPedidos" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodPed" />
                     <TableColumn prefWidth="330.0" text="Cliente" fx:id="colCliPed" />
@@ -85,7 +85,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tbViagens" onMouseClicked="#onClickViagem" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbViagens" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodViag" />
                     <TableColumn prefWidth="300.0" text="Local" fx:id="colLocalViag" />
@@ -101,7 +101,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tbEncomendas" onMouseClicked="#onClickEncomenda" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
+                <TableView fx:id="tbEncomendas" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
                     <TableColumn prefWidth="75.0" text="Código" fx:id="colCodEnc" />
                     <TableColumn prefWidth="700.0" text="Viagem - Data - Valor" fx:id="colViagemEnc" />
