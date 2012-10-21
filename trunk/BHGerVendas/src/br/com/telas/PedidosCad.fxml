@@ -43,12 +43,12 @@
     <TextField fx:id="txtDta" layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
     <TableView fx:id="gridProd" layoutX="14.0" layoutY="147.0" prefHeight="337.0" prefWidth="725.0">
       <columns>
-        <TableColumn prefWidth="90.0" text="Código" />
-        <TableColumn prefWidth="200.0" text="Descrição" />
-        <TableColumn prefWidth="90.0" text="Nro NFe" />
-        <TableColumn prefWidth="100.0" text="Referência" />
-        <TableColumn prefWidth="94.0" text="Tamanho" />
-        <TableColumn prefWidth="150.0" text="Preço" />
+        <TableColumn prefWidth="90.0" text="Código" fx:id="colCodProd" />
+        <TableColumn prefWidth="200.0" text="Descrição" fx:id="colDescProd" />
+        <TableColumn prefWidth="90.0" text="Nro NFe" fx:id="colNFeProd" />
+        <TableColumn prefWidth="100.0" text="Referência" fx:id="colRefProd" />
+        <TableColumn prefWidth="94.0" text="Tamanho" fx:id="colTamProd" />
+        <TableColumn prefWidth="150.0" text="Preço" fx:id="colPrecProd" />
       </columns>
     </TableView>
     <TextField fx:id="txtValor" layoutX="14.0" layoutY="525.0" prefWidth="129.0" promptText="Valor Total" />

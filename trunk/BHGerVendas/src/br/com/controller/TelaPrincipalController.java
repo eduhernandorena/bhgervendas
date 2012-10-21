@@ -19,13 +19,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
  *
  * @author Eduardo Hernandorena
  */
-public class TelaPrincipalController implements Initializable{
+public class TelaPrincipalController implements Initializable {
 
     private static Principal p = Principal.getInstance();
     @FXML
@@ -54,15 +56,15 @@ public class TelaPrincipalController implements Initializable{
     @FXML
     private TableView<Entidade> tbFornecedor;
     @FXML
-    private TableColumn<Entidade, Long> colCelFornecedor;
+    private TableColumn<Entidade, Long> colCelForn;
     @FXML
-    private TableColumn<Entidade, Long> colCodFornecedor;
+    private TableColumn<Entidade, Long> colCodForn;
     @FXML
-    private TableColumn<Entidade, Endereco> colEndFornecedor;
+    private TableColumn<Entidade, Endereco> colEndForn;
     @FXML
-    private TableColumn<Entidade, String> colNomeFornecedor;
+    private TableColumn<Entidade, String> colNomeForn;
     @FXML
-    private TableColumn<Entidade, Long> colTelFornecedor;
+    private TableColumn<Entidade, Long> colTelForn;
     //Pedido
     @FXML
     private TableView<Pedido> tbPedidos;
@@ -98,6 +100,11 @@ public class TelaPrincipalController implements Initializable{
     private TableColumn<Viagem, String> colDtHrViag;
     @FXML
     private TableColumn<Viagem, String> colGuiaViag;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        fill();
+    }
 
     public void fill() {
         fillCliente();
@@ -158,6 +165,13 @@ public class TelaPrincipalController implements Initializable{
             p.gotoEncomendaCad(null);
         }
     }
+    
+    @FXML
+    public void openCadKey(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.F2)) {
+            openCad(null);
+        }
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Métodos do Cliente">
     @FXML
@@ -183,7 +197,7 @@ public class TelaPrincipalController implements Initializable{
 
     private List<Entidade> parseClienteList() {
         EntidadeRest entDAO = new EntidadeRest();
-        List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.CLIENTE);
+        List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.Cliente);
 
         if (!listaEnt.isEmpty()) {
             return listaEnt;
@@ -222,18 +236,18 @@ public class TelaPrincipalController implements Initializable{
     }
 
     private void fillFornecedor() {
-        colCodFornecedor.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("id"));
-        colNomeFornecedor.setCellValueFactory(new PropertyValueFactory<Entidade, String>("Nome"));
-        colTelFornecedor.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Telefone"));
-        colCelFornecedor.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Celular"));
-        colEndFornecedor.setCellValueFactory(new PropertyValueFactory<Entidade, Endereco>("Endereco"));
+        colCodForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("id"));
+        colNomeForn.setCellValueFactory(new PropertyValueFactory<Entidade, String>("Nome"));
+        colTelForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Telefone"));
+        colCelForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Celular"));
+        colEndForn.setCellValueFactory(new PropertyValueFactory<Entidade, Endereco>("Endereco"));
 
         tbFornecedor.getItems().setAll(parseFornecedorList());
     }
 
     private List<Entidade> parseFornecedorList() {
         EntidadeRest entDAO = new EntidadeRest();
-        List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.FORNECEDOR);
+        List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.Fornecedor);
 
         if (!listaEnt.isEmpty()) {
             return listaEnt;
@@ -453,9 +467,4 @@ public class TelaPrincipalController implements Initializable{
         });
     }
     //</editor-fold>
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        fill();
-    }
 }

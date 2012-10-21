@@ -27,11 +27,11 @@ public class ProdutoRest {
         webResource.path(java.text.MessageFormat.format("{0}", new Object[]{id})).delete();
     }
 
-    public String count() throws UniformInterfaceException {
-        WebResource resource = webResource;
-        resource = resource.path("count");
-        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-    }
+//    public String count() throws UniformInterfaceException {
+//        WebResource resource = webResource;
+//        resource = resource.path("count");
+//        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+//    }
 
     public List<Produto> findAll() throws UniformInterfaceException {
         WebResource resource = webResource;
@@ -39,15 +39,15 @@ public class ProdutoRest {
         });
     }
 
-    public void edit(Object requestEntity) throws UniformInterfaceException {
+//    public void edit(Object requestEntity) throws UniformInterfaceException {
+//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
+//    }
+
+    public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
 
-    public void create(Object requestEntity) throws UniformInterfaceException {
-        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(requestEntity);
-    }
-
-    public Produto find(String id) throws UniformInterfaceException {
+    public Produto find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Produto.class);
