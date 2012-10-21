@@ -27,11 +27,11 @@ public class EncomendaRest {
         webResource.path(java.text.MessageFormat.format("{0}", new Object[]{id})).delete();
     }
 
-    public String count() throws UniformInterfaceException {
-        WebResource resource = webResource;
-        resource = resource.path("count");
-        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-    }
+//    public String count() throws UniformInterfaceException {
+//        WebResource resource = webResource;
+//        resource = resource.path("count");
+//        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+//    }
 
     public List<Encomenda> findAll() throws UniformInterfaceException {
         WebResource resource = webResource;
@@ -39,18 +39,18 @@ public class EncomendaRest {
         });
     }
 
-    public void edit(Object requestEntity) throws UniformInterfaceException {
-        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
-    }
+//    public void edit(Object requestEntity) throws UniformInterfaceException {
+//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
+//    }
 
     public Encomenda create(Object requestEntity) throws UniformInterfaceException {
-        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(Encomenda.class, requestEntity);
+        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(Encomenda.class, requestEntity);
     }
 
-    public <T> T find(Class<T> responseType, String id) throws UniformInterfaceException {
+    public Encomenda find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Encomenda.class);
     }
 
     public void close() {

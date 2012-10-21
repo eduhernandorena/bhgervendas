@@ -4,7 +4,6 @@ import br.com.controller.ClienteFornController;
 import br.com.controller.EncomendaController;
 import br.com.controller.PedidosController;
 import br.com.controller.ProdutoController;
-import br.com.controller.TelaPrincipalController;
 import br.com.controller.ViagemController;
 import br.com.ejb.bean.Encomenda;
 import br.com.ejb.bean.Entidade;
@@ -16,15 +15,11 @@ import br.com.ws.UsuarioRest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  *
@@ -100,6 +95,7 @@ public class Principal extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle("BHGerVendas -- Login");
+            stage.centerOnScreen();
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,7 +104,6 @@ public class Principal extends Application {
     public void gotoPrincipal() {
         try {
             replaceSceneContent("TelaPrincipal.fxml", "Sistema Gerenciador de Compra & Venda");
-//            final TelaPrincipalController tela = new TelaPrincipalController();
             stage.centerOnScreen();
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,9 +112,9 @@ public class Principal extends Application {
 
     public void gotoClienteCad(Entidade ent) {
         try {
+            new ClienteFornController(ent);
             replaceSceneContentCad("ClienteCad.fxml", "Cadastro de Clientes");
-            ClienteFornController control = new ClienteFornController();
-            control.fill(ent);
+            stage.centerOnScreen();
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -148,8 +143,7 @@ public class Principal extends Application {
     public void gotoFornecedorCad(Entidade ent) {
         try {
             replaceSceneContentCad("FornecedorCad.fxml", "Cadastro de Viagens");
-            ClienteFornController control = new ClienteFornController();
-            control.fill(ent);
+            new ClienteFornController(ent);
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -157,7 +151,7 @@ public class Principal extends Application {
 
     public void gotoPedidoCad(Pedido ped) {
         try {
-            replaceSceneContentCad("PedidosCad.fxml", "Cadastro de Viagens");
+            replaceSceneContentCad("PedidosCad.fxml", "Cadastro de Pedidos");
             PedidosController control = new PedidosController();
             control.fill(ped);
         } catch (Exception ex) {
@@ -167,7 +161,7 @@ public class Principal extends Application {
 
     public void gotoEncomendaCad(Encomenda enc) {
         try {
-            replaceSceneContentCad("EncomendaCad.fxml", "Cadastro de Viagens");
+            replaceSceneContentCad("EncomendaCad.fxml", "Cadastro de Encomendas");
             EncomendaController control = new EncomendaController();
             control.fill(enc);
         } catch (Exception ex) {

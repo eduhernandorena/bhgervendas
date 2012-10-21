@@ -1,15 +1,23 @@
 package br.com.controller;
 
 import br.com.ejb.bean.Produto;
+import br.com.principal.FXOptionPane;
 import br.com.principal.Principal;
 import br.com.ws.ProdutoRest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class ProdutoController {
+public class ProdutoController implements Initializable {
 
     private static Principal p = Principal.getInstance();
     @FXML
@@ -24,8 +32,6 @@ public class ProdutoController {
     private ComboBox<String> cmbTpLucro;
     @FXML
     private TextField txtCod;
-    @FXML
-    private TextField txtCodViagem;
     @FXML
     private TextField txtDesc;
     @FXML
@@ -44,11 +50,10 @@ public class ProdutoController {
 
     public void clearCad(ActionEvent event) {
         txtCod.setText("");
-        txtCodViagem.setText("");
-        txtDesc.setText("");
         txtNfe.setText("");
-        txtRef.setText("");
+        txtDesc.setText("");
         txtTam.setText("");
+        txtRef.setText("");
         txtValCompra.setText("");
         txtValVenda.setText("");
         txtLucro.setText("");
@@ -68,10 +73,10 @@ public class ProdutoController {
             prod.setReferencia(txtRef.getText());
             prod.setTamanho(txtTam.getText());
             prodDAO.create(prod);
+            p.gotoPrincipal();
         } else {
             System.out.println("Não foi possível salvar!");
         }
-        p.gotoPrincipal();
     }
 
     public void voltar(ActionEvent event) {
@@ -79,7 +84,27 @@ public class ProdutoController {
     }
 
     private boolean valida() {
-        return false;
+        if (txtDesc.getText().isEmpty()) {
+            FXOptionPane.showMessageDialog(null, "A descrição deve ser preenchida!", "Campo Vazio!");
+            txtDesc.requestFocus();
+            return false;
+        }
+        if (txtTam.getText().isEmpty()) {
+            FXOptionPane.showMessageDialog(null, "O tamanho deve ser preenchido!", "Campo Vazio!");
+            txtTam.requestFocus();
+            return false;
+        }
+        if (txtValCompra.getText().isEmpty()) {
+            FXOptionPane.showMessageDialog(null, "O preço de compra deve ser preenchido!", "Campo Vazio!");
+            txtValCompra.requestFocus();
+            return false;
+        }
+        if (txtValVenda.getText().isEmpty()) {
+            FXOptionPane.showMessageDialog(null, "O preço de venda deve ser preenchido!", "Campo Vazio!");
+            txtValVenda.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     public void fill(Produto prod) {
@@ -95,5 +120,29 @@ public class ProdutoController {
             txtLucro.setText(prod.getLucro().toString());
             cmbTpLucro.setValue(prod.getPrecoVenda() - prod.getPrecoCusto() == prod.getLucro() ? "R$" : "%");
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cmbTpLucro.focusedProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (!txtValCompra.getText().isEmpty() && !txtValVenda.getText().isEmpty()) {
+                    if (cmbTpLucro.getValue() != null && cmbTpLucro.getValue().equals("R$")) {
+                        BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
+                        BigDecimal venda = BigDecimal.valueOf(Double.valueOf(txtValVenda.getText()));
+                        txtLucro.setText("R$" + venda.subtract(compra).setScale(2, RoundingMode.HALF_EVEN).toPlainString());
+                    } else {
+                        BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
+                        BigDecimal venda = BigDecimal.valueOf(Double.valueOf(txtValVenda.getText()));
+                        BigDecimal lucro = venda.subtract(compra);
+                        BigDecimal valor = lucro.multiply(BigDecimal.valueOf(100d));
+                        valor = valor.divideToIntegralValue(compra);
+                        txtLucro.setText(valor.setScale(2, RoundingMode.HALF_EVEN).toPlainString() + "%");
+                    }
+                }
+            }
+        });
+
     }
 }

@@ -1,6 +1,7 @@
 package br.com.ws;
 
 import br.com.ejb.bean.Pedido;
+import br.com.ejb.bean.enumeration.TipoEntidade;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
@@ -26,12 +27,12 @@ public class PedidoRest {
     public void remove(String id) throws UniformInterfaceException {
         webResource.path(java.text.MessageFormat.format("{0}", new Object[]{id})).delete();
     }
-
-    public String count() throws UniformInterfaceException {
-        WebResource resource = webResource;
-        resource = resource.path("count");
-        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-    }
+//
+//    public String count() throws UniformInterfaceException {
+//        WebResource resource = webResource;
+//        resource = resource.path("count");
+//        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+//    }
 
     public List<Pedido> findAll() throws UniformInterfaceException {
         WebResource resource = webResource;
@@ -39,18 +40,25 @@ public class PedidoRest {
         });
     }
 
-    public void edit(Object requestEntity) throws UniformInterfaceException {
+//    public void edit(Object requestEntity) throws UniformInterfaceException {
+//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
+//    }
+
+    public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
 
-    public void create(Object requestEntity) throws UniformInterfaceException {
-        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(requestEntity);
-    }
-
-    public Pedido find(String id) throws UniformInterfaceException {
+    public Pedido find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Pedido.class);
+    }
+    
+    public List<Pedido> findAllByEntidade(TipoEntidade tp, Long id) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path(java.text.MessageFormat.format("entidade/{0}/{1}", new Object[]{tp, id}));
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Pedido>>() {
+        });
     }
 
     public void close() {

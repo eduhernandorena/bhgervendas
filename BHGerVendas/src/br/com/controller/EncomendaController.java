@@ -60,8 +60,8 @@ public class EncomendaController {
             try {
                 Encomenda enco = new Encomenda();
                 enco.setDataCadastro(new SimpleDateFormat("dd/MM/yyyy").parse(txtData.getText()));
-                enco.setPedido(pedDAO.find(txtCodPedido.getText()));
-                enco.setViagem(viagemDAO.find(txtCodViagem.getText()));
+                enco.setPedido(pedDAO.find(Long.valueOf(txtCodPedido.getText())));
+                enco.setViagem(viagemDAO.find(Long.valueOf(txtCodViagem.getText())));
                 encDAO.create(enco);
             } catch (ParseException ex) {
                 Logger.getLogger(EncomendaController.class.getName()).log(Level.SEVERE, null, ex);

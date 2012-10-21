@@ -39,15 +39,15 @@ public class ViagemRest {
         });
     }
 
-    public void edit(Object requestEntity) throws UniformInterfaceException {
+//    public void edit(Object requestEntity) throws UniformInterfaceException {
+//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
+//    }
+
+    public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
 
-    public void create(Object requestEntity) throws UniformInterfaceException {
-        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(requestEntity);
-    }
-
-    public Viagem find(String id) throws UniformInterfaceException {
+    public Viagem find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Viagem.class);

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.TelaPrincipalController">
+<AnchorPane id="AnchorPane" onKeyPressed="#openCadKey" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.TelaPrincipalController">
   <children>
     <TabPane fx:id="tabPane" cache="true" cacheHint="SPEED" depthTest="ENABLE" layoutY="24.0" pickOnBounds="true" prefHeight="576.0" prefWidth="800.0" rotateGraphic="true" side="LEFT" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -54,10 +54,10 @@
               <children>
                 <TableView fx:id="tbProdutos" onMouseClicked="#onClickProduto" prefHeight="576.0" prefWidth="769.0" tableMenuButtonVisible="true">
                   <columns>
-                    <TableColumn prefWidth="75.0" text="Código" fx:id="colCodProduto" />
+                    <TableColumn prefWidth="75.0" text="Código" fx:id="colCodProd" />
                     <TableColumn prefWidth="500.0" text="Descriçao" fx:id="colDescProd" />
-                    <TableColumn id="tableColumn1" text="Tamanho" fx:id="colTamProd" />
-                    <TableColumn id="tableColumn1" prefWidth="100.0" text="Preço" fx:id="colPrcProd" />
+                    <TableColumn text="Tamanho" fx:id="colTamProd" />
+                    <TableColumn prefWidth="100.0" text="Preço" fx:id="colPrcProd" />
                   </columns>
                 </TableView>
               </children>

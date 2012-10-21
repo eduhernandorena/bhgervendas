@@ -28,27 +28,28 @@ public class EntidadeRest {
         webResource.path(java.text.MessageFormat.format("{0}", new Object[]{id})).delete();
     }
 
-    public String count() throws UniformInterfaceException {
-        WebResource resource = webResource;
-        resource = resource.path("count");
-        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-    }
+//    public String count() throws UniformInterfaceException {
+//        WebResource resource = webResource;
+//        resource = resource.path("count");
+//        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+//    }
 
     public List<Entidade> findAll(TipoEntidade tp) throws UniformInterfaceException {
         WebResource resource = webResource;
+        resource = resource.path(java.text.MessageFormat.format("tipoEntidade/{0}", new Object[]{tp}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Entidade>>() {
         });
     }
 
-    public void edit(Object requestEntity) throws UniformInterfaceException {
-        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
-    }
+//    public void edit(Object requestEntity) throws UniformInterfaceException {
+//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
+//    }
 
     public Entidade create(Object requestEntity) throws UniformInterfaceException {
-        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).post(Entidade.class, requestEntity);
+        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(Entidade.class, requestEntity);
     }
 
-    public Entidade find(String id) throws UniformInterfaceException {
+    public Entidade find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Entidade.class);
