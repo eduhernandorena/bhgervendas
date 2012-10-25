@@ -1,9 +1,11 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.UF;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,13 +22,24 @@ public class UfDAO implements UfDAORemote {
         em.persist(uf);
     }
 
+//    @Override
+//    public void remove(UF uf) {
+//        em.remove(uf);
+//    }
+//
+//    @Override
+//    public void update(UF uf) {
+//        em.merge(uf);
+//    }
+
     @Override
-    public void remove(UF uf) {
-        em.remove(uf);
+    public List<UF> findAll() {
+        TypedQuery<UF> createNamedQuery = em.createNamedQuery("UF.findAll", UF.class);
+        return createNamedQuery.getResultList();
     }
 
     @Override
-    public void update(UF uf) {
-        em.merge(uf);
+    public UF find(Long id) {
+        return em.find(UF.class, id);
     }
 }

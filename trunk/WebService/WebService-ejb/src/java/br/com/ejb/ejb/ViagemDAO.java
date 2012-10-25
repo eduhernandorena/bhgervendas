@@ -1,9 +1,11 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Viagem;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -17,13 +19,12 @@ public class ViagemDAO implements ViagemDAORemote {
 
     @Override
     public Viagem create(Viagem viagem) {
-        em.persist(viagem);
+        if (viagem.getId() != null) {
+            em.merge(viagem);
+        } else {
+            em.persist(viagem);
+        }
         return viagem;
-    }
-
-    @Override
-    public void update(Viagem viagem) {
-        em.merge(viagem);
     }
 
     @Override
@@ -34,5 +35,11 @@ public class ViagemDAO implements ViagemDAORemote {
     @Override
     public Viagem find(Long id) {
         return em.find(Viagem.class, id);
+    }
+
+    @Override
+    public List<Viagem> findAll() {
+        TypedQuery<Viagem> createNamedQuery = em.createNamedQuery("Viagem.findAll", Viagem.class);
+        return createNamedQuery.getResultList();
     }
 }

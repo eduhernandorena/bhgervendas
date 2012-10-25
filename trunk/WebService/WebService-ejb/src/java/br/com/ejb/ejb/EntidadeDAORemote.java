@@ -13,8 +13,6 @@ public interface EntidadeDAORemote {
 
     public Entidade create(Entidade entit);
 
-    public Entidade update(Entidade entit);
-
     public void remove(Entidade entit);
 
     public List<Entidade> findAllCliente();

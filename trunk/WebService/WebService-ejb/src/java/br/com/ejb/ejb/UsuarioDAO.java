@@ -19,13 +19,12 @@ public class UsuarioDAO implements UsuarioDAORemote {
 
     @Override
     public Usuario create(Usuario user) {
-        em.persist(user);
+        if (user.getId() != null) {
+            em.merge(user);
+        } else {
+            em.persist(user);
+        }
         return user;
-    }
-
-    @Override
-    public void update(Usuario user) {
-        em.merge(user);
     }
 
     @Override
@@ -42,20 +41,5 @@ public class UsuarioDAO implements UsuarioDAORemote {
         } else {
             return null;
         }
-    }
-
-//    @Override
-//    public Usuario find(String id) {
-//        if (id != null && !id.trim().isEmpty()) {
-//            Query q = em.createQuery("select o from Usuario o where o.id=:id");
-//            q.setParameter("id", id);
-//            return (Usuario) q.getSingleResult();
-//        } else {
-//            return null;
-//        }
-//    }
-    @Override
-    public List<Usuario> findAll() {
-        return em.createQuery("select o from Usuario o").getResultList();
     }
 }

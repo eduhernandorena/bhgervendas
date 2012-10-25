@@ -1,6 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Cidade;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,15 +22,15 @@ public class CidadeDAO implements CidadeDAORemote {
         em.persist(city);
     }
 
-    @Override
-    public void update(Cidade city) {
-        em.merge(city);
-    }
-
-    @Override
-    public void remove(Cidade city) {
-        em.remove(city);
-    }
+//    @Override
+//    public void update(Cidade city) {
+//        em.merge(city);
+//    }
+//
+//    @Override
+//    public void remove(Cidade city) {
+//        em.remove(city);
+//    }
 
     @Override
     public Cidade find(Long id) {
@@ -37,8 +38,15 @@ public class CidadeDAO implements CidadeDAORemote {
     }
 
     @Override
-    public void findAll() {
+    public List<Cidade> findAll() {
         TypedQuery<Cidade> createNamedQuery = em.createNamedQuery("Cidade.findAll", Cidade.class);
-        createNamedQuery.getResultList();
+        return createNamedQuery.getResultList();
+    }
+
+    @Override
+    public List<Cidade> findByUF(Long uf) {
+        TypedQuery<Cidade> createNamedQuery = em.createNamedQuery("Cidade.findByUF", Cidade.class);
+        createNamedQuery.setParameter("ibge", uf);
+        return createNamedQuery.getResultList();
     }
 }

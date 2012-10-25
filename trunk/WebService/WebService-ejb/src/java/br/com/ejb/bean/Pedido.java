@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
     @NamedQuery(name = "Pedido.findByPrazo", query = "SELECT p FROM Pedido p WHERE p.formaPagamento = :formaPag"),
+    @NamedQuery(name = "Pedido.findByCliente", query = "SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId"),
     @NamedQuery(name = "Pedido.findByFornecedor", query = "SELECT p FROM Pedido p WHERE p.fornecedor.id = :entidadeId")
 })
 @SequenceGenerator(name = "seq_ped", sequenceName = "seq_ped", allocationSize = 1)

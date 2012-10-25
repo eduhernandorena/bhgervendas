@@ -31,11 +31,13 @@ public class Viagem implements Serializable {
     private String localizacao;
     @JoinColumn(name = "encomenda")
     @OneToMany
-    private List<Encomenda> encomenda;
+    private List<Encomenda> encomendas;
     @Column
     private Integer qtdeProdutos;
     @Column
     private Double valor;
+    @Column
+    private String status;
     @Column(nullable = false)
     private String guia;
     @JoinColumn(name = "pedidos")
@@ -53,10 +55,12 @@ public class Viagem implements Serializable {
     public String getDataHora() {
         return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(dataHora);
     }
-    public String getData(){
+
+    public String getData() {
         return new SimpleDateFormat("dd/MM/yyyy").format(dataHora);
     }
-    public String getHora(){
+
+    public String getHora() {
         return new SimpleDateFormat("HH:mm").format(dataHora);
     }
 
@@ -64,12 +68,12 @@ public class Viagem implements Serializable {
         this.dataHora = dataHora;
     }
 
-    public List<Encomenda> getEncomenda() {
-        return encomenda;
+    public List<Encomenda> getEncomendas() {
+        return encomendas;
     }
 
-    public void setEncomenda(List<Encomenda> encomenda) {
-        this.encomenda = encomenda;
+    public void setEncomendas(List<Encomenda> encomenda) {
+        this.encomendas = encomenda;
     }
 
     public String getGuia() {
@@ -112,6 +116,14 @@ public class Viagem implements Serializable {
         this.valor = valor;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -152,6 +164,6 @@ public class Viagem implements Serializable {
 
     @Override
     public String toString() {
-        return localizacao + " - " +getData() + " - " + valor;
+        return localizacao + " - " + getData() + " - " + valor;
     }
 }

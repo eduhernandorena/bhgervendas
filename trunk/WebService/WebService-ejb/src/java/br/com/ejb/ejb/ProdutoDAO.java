@@ -1,9 +1,11 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Produto;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -17,17 +19,27 @@ public class ProdutoDAO implements ProdutoDAORemote {
 
     @Override
     public Produto create(Produto prod) {
-        em.persist(prod);
+        if (prod.getId() != null) {
+            em.merge(prod);
+        } else {
+            em.persist(prod);
+        }
         return prod;
-    }
-
-    @Override
-    public void update(Produto prod) {
-        em.merge(prod);
     }
 
     @Override
     public void remove(Produto prod) {
         em.remove(prod);
+    }
+
+    @Override
+    public Produto find(Long id) {
+        return em.find(Produto.class, id);
+    }
+
+    @Override
+    public List<Produto> findAll() {
+        TypedQuery<Produto> createNamedQuery = em.createNamedQuery("Produto.findAll", Produto.class);
+        return createNamedQuery.getResultList();
     }
 }

@@ -1,6 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Produto;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,5 +15,7 @@ public interface ProdutoDAORemote {
 
     void remove(Produto prod);
 
-    void update(Produto prod);
+    Produto find(Long id);
+    
+    List<Produto> findAll();
 }
