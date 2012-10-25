@@ -157,7 +157,9 @@ public class PedidosController implements Initializable {
             return false;
         } else {
             try {
-                new SimpleDateFormat("dd/MM/yyyy").parse(txtDta.getText());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                sdf.setLenient(true);
+                sdf.parse(txtDta.getText());
             } catch (ParseException ex) {
                 FXOptionPane.showMessageDialog(null, "O campo de Data deve ter o fomato DD/MM/AAAA!", "Campo Vazio!");
                 txtDta.requestFocus();
@@ -250,6 +252,16 @@ public class PedidosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fill(pedido);
+
+        txtCod.focusedProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String cod = txtCod.getText();
+                if (!cod.isEmpty()) {
+                    fill(pedDAO.find(Long.valueOf(cod)));
+                }
+            }
+        });
 
         cmbFormaPag.focusedProperty().addListener(new ChangeListener() {
             @Override
