@@ -122,25 +122,54 @@ public class ProdutoController implements Initializable {
         }
     }
 
+    private void calculoLucro() {
+        if (!txtValCompra.getText().isEmpty() && !txtValVenda.getText().isEmpty()) {
+            BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
+            BigDecimal venda = BigDecimal.valueOf(Double.valueOf(txtValVenda.getText()));
+            if (cmbTpLucro.getValue() != null && cmbTpLucro.getValue().equals("R$")) {
+                txtLucro.setText("R$" + venda.subtract(compra).setScale(2, RoundingMode.HALF_EVEN).toPlainString());
+            } else {
+                BigDecimal lucro = venda.subtract(compra);
+                BigDecimal valor = lucro.multiply(BigDecimal.valueOf(100d));
+                valor = valor.divideToIntegralValue(compra);
+                txtLucro.setText(valor.setScale(2, RoundingMode.HALF_EVEN).toPlainString() + "%");
+            }
+        } else if (!txtValCompra.getText().isEmpty() && !txtLucro.getText().isEmpty()) {
+            BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
+            BigDecimal lucro = BigDecimal.valueOf(Double.valueOf(txtLucro.getText()));
+            if (cmbTpLucro.getValue() != null && cmbTpLucro.getValue().equals("R$")) {
+                txtValVenda.setText(compra.add(lucro).setScale(2, RoundingMode.HALF_EVEN).toPlainString());
+            } else {
+                BigDecimal valor = compra.multiply(lucro);
+                valor = valor.divideToIntegralValue(BigDecimal.valueOf(100d));
+                txtValVenda.setText(valor.setScale(2, RoundingMode.HALF_EVEN).toPlainString());
+            }
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        txtCod.focusedProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String cod = txtCod.getText();
+                if (!cod.isEmpty()) {
+                    fill(prodDAO.find(Long.valueOf(cod)));
+                }
+            }
+        });
+
+        txtLucro.focusedProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                calculoLucro();
+            }
+        });
+
         cmbTpLucro.focusedProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if (!txtValCompra.getText().isEmpty() && !txtValVenda.getText().isEmpty()) {
-                    if (cmbTpLucro.getValue() != null && cmbTpLucro.getValue().equals("R$")) {
-                        BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
-                        BigDecimal venda = BigDecimal.valueOf(Double.valueOf(txtValVenda.getText()));
-                        txtLucro.setText("R$" + venda.subtract(compra).setScale(2, RoundingMode.HALF_EVEN).toPlainString());
-                    } else {
-                        BigDecimal compra = BigDecimal.valueOf(Double.valueOf(txtValCompra.getText()));
-                        BigDecimal venda = BigDecimal.valueOf(Double.valueOf(txtValVenda.getText()));
-                        BigDecimal lucro = venda.subtract(compra);
-                        BigDecimal valor = lucro.multiply(BigDecimal.valueOf(100d));
-                        valor = valor.divideToIntegralValue(compra);
-                        txtLucro.setText(valor.setScale(2, RoundingMode.HALF_EVEN).toPlainString() + "%");
-                    }
-                }
+                calculoLucro();
             }
         });
 

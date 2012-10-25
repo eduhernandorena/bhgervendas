@@ -381,7 +381,12 @@ public class ClienteFornController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCod.getText();
                 if (!cod.isEmpty()) {
-                    fill(entDao.find(Long.valueOf(cod)));
+                    Entidade ent = entDao.find(Long.valueOf(cod));
+                    if (ent.getTipoEntidade().equals(TipoEntidade.valueOf(cmbTpEntidade.getValue()))) {
+                        fill(ent);
+                    }else{
+                        FXOptionPane.showMessageDialog(null, "Enntidade difere do tipo do cadastro.", "Entidade Incompativel!");
+                    }
                 }
             }
         });
