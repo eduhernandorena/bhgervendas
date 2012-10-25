@@ -2,10 +2,12 @@ package service;
 
 import br.com.ejb.bean.Endereco;
 import br.com.ejb.ejb.EnderecoDAORemote;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -27,18 +29,18 @@ public class EnderecoFacadeREST {
         
     }
 
-    @POST
+    @PUT
     @Produces({"application/xml", "application/json"})
     @Consumes({"application/xml", "application/json"})
     public Endereco create(Endereco entity) {
         return dao.create(entity);
     }
-
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public void edit(Endereco entity) {
-        dao.update(entity);
-    }
+//
+//    @PUT
+//    @Consumes({"application/xml", "application/json"})
+//    public void edit(Endereco entity) {
+//        dao.update(entity);
+//    }
 
     @DELETE
     @Path("{id}")
@@ -48,18 +50,17 @@ public class EnderecoFacadeREST {
         dao.remove(end);
     }
 
-//    @GET
-//    @Path("{id}")
-//    @Produces({"application/xml", "application/json"})
-//    public Endereco find(@PathParam("id") Long id) {
-//        return dao.find(id);
-//    }
+    @GET
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public Endereco find(@PathParam("id") Long id) {
+        return dao.find(id);
+    }
 
-//    @GET
-//    
-//    @Produces({"application/xml", "application/json"})
-//    public List<Endereco> findAll() {
-//        return super.findAll();
-//    }
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Endereco> findAll() {
+        return dao.findAll();
+    }
     
 }

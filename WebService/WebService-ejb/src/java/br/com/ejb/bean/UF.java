@@ -1,6 +1,8 @@
 package br.com.ejb.bean;
 
+import br.com.ejb.utils.Utilidades;
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UF.findByIbge", query = "SELECT u FROM UF u WHERE u.codIbge = :ibge")
 })
 @XmlRootElement
-public class UF implements Serializable {
+public class UF implements Serializable, Comparable<UF> {
 
     @Id
     @Column(nullable = false)
@@ -79,5 +81,15 @@ public class UF implements Serializable {
         hash = 29 * hash + Objects.hashCode(this.descricao);
         hash = 29 * hash + Objects.hashCode(this.sigla);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return Utilidades.upperInicial(descricao);
+    }
+
+    @Override
+    public int compareTo(UF o) {
+        return Collator.getInstance().compare(descricao, o.getDescricao());
     }
 }

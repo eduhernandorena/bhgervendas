@@ -1,6 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Viagem;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -10,11 +11,11 @@ import javax.ejb.Remote;
 @Remote
 public interface ViagemDAORemote {
 
-    public Viagem create(Viagem viagem);
+    Viagem create(Viagem viagem);
 
-    public void remove(Viagem viagem);
+    void remove(Viagem viagem);
 
-    public void update(Viagem viagem);
-
-    public Viagem find(Long id);
+    Viagem find(Long id);
+    
+    List<Viagem> findAll();
 }

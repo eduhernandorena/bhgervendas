@@ -6,5 +6,5 @@ package br.com.ejb.bean.enumeration;
  */
 public enum TipoEndereco {
 
-    RESIDENCIAL, COMERCIAL, ENTREGA, COBRANCA;
+    Residencial, Comercial, Entrega, Cobrança;
 }

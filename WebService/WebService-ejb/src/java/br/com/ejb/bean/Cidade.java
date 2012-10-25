@@ -1,6 +1,8 @@
 package br.com.ejb.bean;
 
+import br.com.ejb.utils.Utilidades;
 import java.io.Serializable;
+import java.text.Collator;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,9 +15,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Cidade.findByDesc", query = "SELECT c FROM Cidade c WHERE c.descricao = :descricao"),
     @NamedQuery(name = "Cidade.findByIbge", query = "SELECT c FROM Cidade c WHERE c.codIbge = :ibge"),
+    @NamedQuery(name = "Cidade.findByUF", query = "SELECT c FROM Cidade c WHERE c.uf.codIbge = :ibge"),
     @NamedQuery(name = "Cidade.findAll", query = "SELECT c FROM Cidade c")})
 @XmlRootElement
-public class Cidade implements Serializable {
+public class Cidade implements Serializable, Comparable<Cidade> {
 
     @Id
     @Column(nullable = false)
@@ -74,6 +77,11 @@ public class Cidade implements Serializable {
 
     @Override
     public String toString() {
-        return "Cidade{" + "descricao=" + descricao + ", uf=" + uf + '}';
+        return Utilidades.upperInicial(descricao);
+    }
+
+    @Override
+    public int compareTo(Cidade o) {
+        return Collator.getInstance().compare(descricao, o.getDescricao());
     }
 }

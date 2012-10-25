@@ -6,6 +6,6 @@ package br.com.ejb.bean.enumeration;
  */
 public enum EstadoCivil {
 
-    CASADO, SOLTEIRO, DIVORCIADO, NOIVO, NAMORANDO, VIUVO;
+    Casado, Solteiro, Divorciado, Noivo, Namorando, Viuvo;
     
 }

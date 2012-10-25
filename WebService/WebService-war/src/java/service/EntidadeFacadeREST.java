@@ -29,7 +29,7 @@ public class EntidadeFacadeREST {
     public EntidadeFacadeREST() {
     }
 
-    @POST
+    @PUT
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Entidade create(Entidade entity) {
@@ -37,11 +37,11 @@ public class EntidadeFacadeREST {
 
     }
 
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public void edit(Entidade entity) {
-        dao.update(entity);
-    }
+//    @PUT
+//    @Consumes({"application/xml", "application/json"})
+//    public void edit(Entidade entity) {
+//        dao.update(entity);
+//    }
 
     @DELETE
     @Path("{id}")
@@ -59,8 +59,9 @@ public class EntidadeFacadeREST {
     }
 
     @GET
+    @Path("tipoEntidade/{tp}")
     @Produces({"application/xml", "application/json"})
-    public List<Entidade> findAll(TipoEntidade tp) {
+    public List<Entidade> findAll(@PathParam("tp") TipoEntidade tp) {
         if (tp.isCliente()) {
             return dao.findAllCliente();
         } else {

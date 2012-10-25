@@ -2,13 +2,12 @@ package service;
 
 import br.com.ejb.bean.Cidade;
 import br.com.ejb.ejb.CidadeDAORemote;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,19 +32,19 @@ public class CidadeFacadeREST {
         dao.create(entity);
     }
 
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public void edit(Cidade entity) {
-        dao.update(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        Cidade cidade = new Cidade();
-        cidade.setCodIbge(id);
-        dao.remove(cidade);
-    }
+//    @PUT
+//    @Consumes({"application/xml", "application/json"})
+//    public void edit(Cidade entity) {
+//        dao.update(entity);
+//    }
+//
+//    @DELETE
+//    @Path("{id}")
+//    public void remove(@PathParam("id") Long id) {
+//        Cidade cidade = new Cidade();
+//        cidade.setCodIbge(id);
+//        dao.remove(cidade);
+//    }
 
     @GET
     @Path("{id}")
@@ -54,9 +53,16 @@ public class CidadeFacadeREST {
         return dao.find(id);
     }
     
-//    @GET
-//    @Produces({"application/xml", "application/json"})
-//    public List<Cidade> findAll() {
-//        return dao.findAll();
-//    }
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Cidade> findAll() {
+        return dao.findAll();
+    }
+    
+    @GET
+    @Path("uf/{uf}")
+    @Produces({"application/xml", "application/json"})
+    public List<Cidade> findAll(@PathParam("uf") Long uf) {
+        return dao.findByUF(uf);
+    }
 }

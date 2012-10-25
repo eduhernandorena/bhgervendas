@@ -6,10 +6,10 @@ package br.com.ejb.bean.enumeration;
  */
 public enum TipoEntidade {
 
-    CLIENTE, FORNECEDOR;
+    Cliente, Fornecedor;
     
     public boolean isCliente(){
-        if (this == CLIENTE) {
+        if (this == Cliente) {
             return true;
         }else{
             return false;

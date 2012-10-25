@@ -2,6 +2,7 @@ package service;
 
 import br.com.ejb.bean.Viagem;
 import br.com.ejb.ejb.ViagemDAORemote;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -27,17 +28,11 @@ public class ViagemFacadeREST {
         
     }
 
-    @POST
+    @PUT
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Viagem create(Viagem entity) {
         return dao.create(entity);
-    }
-
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public void edit(Viagem entity) {
-        dao.update(entity);
     }
 
     @DELETE
@@ -53,10 +48,9 @@ public class ViagemFacadeREST {
         return dao.find(id);
     }
 
-//    @GET
-//    @Override
-//    @Produces({"application/xml", "application/json"})
-//    public List<Viagem> findAll() {
-//        return dao.findAll();
-//    } 
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Viagem> findAll() {
+        return dao.findAll();
+    } 
 }

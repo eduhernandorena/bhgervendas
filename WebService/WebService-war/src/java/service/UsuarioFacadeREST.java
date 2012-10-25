@@ -2,7 +2,6 @@ package service;
 
 import br.com.ejb.bean.Usuario;
 import br.com.ejb.ejb.UsuarioDAORemote;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -28,42 +27,31 @@ public class UsuarioFacadeREST {
     public UsuarioFacadeREST() {
     }
 
-    @POST
+    @PUT
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Usuario create(Usuario entity) {
         return dao.create(entity);
     }
 
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public void edit(Usuario entity) {
-        dao.update(entity);
+//    @PUT
+//    @Consumes({"application/xml", "application/json"})
+//    public void edit(Usuario entity) {
+//        dao.update(entity);
+//    }
+
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Long id) {
+        Usuario usr = new Usuario();
+        usr.setId(id);
+        dao.remove(usr);
     }
-
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") String id) {
-//        dao.remove(dao.find(id));
-//    }
-
-//    @GET
-//    @Path("{id}")
-//    @Produces({"application/xml", "application/json"})
-//    public Usuario find(@PathParam("id") String id) {
-//        return dao.find(id);
-//    }
 
     @GET
     @Path("{nome}")
     @Produces({"application/xml", "application/json"})
     public Usuario findByNome(@PathParam("nome") String nome) {
         return dao.findByNome(nome);
-    }
-
-    @GET
-    @Produces({"application/xml", "application/json"})
-    public List<Usuario> findAll() {
-        return dao.findAll();
     }
 }

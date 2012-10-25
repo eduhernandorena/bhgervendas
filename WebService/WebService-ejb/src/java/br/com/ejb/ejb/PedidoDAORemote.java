@@ -1,6 +1,8 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Pedido;
+import br.com.ejb.bean.enumeration.TipoEntidade;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,5 +16,9 @@ public interface PedidoDAORemote {
 
     void remove(Pedido ped);
 
-    void update(Pedido ped);
+    Pedido find(Long id);
+    
+    List<Pedido> findAll();
+    
+    List<Pedido> findAllByEntidade(TipoEntidade tp, Long id);
 }
