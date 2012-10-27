@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="itens">
+        <item>10/10/1988 - Eduardo - R$200,00</item>
+        <item>5/10/2012 - Carla - R$123,00</item>
+    </array>
+</resources>

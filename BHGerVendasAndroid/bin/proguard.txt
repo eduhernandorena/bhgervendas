@@ -1,0 +1,6 @@
+# view AndroidManifest.xml #generated:8
+-keep class br.com.bhgervendas.Principal { <init>(...); }
+
+# view AndroidManifest.xml #generated:15
+-keep class br.com.bhgervendas.activity.ListaSync { <init>(...); }
+
