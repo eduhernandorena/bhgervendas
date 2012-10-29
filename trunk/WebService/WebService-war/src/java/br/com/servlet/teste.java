@@ -1,21 +1,12 @@
 package br.com.servlet;
 
-import br.com.ejb.bean.Cidade;
-import br.com.ejb.bean.Endereco;
-import br.com.ejb.bean.Entidade;
-import br.com.ejb.bean.UF;
 import br.com.ejb.bean.Usuario;
-import br.com.ejb.bean.enumeration.EstadoCivil;
-import br.com.ejb.bean.enumeration.Genero;
-import br.com.ejb.bean.enumeration.TipoEndereco;
-import br.com.ejb.bean.enumeration.TipoEntidade;
 import br.com.ejb.ejb.CidadeDAORemote;
 import br.com.ejb.ejb.EnderecoDAORemote;
 import br.com.ejb.ejb.EntidadeDAORemote;
 import br.com.ejb.ejb.UfDAORemote;
 import br.com.ejb.ejb.UsuarioDAORemote;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
