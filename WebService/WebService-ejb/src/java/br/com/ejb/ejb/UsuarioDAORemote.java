@@ -15,4 +15,6 @@ public interface UsuarioDAORemote {
     public void remove(Usuario user);
 
     public Usuario findByNome(String user);
+    
+    public Boolean isEmpty();
 }

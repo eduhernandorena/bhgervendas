@@ -1,14 +1,13 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,10 +24,16 @@ public class Sync implements Serializable {
     private long id;
     @Column(nullable = false)
     private String nome;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataPag;
+    @Column(nullable = false)
+    private String dataPag;
     @Column(nullable = false)
     private double valor;
+    @Column(nullable = false)
+    private String tpMov;
+    @Column(nullable = false)
+    private String parc;
+    @Column(nullable = false)
+    private boolean sincronizado;
 
     public long getId() {
         return id;
@@ -46,12 +51,12 @@ public class Sync implements Serializable {
         this.nome = nome;
     }
 
-    public Date getDataPag() {
+    public String getDataPag() {
         return dataPag;
     }
 
     public void setDataPag(Date dataPag) {
-        this.dataPag = dataPag;
+        this.dataPag = new SimpleDateFormat("dd/MM/yyyy").format(dataPag);
     }
 
     public double getValor() {
@@ -60,5 +65,29 @@ public class Sync implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public String getTpMov() {
+        return tpMov;
+    }
+
+    public void setTpMov(String tpMov) {
+        this.tpMov = tpMov;
+    }
+
+    public String getParc() {
+        return parc;
+    }
+
+    public void setParc(String parc) {
+        this.parc = parc;
+    }
+
+    public boolean isSincronizado() {
+        return sincronizado;
+    }
+
+    public void setSincronizado(boolean sincronizado) {
+        this.sincronizado = sincronizado;
     }
 }

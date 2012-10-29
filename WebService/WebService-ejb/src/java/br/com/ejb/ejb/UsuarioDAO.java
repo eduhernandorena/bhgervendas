@@ -42,4 +42,10 @@ public class UsuarioDAO implements UsuarioDAORemote {
             return null;
         }
     }
+
+    @Override
+    public Boolean isEmpty() {
+        Query q = em.createQuery("select o from Usuario o");
+        return q.getResultList().isEmpty();
+    }
 }
