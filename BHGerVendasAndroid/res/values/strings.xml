@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Principal</string>
+    <string name="app_name">BHGerVendas</string>
+    <string name="ano">Escolha o ano</string>
+    <string name="mes">Escolha o mes</string>
 </resources>

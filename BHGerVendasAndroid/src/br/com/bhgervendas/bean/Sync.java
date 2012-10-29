@@ -1,7 +1,6 @@
 package br.com.bhgervendas.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -11,8 +10,11 @@ public class Sync implements Serializable {
 
     private long id;
     private String nome;
-    private Date dataPag;
+    private String dataPag;
     private double valor;
+    private String tpMov;
+    private String parc;
+    private boolean sincronizado;
 
     public long getId() {
         return id;
@@ -30,11 +32,11 @@ public class Sync implements Serializable {
         this.nome = nome;
     }
 
-    public Date getDataPag() {
+    public String getDataPag() {
         return dataPag;
     }
 
-    public void setDataPag(Date dataPag) {
+    public void setDataPag(String dataPag) {
         this.dataPag = dataPag;
     }
 
@@ -45,4 +47,29 @@ public class Sync implements Serializable {
     public void setValor(double valor) {
         this.valor = valor;
     }
+
+    public String getTpMov() {
+        return tpMov;
+    }
+
+    public void setTpMov(String tpMov) {
+        this.tpMov = tpMov;
+    }
+
+    public String getParc() {
+        return parc;
+    }
+
+    public void setParc(String parc) {
+        this.parc = parc;
+    }
+
+    public boolean isSincronizado() {
+        return sincronizado;
+    }
+
+    public void setSincronizado(boolean sincronizado) {
+        this.sincronizado = sincronizado;
+    }
+    
 }

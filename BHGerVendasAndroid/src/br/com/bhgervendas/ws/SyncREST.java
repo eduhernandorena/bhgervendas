@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SyncREST {
 
-    private static final String URL_WS = "http://localhost:8080/WebService-war/resources";
+    private static String URL_WS = "http://localhost:8080/WebService-war/resources";
 
     public Sync getSync(int id) throws Exception {
 
@@ -27,7 +27,6 @@ public class SyncREST {
     public List<Sync> getListaSync() throws Exception {
 
         String[] resposta = new WebService().get(URL_WS + "GSON");
-//       String[] resposta = new WebServiceSync().get(URL_WS + "buscarTodos");
 
         if (resposta[0].equals("200")) {
             Gson gson = new Gson();
@@ -40,24 +39,11 @@ public class SyncREST {
             }
             return listaSync;
         } else {
-            throw new Exception(resposta[1]);
+            return null;
         }
     }
 
-//    public String inserirSync(Sync Sync) throws Exception {
-//
-//        Gson gson = new Gson();
-//        String SyncJSON = gson.toJson(Sync);
-//        String[] resposta = new WebService().post(URL_WS + "inserir", SyncJSON);
-//        if (resposta[0].equals("200")) {
-//            return resposta[1];
-//        } else {
-//            throw new Exception(resposta[1]);
-//        }
-//    }
-//
-//    public String deletarSync(int id) {
-//        String[] resposta = new WebService().get(URL_WS + "delete/" + id);
-//        return resposta[1];
-//    }
+    public static void setIP(String ip) {
+        URL_WS = "http://" + ip + ":8080/WebService-war/resources";
+    }
 }

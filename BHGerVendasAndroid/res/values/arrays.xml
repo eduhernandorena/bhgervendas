@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="itens">
-        <item>10/10/1988 - Eduardo - R$200,00</item>
-        <item>5/10/2012 - Carla - R$123,00</item>
+    <array name="mes">
+        <item>Janeiro</item>
+        <item>Fevereiro</item>
+        <item>Marco</item>
+        <item>Abril</item>
+        <item>Maio</item>
+        <item>Junho</item>
+        <item>Julho</item>
+        <item>Agosto</item>
+        <item>Setembro</item>
+        <item>Outubro</item>
+        <item>Novembro</item>
+        <item>Dezembro</item>
+    </array>
+    <array name="ano">
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+    </array>
+    <array name="clientes">
+        <item>(E) 10/10/2012 - Eduardo - R$100,00 (1/1)</item>
+        <item>(S) 23/10/2012 - Lisiane - R$60,54 (1/3)</item>
+        <item>(S) 28/10/2012 - Tanise - R$75,00 (2/3)</item>
+        <item>(E) 29/10/2012 - Carla - R$34,40 (3/5)</item>
     </array>
 </resources>
