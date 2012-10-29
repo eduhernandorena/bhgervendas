@@ -4,6 +4,7 @@ import br.com.ejb.bean.Usuario;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import java.net.ConnectException;
 
 /**
  *
@@ -30,18 +31,16 @@ public class UsuarioRest {
 //        resource = resource.path("count");
 //        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
 //    }
-
-//    public <T> T findAll(Class<T> responseType) throws UniformInterfaceException {
-//        WebResource resource = webResource;
-//        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
-//    }
+    public boolean isEmpty() throws UniformInterfaceException {
+        WebResource resource = webResource;
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Boolean.class);
+    }
 
 //    public void edit(Object requestEntity) throws UniformInterfaceException {
 //        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
 //    }
-
-    public Usuario create(Object requestEntity) throws UniformInterfaceException {
-        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(Usuario.class, requestEntity);
+    public Usuario create(Usuario user) throws UniformInterfaceException {
+        return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(Usuario.class, user);
     }
 
     public Usuario find(Long id) throws UniformInterfaceException {

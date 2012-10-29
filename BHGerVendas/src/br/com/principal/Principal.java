@@ -4,6 +4,7 @@ import br.com.controller.ClienteFornController;
 import br.com.controller.EncomendaController;
 import br.com.controller.PedidosController;
 import br.com.controller.ProdutoController;
+import br.com.controller.UsuarioController;
 import br.com.controller.ViagemController;
 import br.com.ejb.bean.Encomenda;
 import br.com.ejb.bean.Entidade;
@@ -12,6 +13,8 @@ import br.com.ejb.bean.Produto;
 import br.com.ejb.bean.Usuario;
 import br.com.ejb.bean.Viagem;
 import br.com.ws.UsuarioRest;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import java.net.ConnectException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -20,6 +23,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,10 +52,16 @@ public class Principal extends Application {
         try {
             stage = primaryStage;
             stage.centerOnScreen();
-            gotoLogin();
+            if (!new UsuarioRest().isEmpty()) {
+                gotoLogin();
+            } else {
+                FXOptionPane.showMessageDialog(null, "Não há usuário cadastrado!", "Sem Usuario!");
+                gotoCadUser();
+            }
             primaryStage.show();
-        } catch (Exception ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UniformInterfaceException ex) {
+            FXOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados\nverifique sua conexão e o IP do banco!", "Erro Banco de dados!");
+            
         }
     }
 
@@ -95,6 +105,20 @@ public class Principal extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle("BHGerVendas -- Login");
+            stage.centerOnScreen();
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void gotoCadUser() {
+        try {
+            new UsuarioController(stage);
+            Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/UsuarioCad.fxml"), null, new JavaFXBuilderFactory());
+            Scene scene = new Scene(page, 240, 160);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("BHGerVendas -- Cadastro de Usuários");
             stage.centerOnScreen();
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
