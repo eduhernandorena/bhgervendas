@@ -16,5 +16,5 @@ public interface UsuarioDAORemote {
 
     public Usuario findByNome(String user);
     
-    public Boolean isEmpty();
+    public String isEmpty();
 }

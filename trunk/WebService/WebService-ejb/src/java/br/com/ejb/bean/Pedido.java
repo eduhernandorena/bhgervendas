@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Pedido implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_ped")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_ped")
     private Long codigo;
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column
@@ -37,11 +37,11 @@ public class Pedido implements Serializable {
     private Integer nroParcelas;
     @Column(nullable = false)
     private FormaPagamento formaPagamento;
-    @JoinColumn(name = "cliente")
+    @JoinColumn(name = "cliente", nullable = true)
     @ManyToOne
     private Entidade cliente;
     @ManyToOne
-    @JoinColumn(name = "fornecedor")
+    @JoinColumn(name = "fornecedor", nullable = true)
     private Entidade fornecedor;
     @JoinColumn(name = "produtos")
     @ManyToMany
