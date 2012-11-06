@@ -28,6 +28,9 @@ public class UsuarioController implements Initializable {
     private static UsuarioRest userDAO = new UsuarioRest();
     private static Stage st = null;
 
+    public UsuarioController() {
+    }
+
     public UsuarioController(Stage stage) {
         st = stage;
     }

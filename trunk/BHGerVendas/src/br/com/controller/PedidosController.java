@@ -4,6 +4,7 @@ import br.com.ejb.bean.Encomenda;
 import br.com.ejb.bean.Entidade;
 import br.com.ejb.bean.Pedido;
 import br.com.ejb.bean.Produto;
+import br.com.ejb.bean.Sync;
 import br.com.ejb.bean.enumeration.FormaPagamento;
 import br.com.principal.FXOptionPane;
 import br.com.principal.Principal;
@@ -11,10 +12,13 @@ import br.com.ws.EncomendaRest;
 import br.com.ws.EntidadeRest;
 import br.com.ws.PedidoRest;
 import br.com.ws.ViagemRest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -101,6 +105,44 @@ public class PedidosController implements Initializable {
     public PedidosController() {
     }
 
+    public void buscarProd(ActionEvent event) {
+        Pedido ped = new Pedido();
+        Entidade cli = null;
+        if (!txtCodCliente.getText().isEmpty()) {
+            cli = entDAO.find(Long.valueOf(txtCodCliente.getText()));
+        }
+        ped.setCliente(cli);
+        if (!txtDta.getText().isEmpty()) {
+            try {
+                ped.setDataCompra(new SimpleDateFormat("dd/MM/yyyy").parse(txtDta.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(PedidosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (cmbFormaPag.getValue() != null) {
+            ped.setFormaPagamento(FormaPagamento.valueOf(cmbFormaPag.getValue()));
+        }
+        Entidade forn = null;
+        if (!txtCodForn.getText().isEmpty()) {
+            forn = entDAO.find(Long.valueOf(txtCodForn.getText()));
+        }
+        ped.setFornecedor(forn);
+        int parcelas = !txtNParcelas.getText().isEmpty() ? Integer.valueOf(txtNParcelas.getText()) : 1;
+        ped.setNroParcelas(parcelas);
+        ped.setProdutos(gridProd.getItems() != null ? gridProd.getItems() : new ArrayList<Produto>());
+        if (!txtValor.getText().isEmpty()) {
+            ped.setValor(Double.valueOf(txtValor.getText()));
+        }
+
+        ped.setObsPagamento(txtObsPag.getText());
+        if (txtCodViagem.getText() != null && !txtCodViagem.getText().trim().isEmpty()) {
+            ped.setViagem(viDAO.find(Long.valueOf(txtCodViagem.getText())));
+        } else {
+            ped.setViagem(null);
+        }
+        p.gotoFindProdutos(ped);
+    }
+
     public void clearCad(ActionEvent event) {
         cmbFormaPag.setValue("A Vista");
         rdPedido.setSelected(false);
@@ -121,14 +163,22 @@ public class PedidosController implements Initializable {
     public void saveCad(ActionEvent event) {
         if (valida()) {
             Pedido ped = new Pedido();
-            ped.setCliente(entDAO.find(Long.valueOf(txtCodCliente.getText())));
+            Entidade cli = null;
+            if (!txtCodCliente.getText().isEmpty()) {
+                cli = entDAO.find(Long.valueOf(txtCodCliente.getText()));
+            }
+            ped.setCliente(cli);
             try {
                 ped.setDataCompra(new SimpleDateFormat("dd/MM/yyyy").parse(txtDta.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(PedidosController.class.getName()).log(Level.SEVERE, null, ex);
             }
             ped.setFormaPagamento(FormaPagamento.valueOf(cmbFormaPag.getValue()));
-            ped.setFornecedor(entDAO.find(Long.valueOf(txtCodForn.getText())));
+            Entidade forn = null;
+            if (!txtCodForn.getText().isEmpty()) {
+                forn = entDAO.find(Long.valueOf(txtCodForn.getText()));
+            }
+            ped.setFornecedor(forn);
             int parcelas = !txtNParcelas.getText().isEmpty() ? Integer.valueOf(txtNParcelas.getText()) : 1;
             ped.setNroParcelas(parcelas);
             ped.setProdutos(gridProd.getItems());
@@ -140,6 +190,23 @@ public class PedidosController implements Initializable {
                 ped.setViagem(null);
             }
             pedDAO.create(ped);
+            for (int i = 1; i <= ped.getNroParcelas(); i++) {
+                Sync sync = new Sync();
+                sync.setDataPag(new Date());
+                sync.setNome(ped.getCliente().getNome());
+                sync.setParc(i + "/" + ped.getNroParcelas());
+                sync.setSincronizado(false);
+                if (cli != null) {
+                    sync.setTpMov("E");
+                } else if (forn != null) {
+                    sync.setTpMov("S");
+                }
+                BigDecimal div = new BigDecimal(ped.getNroParcelas());
+                BigDecimal res = new BigDecimal(ped.getValor()).divide(div);
+                Double r = res.setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                sync.setValor(r);
+
+            }
             p.gotoPrincipal();
         } else {
             System.out.println("Não foi possível salvar!");
@@ -205,19 +272,19 @@ public class PedidosController implements Initializable {
 
     public void fill(Pedido ped) {
         if (ped != null) {
-            txtCod.setText(ped.getCodigo().toString());
-            cmbFormaPag.setValue(ped.getFormaPagamento().name());
+            txtCod.setText(ped.getCodigo() != null ? ped.getCodigo().toString() : "");
+            cmbFormaPag.setValue(ped.getFormaPagamento() != null ? ped.getFormaPagamento().name() : "A Vista");
             txtCodCliente.setText(ped.getCliente() != null ? ped.getCliente().getId().toString() : "");
             txtCliente.setText(ped.getCliente() != null ? ped.getCliente().getNome() : "");
             txtCodForn.setText(ped.getFornecedor() != null ? ped.getFornecedor().getId().toString() : "");
             txtFornecedor.setText(ped.getFornecedor() != null ? ped.getFornecedor().getNome() : "");
             txtDta.setText(ped.getDataCompra());
-            txtNParcelas.setText(ped.getNroParcelas().toString());
+            txtNParcelas.setText(ped.getNroParcelas() != null ? ped.getNroParcelas().toString() : "");
             txtObsPag.setText(ped.getObsPagamento());
-            String valParc = String.valueOf(ped.getValor() / Double.valueOf(ped.getNroParcelas().doubleValue()));
+            String valParc = String.valueOf(ped.getValor() / Double.valueOf(ped.getNroParcelas() != null ? ped.getNroParcelas().doubleValue() : 0));
             txtValParcelas.setText(valParc);
-            txtValor.setText(ped.getValor().toString());
-            txtCodViagem.setText(ped.getViagem().getId().toString());
+            txtValor.setText(ped.getValor() != null ? ped.getValor().toString() : "");
+            txtCodViagem.setText(ped.getViagem() != null ? ped.getViagem().getId().toString() : "");
             fillPedidoGrid(ped.getProdutos());
         }
     }
