@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="725.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
+  <children>
+    <TableView fx:id="gridFindProd" layoutX="0.0" layoutY="0.0" onMouseClicked="#onClick" prefHeight="337.0" prefWidth="725.0">
+      <columns>
+        <TableColumn prefWidth="90.0" text="Código" fx:id="colCodProd" />
+        <TableColumn prefWidth="200.0" text="Descrição" fx:id="colDescProd" />
+        <TableColumn prefWidth="90.0" text="Nro NFe" fx:id="colNFeProd" />
+        <TableColumn prefWidth="100.0" text="Referência" fx:id="colRefProd" />
+        <TableColumn prefWidth="94.0" text="Tamanho" fx:id="colTamProd" />
+        <TableColumn prefWidth="150.0" text="Preço" fx:id="colPrecProd" />
+      </columns>
+    </TableView>
+    <Button fx:id="btVoltar" defaultButton="true" layoutX="337.0" layoutY="350.0" mnemonicParsing="false" text="Voltar" onAction="#voltaFind" />
+  </children>
+</AnchorPane>

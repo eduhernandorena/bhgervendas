@@ -51,7 +51,7 @@
     <TextField fx:id="txtCel" layoutX="645.0" layoutY="91.0" prefWidth="95.0" promptText="DDD - Celular" />
     <TextField fx:id="txtUltPed" layoutX="14.0" layoutY="121.0" prefWidth="151.0" promptText="Último Pedido" />
     <CheckBox fx:id="chkNew" layoutX="179.0" layoutY="124.0" mnemonicParsing="false" text="Cliente Novo" />
-    <TableView focusTraversable="false" layoutX="15.0" layoutY="150.0" prefHeight="200.00009999999747" prefWidth="725.0">
+    <TableView fx:id="gridPedidos" focusTraversable="false" layoutX="15.0" layoutY="150.0" prefHeight="200.00009999999747" prefWidth="725.0">
       <columns>
         <TableColumn prefWidth="85.0" resizable="false" text="Cod" />
         <TableColumn prefWidth="120.0" resizable="false" text="Data do Pedido" />

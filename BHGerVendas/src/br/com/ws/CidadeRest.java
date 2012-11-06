@@ -1,6 +1,7 @@
 package br.com.ws;
 
 import br.com.ejb.bean.Cidade;
+import br.com.principal.ConfInicial;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
@@ -15,7 +16,7 @@ public class CidadeRest {
 
     private WebResource webResource;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/WebService-war/resources";
+    private static final String BASE_URI = ConfInicial.getInstance();
 
     public CidadeRest() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
@@ -55,7 +56,7 @@ public class CidadeRest {
 
     public Cidade find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
+        resource = resource.path(id.toString());
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Cidade.class);
     }
 

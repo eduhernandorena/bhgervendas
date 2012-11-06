@@ -2,6 +2,7 @@ package br.com.ws;
 
 import br.com.ejb.bean.Entidade;
 import br.com.ejb.bean.enumeration.TipoEntidade;
+import br.com.principal.ConfInicial;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
@@ -16,7 +17,7 @@ public class EntidadeRest {
 
     private WebResource webResource;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/WebService-war/resources";
+    private static final String BASE_URI = ConfInicial.getInstance();
 
     public EntidadeRest() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();

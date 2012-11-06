@@ -28,9 +28,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -39,10 +36,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  *
@@ -150,14 +143,14 @@ public class ClienteFornController implements Initializable {
     public void saveCad(ActionEvent event) {
         if (valida()) {
             Entidade ent = new Entidade();
-            Long id = txtCod.getText() != null ? Long.valueOf(txtCod.getText()) : null;
+            Long id = !txtCod.getText().isEmpty() ? Long.valueOf(txtCod.getText()) : null;
             ent.setId(id);
-            Long cel = txtCel.getText() != null ? Long.valueOf(txtCel.getText()) : null;
+            Long cel = !txtCel.getText().isEmpty() ? Long.valueOf(txtCel.getText()) : null;
             ent.setCelular(cel);
             ent.setCpfCnpj(txtCpfCnpj.getText());
             ent.setEmail(txtEmail.getText());
             Endereco end = new Endereco();
-            Long idEnd = txtCodEnd.getText() != null ? Long.valueOf(txtCodEnd.getText()) : null;
+            Long idEnd = !txtCodEnd.getText().isEmpty() ? Long.valueOf(txtCodEnd.getText()) : null;
             end.setId(idEnd);
             end.setRua(txtLogradouro.getText());
             end.setNumero(txtNum.getText());
@@ -166,7 +159,7 @@ public class ClienteFornController implements Initializable {
             end.setCep(txtCep.getText());
             end.setTipoEndereco(TipoEndereco.valueOf(cmbTpEnd.getValue()));
             end.setCidade(cidDao.find(Long.valueOf(cmbMun.getValue().getCodIbge())));
-            endDao.create(end);
+            end = endDao.create(end);
             ent.setEndereco(end);
             ent.setEstadoCivil(EstadoCivil.valueOf(cmbEstCivil.getValue()));
             ent.setGenero(Genero.valueOf(cmbGenero.getValue()));
@@ -175,7 +168,9 @@ public class ClienteFornController implements Initializable {
             ent.setPedidos(gridPedidos.getItems());
             ent.setTelefone(Long.valueOf(txtTel.getText()));
             ent.setTipoEntidade(TipoEntidade.valueOf(cmbTpEntidade.getValue()));
-            ent.setUltimoPedido(Long.valueOf(txtUltPed.getText()));
+            if (!txtUltPed.getText().isEmpty()) {
+                ent.setUltimoPedido(Long.valueOf(txtUltPed.getText()));
+            }
             entDao.create(ent);
             p.gotoPrincipal();
         } else {
@@ -231,7 +226,7 @@ public class ClienteFornController implements Initializable {
             return false;
         }
 
-        if (chkNew.isSelected()) {
+        if (!chkNew.isSelected()) {
             if (txtUltPed.getText().isEmpty()) {
                 FXOptionPane.showMessageDialog(null, "O campo de último pedido deve ser preenchido!", "Campo Vazio");
                 txtUltPed.requestFocus();
@@ -296,10 +291,14 @@ public class ClienteFornController implements Initializable {
             txtEmail.setText(ent.getEmail());
             txtNome.setText(ent.getNome());
             txtTel.setText(ent.getTelefone().toString());
-            txtUltPed.setText(ent.getUltimoPedido().toString());
+            if (ent.getUltimoPedido() != null) {
+                chkNew.setSelected(false);
+                txtUltPed.setText(ent.getUltimoPedido().toString());
+            } else {
+                chkNew.setSelected(true);
+            }
             cmbEstCivil.setValue(ent.getEstadoCivil().name());
             cmbGenero.setValue(ent.getGenero().name());
-            chkNew.setSelected(false);
             if (ent.getId() != null) {
                 fillPedidoGrid();
             }
@@ -384,7 +383,7 @@ public class ClienteFornController implements Initializable {
                     Entidade ent = entDao.find(Long.valueOf(cod));
                     if (ent.getTipoEntidade().equals(TipoEntidade.valueOf(cmbTpEntidade.getValue()))) {
                         fill(ent);
-                    }else{
+                    } else {
                         FXOptionPane.showMessageDialog(null, "Enntidade difere do tipo do cadastro.", "Entidade Incompativel!");
                     }
                 }

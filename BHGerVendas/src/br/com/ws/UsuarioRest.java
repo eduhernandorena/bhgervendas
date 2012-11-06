@@ -1,10 +1,10 @@
 package br.com.ws;
 
 import br.com.ejb.bean.Usuario;
+import br.com.principal.ConfInicial;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
-import java.net.ConnectException;
 
 /**
  *
@@ -14,7 +14,7 @@ public class UsuarioRest {
 
     private WebResource webResource;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/WebService-war/resources";
+    private static final String BASE_URI = ConfInicial.getInstance();
 
     public UsuarioRest() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
@@ -31,9 +31,10 @@ public class UsuarioRest {
 //        resource = resource.path("count");
 //        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
 //    }
-    public boolean isEmpty() throws UniformInterfaceException {
+    public Boolean isEmpty() throws UniformInterfaceException {
         WebResource resource = webResource;
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Boolean.class);
+        resource = resource.path("/empty");
+        return Boolean.valueOf(resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class));
     }
 
 //    public void edit(Object requestEntity) throws UniformInterfaceException {
