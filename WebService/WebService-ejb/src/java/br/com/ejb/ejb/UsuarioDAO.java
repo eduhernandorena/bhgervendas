@@ -1,7 +1,6 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Usuario;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,8 +43,8 @@ public class UsuarioDAO implements UsuarioDAORemote {
     }
 
     @Override
-    public Boolean isEmpty() {
+    public String isEmpty() {
         Query q = em.createQuery("select o from Usuario o");
-        return q.getResultList().isEmpty();
+        return String.valueOf(q.getResultList().isEmpty());
     }
 }

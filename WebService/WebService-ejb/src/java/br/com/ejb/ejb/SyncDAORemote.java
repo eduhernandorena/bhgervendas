@@ -1,7 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Sync;
-import java.util.Date;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -15,5 +15,7 @@ public interface SyncDAORemote {
 
     public void remove(Sync sync);
 
-    public Sync findByData(Date data);
+    public List<Sync> sincroniza();
+    
+    public void atualiza(List<Sync> syncs);
 }

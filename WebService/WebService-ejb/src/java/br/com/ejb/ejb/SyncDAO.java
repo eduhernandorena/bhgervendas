@@ -2,9 +2,11 @@ package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Sync;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,29 +20,29 @@ public class SyncDAO implements SyncDAORemote {
 
     @Override
     public Sync create(Sync sync) {
-//        if (user.getId() != null) {
-//            em.merge(user);
-//        } else {
-//            em.persist(user);
-//        }
-//        return user;
-        return null;
+        if (sync.getId() != null) {
+            em.merge(sync);
+        } else {
+            em.persist(sync);
+        }
+        return sync;
     }
 
     @Override
     public void remove(Sync sync) {
-//        em.remove(user);
+        em.remove(sync);
     }
 
     @Override
-    public Sync findByData(Date data) {
-//        if (user != null && !user.trim().isEmpty()) {
-//            Query q = em.createQuery("select o from Usuario o where o.nome=:user");
-//            q.setParameter("user", user);
-//            return (Usuario) q.getSingleResult();
-//        } else {
-//            return null;
-//        }
-        return null;
+    public List<Sync> sincroniza() {
+        Query q = em.createQuery("select o from Sync o where o.sincronizado=false");
+        return q.getResultList();
+    }
+
+    public void atualiza(List<Sync> lista) {
+        for (Sync sync : lista) {
+            Query q = em.createQuery("update Sync o set o.sincronizado=TRUE where o.id =" + sync.getId());
+            q.executeUpdate();
+        }
     }
 }

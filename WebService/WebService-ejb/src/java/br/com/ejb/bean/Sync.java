@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Sync implements Serializable {
 
     @Id
-    private long id;
+    private Long id;
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false)
@@ -35,11 +35,11 @@ public class Sync implements Serializable {
     @Column(nullable = false)
     private boolean sincronizado;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

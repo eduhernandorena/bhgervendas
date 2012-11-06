@@ -7,11 +7,11 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -39,7 +39,6 @@ public class UsuarioFacadeREST {
 //    public void edit(Usuario entity) {
 //        dao.update(entity);
 //    }
-
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
@@ -53,5 +52,12 @@ public class UsuarioFacadeREST {
     @Produces({"application/xml", "application/json"})
     public Usuario findByNome(@PathParam("nome") String nome) {
         return dao.findByNome(nome);
+    }
+
+    @GET
+    @Path("/empty")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String isEmpty() {
+        return dao.isEmpty();
     }
 }
