@@ -6,9 +6,9 @@ import java.io.Serializable;
  *
  * @author Eduardo Hernandorena
  */
-public class Sync implements Serializable {
+public class Sync implements Serializable, Comparable<Sync> {
 
-    private long id;
+    private Long id;
     private String nome;
     private String dataPag;
     private double valor;
@@ -71,5 +71,17 @@ public class Sync implements Serializable {
     public void setSincronizado(boolean sincronizado) {
         this.sincronizado = sincronizado;
     }
-    
+
+    public int compareTo(Sync t) {
+        return this.id.compareTo(t.id);
+    }
+
+    @Override
+    public String toString() {
+        return "[" + this.getTpMov() + "] "
+                + this.getDataPag() + " - "
+                + this.getNome()
+                + " R$" + this.getValor()
+                + " (" + this.getParc() + ")";
+    }
 }

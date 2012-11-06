@@ -14,8 +14,8 @@ import br.com.bhgervendas.bd.SyncDAO;
 import br.com.bhgervendas.bean.Sync;
 import br.com.bhgervendas.ws.SyncREST;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import org.apache.http.conn.HttpHostConnectException;
 
 public class Relatorio extends Activity {
 
@@ -26,7 +26,6 @@ public class Relatorio extends Activity {
     private int ano;
     private int mes;
     private String tpMov;
-    private SyncDAO dao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,6 @@ public class Relatorio extends Activity {
         spinnerAno = (Spinner) findViewById(R.id.comboAno);
         spinnerMes = (Spinner) findViewById(R.id.comboMes);
         txtView = (ListView) findViewById(R.id.list);
-
-        dao = new SyncDAO(this);
-        dao.open();
 
         List<String> meses = new ArrayList<String>();
         meses.add("Janeiro");
@@ -99,58 +95,42 @@ public class Relatorio extends Activity {
     }
 
     private void sincroniza() {
-        List<Sync> list = null;
-        lista = new ArrayList<Sync>();
         try {
-//            list = new SyncREST().getListaSync();
-            if (list == null) {
-//                list = dao.getAll();
-            }
-            for (Sync sync : list) {
-                if (sync.getTpMov().equalsIgnoreCase(tpMov)) {
-                    lista.add(sync);
+            SyncDAO dao = new SyncDAO(this);
+            SyncREST rest = new SyncREST(dao);
+            if (rest.sincroniza()) {
+                List<Sync> list = dao.getAll();
+                for (Sync sync : list) {
+                    if (!sync.isSincronizado()) {
+                        sync.setSincronizado(true);
+                        dao.update(sync);
+                        rest.create(sync);
+                    }
+
+                    if (!tpMov.equalsIgnoreCase("T")) {
+                        if (sync.getTpMov().equalsIgnoreCase(tpMov)) {
+                            lista.add(sync);
+                        }
+                    }
                 }
-                if (!sync.isSincronizado()) {
-                    dao.create(sync);
-                    lista.add(sync);
-                }
+                rest.close();
+                dao.close();
             }
-            List<String> l = new ArrayList<String>();
-            for (Sync sync : lista) {
-                String temp = "[" + sync.getTpMov() + "] "
-                        + sync.getDataPag() + " - "
-                        + sync.getNome()
-                        + " R$" + sync.getValor()
-                        + " (" + sync.getParc() + ")";
-                l.add(temp);
-            }
-//            Collections.sort(l); Aplicar comparação
-            ArrayAdapter<String> adapterSync = new ArrayAdapter<String>(this, R.layout.list_item, l);
+
+            Collections.sort(lista);
+            ArrayAdapter<Sync> adapterSync = new ArrayAdapter<Sync>(this, R.layout.list_item, lista);
             txtView.setAdapter(adapterSync);
+
             txtView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> av, View view, int i, long l) {
                 }
             });
+
             finish();
-//        } catch (HttpHostConnectException e) {
-//            gerarToast("Erro:\nNão foi possível conectar!");
-//            Log.e("NGVL", "Erro de conexão!", e);
         } catch (Exception e) {
             gerarToast("Erro: " + e.getMessage());
             Log.e("NGVL", "Erro Diverso!", e);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        dao.open();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        dao.close();
-        super.onPause();
     }
 
     private void gerarToast(CharSequence message) {

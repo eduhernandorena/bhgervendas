@@ -26,6 +26,7 @@ public class SyncDAO {
 
     public SyncDAO(Context context) {
         sqliteOpenHelper = new CustomSQLiteOpenHelper(context);
+        this.open();
     }
 
     public void open() throws SQLException {
@@ -63,6 +64,18 @@ public class SyncDAO {
     public void delete(Sync Sync) {
         long id = Sync.getId();
         database.delete(CustomSQLiteOpenHelper.TABLE_SYNCS, CustomSQLiteOpenHelper.COLUMN_ID + " = " + id, null);
+    }
+
+    public void update(Sync sync) {
+        long id = sync.getId();
+        ContentValues values = new ContentValues();
+        values.put(CustomSQLiteOpenHelper.COLUMN_ID, sync.getId());
+        values.put(CustomSQLiteOpenHelper.COLUMN_NOME, sync.getNome());
+        values.put(CustomSQLiteOpenHelper.COLUMN_DATA, sync.getDataPag());
+        values.put(CustomSQLiteOpenHelper.COLUMN_VALOR, sync.getValor());
+        values.put(CustomSQLiteOpenHelper.COLUMN_TPMOV, sync.getTpMov());
+        values.put(CustomSQLiteOpenHelper.COLUMN_SYNC, sync.isSincronizado());
+        database.update(CustomSQLiteOpenHelper.TABLE_SYNCS, values, CustomSQLiteOpenHelper.COLUMN_ID + " = " + id, null);
     }
 
     public void deleteAll() {
