@@ -7,9 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ViagemController">
+<AnchorPane id="AnchorPane" prefHeight="332.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ViagemController">
   <children>
-    <Button layoutX="635.0" layoutY="30.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
     <MenuBar prefWidth="754.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
@@ -38,12 +37,16 @@
       </menus>
     </MenuBar>
     <AnchorPane id="AnchorPane" layoutY="24.0" />
+    <Button layoutX="394.0" layoutY="30.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" />
+    <Button defaultButton="true" layoutX="515.0" layoutY="30.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
+    <Button layoutX="635.0" layoutY="30.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
     <TextField fx:id="txtCod" layoutX="14.0" layoutY="30.0" prefWidth="115.0" promptText="Código" />
     <TextField fx:id="txtData" layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
-    <Button defaultButton="true" layoutX="515.0" layoutY="30.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
     <TextField fx:id="txtHora" layoutX="138.0" layoutY="58.0" prefWidth="115.0" promptText="Hora" />
     <TextField fx:id="txtLocal" layoutX="262.0" layoutY="58.0" prefWidth="241.0" promptText="Local" />
     <TextField fx:id="txtGuia" layoutX="515.0" layoutY="58.0" prefWidth="229.0" promptText="Guia" />
+    <TextField fx:id="txtQtde" layoutX="14.0" layoutY="89.0" prefWidth="115.0" promptText="Qtde de Produtos" />
+    <TextField fx:id="txtValor" layoutX="138.0" layoutY="89.0" prefWidth="115.0" promptText="Valor Total" />
     <TableView fx:id="gridPed" layoutX="14.0" layoutY="119.0" prefHeight="200.0" prefWidth="730.0">
       <columns>
         <TableColumn prefWidth="75.0" text="Código" fx:id="colCodPed" />
@@ -53,27 +56,5 @@
         <TableColumn prefWidth="80.0" text="Parcelas" fx:id="colParcPed" />
       </columns>
     </TableView>
-    <TextField fx:id="txtQtde" layoutX="14.0" layoutY="89.0" prefWidth="115.0" promptText="Qtde de Produtos" />
-    <TextField fx:id="txtValor" layoutX="138.0" layoutY="89.0" prefWidth="115.0" promptText="Valor Total" />
-    <Separator layoutX="14.0" layoutY="332.0" prefWidth="730.0" />
-    <TableView fx:id="gridEncomenda" layoutX="14.0" layoutY="344.0" prefHeight="173.0" prefWidth="730.0">
-      <columns>
-        <TableColumn prefWidth="100.0" text="Código" fx:id="colCodEnc" />
-        <TableColumn prefWidth="379.0" text="Cliente" fx:id="colCliEnc" />
-        <TableColumn prefWidth="130.0" text="Data da Encomenda" fx:id="colDtEnc" />
-        <TableColumn prefWidth="120.0" text="Pedido" fx:id="colPedEnc" />
-      </columns>
-    </TableView>
-    <Button fx:id="btEncomenda" layoutX="16.0" layoutY="524.0" mnemonicParsing="false" prefWidth="115.0" text="Nova Encomenda" />
-    <Button layoutX="394.0" layoutY="30.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" />
-    <ChoiceBox fx:id="cmbStatus" layoutX="262.0" layoutY="90.0" prefWidth="146.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="Item 1" />
-          <String fx:value="Item 2" />
-          <String fx:value="Item 3" />
-        </FXCollections>
-      </items>
-    </ChoiceBox>
   </children>
 </AnchorPane>

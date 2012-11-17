@@ -9,8 +9,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.PedidosController">
     <children>
-        <Button id="button4" layoutX="684.0" layoutY="90.0" mnemonicParsing="false" text="Buscar" />
-        <TextField fx:id="txtValParcelas" layoutX="448.0" layoutY="526.0" prefWidth="129.0" promptText="Valor Parcelas" />
         <MenuBar prefWidth="754.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -40,8 +38,31 @@
         </MenuBar>
         <AnchorPane id="AnchorPane" layoutY="24.0" />
         <TextField fx:id="txtCod" layoutX="14.0" layoutY="30.0" prefWidth="115.0" promptText="Código" />
+        <ComboBox fx:id="cmbStatus" layoutX="143.0" layoutY="31.0" prefHeight="21.0" prefWidth="153.0" promptText="Status Pedido">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="PENDENTE" />
+                    <String fx:value="EMITIDO" />
+                    <String fx:value="ENCOMENDA" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button fx:id="btVoltar" cancelButton="true" layoutX="395.0" layoutY="31.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" textAlignment="CENTER" />
+        <Button defaultButton="true" layoutX="515.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
+        <Button layoutX="635.0" layoutY="31.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
         <TextField fx:id="txtDta" layoutX="14.0" layoutY="58.0" prefWidth="115.0" promptText="Data" />
-        <TableView fx:id="gridProd" layoutX="14.0" layoutY="147.0" prefHeight="337.0" prefWidth="725.0">
+        <TextField fx:id="txtCodCliente" layoutX="14.0" layoutY="89.0" prefWidth="56.0" promptText="Cod" />
+        <TextField fx:id="txtCliente" layoutX="79.0" layoutY="88.0" prefWidth="217.0" promptText="Cliente" />
+        <Button fx:id="btCliente" layoutX="306.0" layoutY="89.0" mnemonicParsing="false" prefWidth="71.0" text="Buscar" onAction="#buscarCliente" />
+        <CheckBox fx:id="rdPedido" layoutX="392.0" layoutY="91.0" mnemonicParsing="false" text="Pedido Oriundo de Encomenda" />
+        <TextField fx:id="txtCodViagem" layoutX="588.0" layoutY="89.0" prefWidth="85.0" promptText="Cod Viagem" />
+        <Button layoutX="684.0" layoutY="90.0" mnemonicParsing="false" text="Buscar" onAction="#buscarViagem" />
+        <TextField fx:id="txtCodForn" layoutX="14.0" layoutY="116.0" prefWidth="56.0" promptText="Cod" />
+        <TextField fx:id="txtFornecedor" layoutX="79.0" layoutY="116.0" prefWidth="217.0" promptText="Fornecedor" />
+        <Button fx:id="btFornecedor" layoutX="306.0" layoutY="116.0" mnemonicParsing="false" prefWidth="71.0" text="Buscar" onAction="#buscarFornecedor" />
+        <TextField fx:id="txtCodEncomenda" layoutX="392.0" layoutY="115.0" prefWidth="186.0" promptText="Código da Encomenda" />
+        <Button fx:id="btEncomenda" layoutX="582.0" layoutY="116.0" mnemonicParsing="false" prefWidth="157.0" text="Buscar Encomenda" onAction="#buscarEncomenda" />
+        <TableView fx:id="gridProd" onMouseClicked="#onClickRemove" layoutX="14.0" layoutY="147.0" prefHeight="337.0" prefWidth="725.0">
             <columns>
                 <TableColumn prefWidth="90.0" text="Código" fx:id="colCodProd" />
                 <TableColumn prefWidth="200.0" text="Descrição" fx:id="colDescProd" />
@@ -51,12 +72,9 @@
                 <TableColumn prefWidth="150.0" text="Preço" fx:id="colPrecProd" />
             </columns>
         </TableView>
-        <TextField fx:id="txtValor" layoutX="14.0" layoutY="525.0" prefWidth="129.0" promptText="Valor Total" />
-        <CheckBox fx:id="rdPedido" layoutX="392.0" layoutY="91.0" mnemonicParsing="false" text="Pedido Oriundo de Encomenda" />
-        <TextField fx:id="txtCodEncomenda" layoutX="392.0" layoutY="115.0" prefWidth="186.0" promptText="Código da Encomenda" />
-        <Button fx:id="btEncomenda" layoutX="582.0" layoutY="116.0" mnemonicParsing="false" prefWidth="157.0" text="Buscar Encomenda" />
-        <Button fx:id="btProduto" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" prefWidth="129.0" text="Buscar Produto" onAction="#buscarProd" />
+        <Button fx:id="btProduto" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" onAction="#buscarProd" prefWidth="129.0" text="Buscar Produto" />
         <Separator disable="true" layoutX="14.0" layoutY="518.0" prefWidth="725.0" />
+        <TextField fx:id="txtValor" layoutX="14.0" layoutY="525.0" prefWidth="129.0" promptText="Valor Total" />
         <ComboBox fx:id="cmbFormaPag" layoutX="171.0" layoutY="526.0" prefHeight="21.0" prefWidth="191.0" promptText="Forma de Pagamento">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -67,16 +85,7 @@
             </items>
         </ComboBox>
         <TextField fx:id="txtNParcelas" layoutX="377.0" layoutY="526.0" prefWidth="61.0" promptText="Nro" />
-        <TextField id="textField1" fx:id="txtObsPag" layoutX="582.0" layoutY="525.0" prefWidth="157.0" promptText="Obs Pagamento" />
-        <Button id="button1" fx:id="btVoltar" cancelButton="true" layoutX="395.0" layoutY="31.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" textAlignment="CENTER" />
-        <Button defaultButton="true" layoutX="515.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
-        <Button layoutX="635.0" layoutY="31.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
-        <Button fx:id="btCliente" layoutX="306.0" layoutY="89.0" mnemonicParsing="false" prefWidth="71.0" text="Buscar" />
-        <Button fx:id="btFornecedor" layoutX="306.0" layoutY="116.0" mnemonicParsing="false" prefWidth="71.0" text="Buscar" />
-        <TextField fx:id="txtFornecedor" layoutX="79.0" layoutY="116.0" prefWidth="217.0" promptText="Fornecedor" />
-        <TextField fx:id="txtCliente" layoutX="79.0" layoutY="88.0" prefWidth="217.0" promptText="Cliente" />
-        <TextField fx:id="txtCodForn" layoutX="14.0" layoutY="116.0" prefWidth="56.0" promptText="Cod" />
-        <TextField fx:id="txtCodCliente" layoutX="14.0" layoutY="89.0" prefWidth="56.0" promptText="Cod" />
-        <TextField fx:id="txtCodViagem" layoutX="588.0" layoutY="89.0" prefWidth="85.0" promptText="Cod Viagem" />
+        <TextField fx:id="txtValParcelas" layoutX="448.0" layoutY="526.0" prefWidth="129.0" promptText="Valor Parcelas" />
+        <TextField fx:id="txtObsPag" layoutX="582.0" layoutY="525.0" prefWidth="157.0" promptText="Obs Pagamento" />
     </children>
 </AnchorPane>

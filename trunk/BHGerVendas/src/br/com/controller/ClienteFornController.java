@@ -47,6 +47,8 @@ public class ClienteFornController implements Initializable {
     @FXML
     private Button btSalvar;
     @FXML
+    private CheckBox chkAtivo;
+    @FXML
     private CheckBox chkNew;
     @FXML
     private ComboBox<UF> cmbEst;
@@ -148,6 +150,7 @@ public class ClienteFornController implements Initializable {
             Long cel = !txtCel.getText().isEmpty() ? Long.valueOf(txtCel.getText()) : null;
             ent.setCelular(cel);
             ent.setCpfCnpj(txtCpfCnpj.getText());
+            ent.setAtivo(chkAtivo.isSelected());
             ent.setEmail(txtEmail.getText());
             Endereco end = new Endereco();
             Long idEnd = !txtCodEnd.getText().isEmpty() ? Long.valueOf(txtCodEnd.getText()) : null;
@@ -186,8 +189,10 @@ public class ClienteFornController implements Initializable {
         txtNum.setText(end.getNumero().toString());
         txtCpl.setText(end.getComplemento());
         cmbTpEnd.setValue(end.getTipoEndereco().name());
-        cmbMun.setValue(end.getCidade());
-        cmbEst.setValue(end.getCidade().getUf());
+        fillCmbUF();
+        cmbEst.getSelectionModel().select(end.getCidade().getUf());
+        fillcmbMunicipio();
+        cmbMun.getSelectionModel().select(end.getCidade());
     }
 
     @FXML
@@ -369,7 +374,7 @@ public class ClienteFornController implements Initializable {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCodEnd.getText();
-                if (!cod.isEmpty()) {
+                if (cod != null && !cod.isEmpty()) {
                     fillEndereco(endDao.find(Long.valueOf(cod)));
                 }
             }
@@ -379,12 +384,15 @@ public class ClienteFornController implements Initializable {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCod.getText();
+                Entidade ent;
                 if (!cod.isEmpty()) {
-                    Entidade ent = entDao.find(Long.valueOf(cod));
-                    if (ent.getTipoEntidade().equals(TipoEntidade.valueOf(cmbTpEntidade.getValue()))) {
-                        fill(ent);
+                    if (TipoEntidade.valueOf(cmbTpEntidade.getValue()).isCliente()) {
+                        ent = entDao.findCli(Long.valueOf(cod));
                     } else {
-                        FXOptionPane.showMessageDialog(null, "Enntidade difere do tipo do cadastro.", "Entidade Incompativel!");
+                        ent = entDao.findForn(Long.valueOf(cod));
+                    }
+                    if (ent != null) {
+                        fill(ent);
                     }
                 }
             }

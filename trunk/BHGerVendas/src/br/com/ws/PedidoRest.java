@@ -44,7 +44,6 @@ public class PedidoRest {
 //    public void edit(Object requestEntity) throws UniformInterfaceException {
 //        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
 //    }
-
     public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
@@ -52,14 +51,33 @@ public class PedidoRest {
     public Pedido find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Pedido.class);
+        Pedido p;
+        try {
+            p = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Pedido.class);
+        } catch (UniformInterfaceException ex) {
+            return null;
+        }
+        return p;
     }
-    
+
     public List<Pedido> findAllByEntidade(TipoEntidade tp, Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("entidade/{0}/{1}", new Object[]{tp, id}));
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Pedido>>() {
         });
+    }
+
+    public List<Pedido> findByCli(String nome) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path(java.text.MessageFormat.format("cliente/{0}", new Object[]{nome}));
+        List<Pedido> p;
+        try {
+            p = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Pedido>>() {
+            });
+        } catch (UniformInterfaceException ex) {
+            return null;
+        }
+        return p;
     }
 
     public void close() {

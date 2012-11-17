@@ -71,6 +71,7 @@ public class ProdutoController implements Initializable {
     private TableColumn<Produto, Double> colPrecProd;
     private static List<Produto> gridProd;
     private static Pedido pedido;
+    private static Produto prodt;
     private static ProdutoRest prodDAO = new ProdutoRest();
 
     public ProdutoController() {
@@ -81,6 +82,10 @@ public class ProdutoController implements Initializable {
         pedido = ped;
     }
 
+    public ProdutoController(Produto produto) {
+        prodt = produto;
+    }
+
     public void onClick(MouseEvent event) {
         if (event.getClickCount() > 1) {
             Produto prod = gridFindProd.getSelectionModel().getSelectedItem();
@@ -88,11 +93,11 @@ public class ProdutoController implements Initializable {
                 System.out.println("Produto: " + prod.getId());
                 pedido.getProdutos().add(prod);
             }
+            p.gotoPedidoCad(pedido);
         }
-        p.gotoPedidoCad(pedido);
     }
 
-    public void voltarFind(ActionEvent event) {
+    public void voltaFind(ActionEvent event) {
         p.gotoPedidoCad(pedido);
     }
 
@@ -224,6 +229,7 @@ public class ProdutoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fill(prodt);
         if (pedido == null) {
             txtCod.focusedProperty().addListener(new ChangeListener() {
                 @Override

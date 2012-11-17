@@ -7,11 +7,11 @@
 <?import javafx.scene.paint.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="160.0" prefWidth="240.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.UsuarioController">
-  <children>
-    <Button fx:id="btSave" defaultButton="true" layoutX="50.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickSave" prefWidth="60.0" text="Salvar" />
-    <TextField fx:id="txtUser" layoutX="18.0" layoutY="23.0" prefWidth="200.0" promptText="Usuario" />
-    <TextField fx:id="txtSenha" layoutX="18.0" layoutY="58.0" prefWidth="200.0" promptText="Senha" />
-    <TextField id="txtSenhaConfirm" fx:id="txtSenhaConfirm" layoutX="18.0" layoutY="86.0" prefWidth="200.0" promptText="Confirme a senha" />
-    <Button fx:id="btClear" cancelButton="true" layoutX="135.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickClear" prefWidth="60.0" text="Limpar" />
-  </children>
+    <children>
+        <Button fx:id="btSave" defaultButton="true" layoutX="50.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickSave" prefWidth="60.0" text="Salvar" />
+        <TextField fx:id="txtUser" layoutX="18.0" layoutY="23.0" prefWidth="200.0" promptText="Usuario" />
+        <PasswordField fx:id="txtSenha" layoutX="18.0" layoutY="58.0" prefWidth="200.0" promptText="Senha" />
+        <PasswordField id="txtSenhaConfirm" fx:id="txtSenhaConfirm" layoutX="18.0" layoutY="86.0" prefWidth="200.0" promptText="Confirme a senha" />
+        <Button fx:id="btClear" cancelButton="true" layoutX="135.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickClear" prefWidth="60.0" text="Limpar" />
+    </children>
 </AnchorPane>
