@@ -32,6 +32,8 @@ public class Encomenda implements Serializable {
     @JoinColumn(name = "pedido")
     @OneToOne
     private Pedido pedido;
+    @Column
+    private Boolean emitido;
 
     public Long getCodigo() {
         return codigo;
@@ -63,6 +65,14 @@ public class Encomenda implements Serializable {
 
     public void setViagem(Viagem viagem) {
         this.viagem = viagem;
+    }
+
+    public Boolean getEmitido() {
+        return emitido;
+    }
+
+    public void setEmitido(Boolean emitido) {
+        this.emitido = emitido;
     }
 
     @Override

@@ -18,4 +18,6 @@ public interface ProdutoDAORemote {
     Produto find(Long id);
     
     List<Produto> findAll();
+    
+    List<Produto> findDesc(String desc);
 }

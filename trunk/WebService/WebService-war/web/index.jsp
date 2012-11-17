@@ -12,6 +12,14 @@
         <title>BHGerVendas - Servidor Conectado</title>
     </head>
     <body>
+    <center>
+        <img src="images/conectado.jpg" width="570" height="387" alt="conectado"/>
         <h1>Servidor Conectado com Sucesso!</h1>
-    </body>
+        <h4>
+            <form action="javascript:window.close()" method="">
+                <input alt="Fechar" value="Fechar!" type="submit" />
+            </form
+        </h4>
+    </center>
+</body>
 </html>

@@ -1,6 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,11 +34,21 @@ public class UsuarioDAO implements UsuarioDAORemote {
 
     @Override
     public Usuario findByNome(String user) {
-        if (user != null && !user.trim().isEmpty()) {
-            Query q = em.createQuery("select o from Usuario o where o.nome=:user");
-            q.setParameter("user", user);
-            return (Usuario) q.getSingleResult();
-        } else {
+        try {
+            if (user != null && !user.trim().isEmpty()) {
+                Query q = em.createQuery("select o from Usuario o where o.nome=:user");
+                q.setParameter("user", user);
+                List<Usuario> listUser = q.getResultList();
+                if (!listUser.isEmpty()) {
+                    return listUser.get(0);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }

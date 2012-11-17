@@ -27,7 +27,7 @@ public class PedidoDAO implements PedidoDAORemote {
         }
         return ped;
     }
-    
+
     @Override
     public void remove(Pedido ped) {
         em.remove(ped);
@@ -42,6 +42,13 @@ public class PedidoDAO implements PedidoDAORemote {
     public List<Pedido> findAll() {
         TypedQuery<Pedido> createNamedQuery = em.createNamedQuery("Pedido.findAll", Pedido.class);
         return createNamedQuery.getResultList();
+    }
+
+    @Override
+    public List<Pedido> findByCli(String nome) {
+        TypedQuery<Pedido> createQuery = em.createQuery("select o from Cliente o where upper(o.cliente.nome) like :nome", Pedido.class);
+        createQuery.setParameter("nome", nome.toUpperCase());
+        return createQuery.getResultList();
     }
 
     @Override

@@ -52,6 +52,8 @@ public class Entidade implements Serializable {
     private Endereco endereco;
     @Column
     private Long codUltPedido;
+    @Column
+    private Boolean ativo;
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
 
@@ -61,6 +63,14 @@ public class Entidade implements Serializable {
 
     public void setCelular(Long celular) {
         this.celular = celular;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Long getId() {

@@ -21,11 +21,11 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("br.com.ejb.bean.viagem")
 public class ViagemFacadeREST {
-   @EJB
-   private ViagemDAORemote dao;
+
+    @EJB
+    private ViagemDAORemote dao;
 
     public ViagemFacadeREST() {
-        
     }
 
     @PUT
@@ -52,5 +52,12 @@ public class ViagemFacadeREST {
     @Produces({"application/xml", "application/json"})
     public List<Viagem> findAll() {
         return dao.findAll();
-    } 
+    }
+
+    @GET
+    @Path("local/{local}")
+    @Produces({"application/xml", "application/json"})
+    public List<Viagem> findLocal(@PathParam("local") String local) {
+        return dao.findLocal(local);
+    }
 }

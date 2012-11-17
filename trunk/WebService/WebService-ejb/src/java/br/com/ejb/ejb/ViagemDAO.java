@@ -38,6 +38,13 @@ public class ViagemDAO implements ViagemDAORemote {
     }
 
     @Override
+    public List<Viagem> findLocal(String local) {
+        TypedQuery<Viagem> createQuery = em.createQuery("Select o from Viagem o where upper(o.local) like :local", Viagem.class);
+        createQuery.setParameter("local", local.toUpperCase());
+        return createQuery.getResultList();
+    }
+
+    @Override
     public List<Viagem> findAll() {
         TypedQuery<Viagem> createNamedQuery = em.createNamedQuery("Viagem.findAll", Viagem.class);
         return createNamedQuery.getResultList();

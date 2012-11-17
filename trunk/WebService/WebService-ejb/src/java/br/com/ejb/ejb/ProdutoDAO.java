@@ -42,4 +42,11 @@ public class ProdutoDAO implements ProdutoDAORemote {
         TypedQuery<Produto> createNamedQuery = em.createNamedQuery("Produto.findAll", Produto.class);
         return createNamedQuery.getResultList();
     }
+
+    @Override
+    public List<Produto> findDesc(String desc) {
+        TypedQuery<Produto> createQuery = em.createQuery("Select o from Produto o where upper(o.descricao) like :desc", Produto.class);
+        createQuery.setParameter("desc", desc.toUpperCase());
+        return createQuery.getResultList();
+    }
 }
