@@ -1,6 +1,7 @@
 package br.com.ejb.ejb;
 
 import br.com.ejb.bean.Entidade;
+import br.com.ejb.bean.enumeration.TipoEntidade;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -19,5 +20,7 @@ public interface EntidadeDAORemote {
 
     public List<Entidade> findAllFornecedor();
     
-    public Entidade find(long id);
+    public Entidade find(TipoEntidade tp, long id);
+    
+    public List<Entidade> findNome(TipoEntidade tp, String nome);
 }

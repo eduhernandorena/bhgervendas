@@ -25,13 +25,10 @@ public class Viagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_viagem")
     private Long id;
     @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataHora;
     @Column(nullable = false)
     private String localizacao;
-    @JoinColumn(name = "encomenda")
-    @OneToMany
-    private List<Encomenda> encomendas;
     @Column
     private Integer qtdeProdutos;
     @Column
@@ -66,14 +63,6 @@ public class Viagem implements Serializable {
 
     public void setDataHora(Date dataHora) {
         this.dataHora = dataHora;
-    }
-
-    public List<Encomenda> getEncomendas() {
-        return encomendas;
-    }
-
-    public void setEncomendas(List<Encomenda> encomenda) {
-        this.encomendas = encomenda;
     }
 
     public String getGuia() {

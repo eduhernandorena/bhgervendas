@@ -5,6 +5,7 @@ import br.com.ejb.bean.enumeration.TipoEntidade;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -48,7 +49,22 @@ public class EntidadeDAO implements EntidadeDAORemote {
     }
 
     @Override
-    public Entidade find(long id) {
-        return em.find(Entidade.class, id);
+    public Entidade find(TipoEntidade tp, long id) {
+        TypedQuery<Entidade> q = em.createQuery("select o from Entidade o where o.id=:id and o.tipoEntidade=:tp", Entidade.class);
+        q.setParameter("id", id);
+        q.setParameter("tp", tp);
+        try {
+            return q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Entidade> findNome(TipoEntidade tp, String nome) {
+        TypedQuery<Entidade> q = em.createQuery("select o from Entidade o where upper(o.nome) like :nome and o.tipoEntidade=:tp", Entidade.class);
+        q.setParameter("nome", nome.toUpperCase());
+        q.setParameter("tp", tp);
+        return q.getResultList();
     }
 }

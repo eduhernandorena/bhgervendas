@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import br.com.ejb.bean.Produto;
@@ -44,7 +40,6 @@ public class ProdutoFacadeREST {
 //    public void edit(Produto entity) {
 //        dao.update(entity);
 //    }
-
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
@@ -62,5 +57,12 @@ public class ProdutoFacadeREST {
     @Produces({"application/xml", "application/json"})
     public List<Produto> findAll() {
         return dao.findAll();
+    }
+
+    @GET
+    @Path("descricao/{desc}")
+    @Produces({"application/xml", "application/json"})
+    public List<Produto> findDesc(@PathParam("desc") String desc) {
+        return dao.findDesc(desc);
     }
 }

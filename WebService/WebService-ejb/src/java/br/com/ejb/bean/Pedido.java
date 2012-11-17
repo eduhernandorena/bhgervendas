@@ -1,6 +1,7 @@
 package br.com.ejb.bean;
 
 import br.com.ejb.bean.enumeration.FormaPagamento;
+import br.com.ejb.bean.enumeration.StatusPedido;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class Pedido implements Serializable {
     private Date dataCompra;
     @Column
     private Double valor;
+    @Column
+    private Double lucro;
     @Column(nullable = false)
     private Integer nroParcelas;
     @Column(nullable = false)
@@ -48,6 +51,8 @@ public class Pedido implements Serializable {
     private List<Produto> produtos;
     @Column
     private String ObsPagamento;
+    @Column
+    private StatusPedido status;
     @OneToOne
     private Viagem viagem;
 
@@ -57,6 +62,14 @@ public class Pedido implements Serializable {
 
     public void setCodigo(Long codigo) {
         this.codigo = codigo;
+    }
+
+    public Double getLucro() {
+        return lucro;
+    }
+
+    public void setLucro(Double lucro) {
+        this.lucro = lucro;
     }
 
     public String getDataCompra() {
@@ -121,6 +134,14 @@ public class Pedido implements Serializable {
 
     public void setObsPagamento(String ObsPagamento) {
         this.ObsPagamento = ObsPagamento;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
     }
 
     public Viagem getViagem() {

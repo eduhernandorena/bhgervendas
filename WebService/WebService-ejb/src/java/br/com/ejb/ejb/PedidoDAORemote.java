@@ -21,4 +21,6 @@ public interface PedidoDAORemote {
     List<Pedido> findAll();
     
     List<Pedido> findAllByEntidade(TipoEntidade tp, Long id);
+ 
+    List<Pedido> findByCli(String nome);
 }

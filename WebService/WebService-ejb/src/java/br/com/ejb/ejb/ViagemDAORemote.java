@@ -17,5 +17,7 @@ public interface ViagemDAORemote {
 
     Viagem find(Long id);
     
+    List<Viagem> findLocal(String local);
+    
     List<Viagem> findAll();
 }

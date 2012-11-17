@@ -42,7 +42,6 @@ public class EntidadeFacadeREST {
 //    public void edit(Entidade entity) {
 //        dao.update(entity);
 //    }
-
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
@@ -52,10 +51,31 @@ public class EntidadeFacadeREST {
     }
 
     @GET
-    @Path("{id}")
+    @Path("Cliente/{id}")
     @Produces({"application/xml", "application/json"})
-    public Entidade find(@PathParam("id") Long id) {
-        return dao.find(id);
+    public Entidade findCli(@PathParam("id") Long id) {
+        return dao.find(TipoEntidade.Cliente, id);
+    }
+
+    @GET
+    @Path("Fornecedor/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Entidade findForn(@PathParam("id") Long id) {
+        return dao.find(TipoEntidade.Fornecedor, id);
+    }
+    
+    @GET
+    @Path("ClienteNome/{nome}")
+    @Produces({"application/xml", "application/json"})
+    public List<Entidade> findCliNome(@PathParam("nome") String nome) {
+        return dao.findNome(TipoEntidade.Cliente, nome);
+    }
+
+    @GET
+    @Path("FornecedorNome/{nome}")
+    @Produces({"application/xml", "application/json"})
+    public List<Entidade> findFornNome(@PathParam("nome") String nome) {
+        return dao.findNome(TipoEntidade.Fornecedor, nome);
     }
 
     @GET
