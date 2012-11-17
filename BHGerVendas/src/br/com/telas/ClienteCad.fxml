@@ -91,5 +91,6 @@
     <Button fx:id="btSalvar" defaultButton="true" layoutX="511.0" layoutY="33.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="109.0" text="Salvar" textAlignment="CENTER" />
     <Button layoutX="631.0" layoutY="33.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="109.0" text="Limpar" />
     <Button id="button1" layoutX="390.0" layoutY="33.0" mnemonicParsing="false" onAction="#voltar" prefWidth="109.0" text="Voltar" />
+    <CheckBox id="chkAtivo" fx:id="chkAtivo" allowIndeterminate="false" contentDisplay="CENTER" graphicTextGap="4.0" indeterminate="false" layoutX="279.0" layoutY="37.0" mnemonicParsing="false" prefWidth="96.0" selected="true" text="Ativo" textAlignment="CENTER" underline="false" />
   </children>
 </AnchorPane>

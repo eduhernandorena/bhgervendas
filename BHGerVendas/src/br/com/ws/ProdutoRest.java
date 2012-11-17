@@ -33,17 +33,29 @@ public class ProdutoRest {
 //        resource = resource.path("count");
 //        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
 //    }
-
     public List<Produto> findAll() throws UniformInterfaceException {
         WebResource resource = webResource;
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Produto>>() {
         });
     }
 
+    public List<Produto> findDesc(String desc) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path(java.text.MessageFormat.format("descricao/{0}", new Object[]{desc}));
+        List<Produto> p;
+        try {
+            p = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Produto>>() {
+            });
+        } catch (UniformInterfaceException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return p;
+    }
+
 //    public void edit(Object requestEntity) throws UniformInterfaceException {
 //        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
 //    }
-
     public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }

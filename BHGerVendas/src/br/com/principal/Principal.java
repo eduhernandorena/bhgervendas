@@ -21,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -78,7 +77,7 @@ public class Principal extends Application {
         boolean userValid = false;
         Usuario u = new UsuarioRest().findByNome(user);
         if (u != null) {
-            if (u.getSenha() == null ? senha == null : u.getSenha().equals(senha)) {
+            if (u.getSenha() == null ? senha == null : Cripto.decode(u.getSenha()).equals(senha)) {
                 userValid = true;
                 loggedUser = u;
             } else {
@@ -160,6 +159,7 @@ public class Principal extends Application {
 
     public void gotoProdutosCad(Produto prod) {
         try {
+            new ProdutoController(prod);
             replaceSceneProdutoCad("ProdutoCad.fxml", "Cadastro de Produtos");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,7 +168,12 @@ public class Principal extends Application {
 
     public void gotoViagemCad(Viagem viag) {
         try {
-            replaceSceneContentCad("ViagemCad.fxml", "Cadastro de Viagens");
+            new ViagemController(viag);
+            Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/ViagemCad.fxml"), null, new JavaFXBuilderFactory());
+            Scene scene = new Scene(page, 754, 332);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("BHGerVendas -- Cadastro de Viagens");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -176,8 +181,8 @@ public class Principal extends Application {
 
     public void gotoFornecedorCad(Entidade ent) {
         try {
-            replaceSceneContentCad("FornecedorCad.fxml", "Cadastro de Viagens");
             new ClienteFornController(ent);
+            replaceSceneContentCad("FornecedorCad.fxml", "Cadastro de Viagens");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -185,6 +190,7 @@ public class Principal extends Application {
 
     public void gotoPedidoCad(Pedido ped) {
         try {
+            new PedidosController(ped);
             replaceSceneContentCad("PedidosCad.fxml", "Cadastro de Pedidos");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,9 +199,8 @@ public class Principal extends Application {
 
     public void gotoEncomendaCad(Encomenda enc) {
         try {
+            new EncomendaController(enc);
             replaceSceneContentCad("EncomendaCad.fxml", "Cadastro de Encomendas");
-            EncomendaController control = new EncomendaController();
-            control.fill(enc);
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }

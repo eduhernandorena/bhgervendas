@@ -6,6 +6,7 @@ import br.com.ejb.bean.Pedido;
 import br.com.ejb.bean.Produto;
 import br.com.ejb.bean.Sync;
 import br.com.ejb.bean.enumeration.FormaPagamento;
+import br.com.ejb.bean.enumeration.StatusPedido;
 import br.com.principal.FXOptionPane;
 import br.com.principal.Principal;
 import br.com.ws.EncomendaRest;
@@ -36,6 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class PedidosController implements Initializable {
 
@@ -56,6 +58,8 @@ public class PedidosController implements Initializable {
     private Button btVoltar;
     @FXML
     private ComboBox<String> cmbFormaPag;
+    @FXML
+    private ComboBox<String> cmbStatus;
     @FXML
     private CheckBox rdPedido;
     @FXML
@@ -97,6 +101,7 @@ public class PedidosController implements Initializable {
     private EncomendaRest encDAO = new EncomendaRest();
     private ViagemRest viDAO = new ViagemRest();
     private static Pedido pedido;
+    private static Encomenda enc;
 
     public PedidosController(Pedido ped) {
         pedido = ped;
@@ -109,7 +114,7 @@ public class PedidosController implements Initializable {
         Pedido ped = new Pedido();
         Entidade cli = null;
         if (!txtCodCliente.getText().isEmpty()) {
-            cli = entDAO.find(Long.valueOf(txtCodCliente.getText()));
+            cli = entDAO.findCli(Long.valueOf(txtCodCliente.getText()));
         }
         ped.setCliente(cli);
         if (!txtDta.getText().isEmpty()) {
@@ -124,7 +129,7 @@ public class PedidosController implements Initializable {
         }
         Entidade forn = null;
         if (!txtCodForn.getText().isEmpty()) {
-            forn = entDAO.find(Long.valueOf(txtCodForn.getText()));
+            forn = entDAO.findForn(Long.valueOf(txtCodForn.getText()));
         }
         ped.setFornecedor(forn);
         int parcelas = !txtNParcelas.getText().isEmpty() ? Integer.valueOf(txtNParcelas.getText()) : 1;
@@ -141,6 +146,22 @@ public class PedidosController implements Initializable {
             ped.setViagem(null);
         }
         p.gotoFindProdutos(ped);
+    }
+
+    public void buscarCliente(ActionEvent event) {
+        System.out.println("Busca Cliente");
+    }
+
+    public void buscarFornecedor(ActionEvent event) {
+        System.out.println("Busca Fornecedor");
+    }
+
+    public void buscarEncomenda(ActionEvent event) {
+        System.out.println("Busca Encomenda");
+    }
+
+    public void buscarViagem(ActionEvent event) {
+        System.out.println("Busca Viagem");
     }
 
     public void clearCad(ActionEvent event) {
@@ -165,7 +186,7 @@ public class PedidosController implements Initializable {
             Pedido ped = new Pedido();
             Entidade cli = null;
             if (!txtCodCliente.getText().isEmpty()) {
-                cli = entDAO.find(Long.valueOf(txtCodCliente.getText()));
+                cli = entDAO.findCli(Long.valueOf(txtCodCliente.getText()));
             }
             ped.setCliente(cli);
             try {
@@ -176,12 +197,18 @@ public class PedidosController implements Initializable {
             ped.setFormaPagamento(FormaPagamento.valueOf(cmbFormaPag.getValue()));
             Entidade forn = null;
             if (!txtCodForn.getText().isEmpty()) {
-                forn = entDAO.find(Long.valueOf(txtCodForn.getText()));
+                forn = entDAO.findForn(Long.valueOf(txtCodForn.getText()));
             }
             ped.setFornecedor(forn);
             int parcelas = !txtNParcelas.getText().isEmpty() ? Integer.valueOf(txtNParcelas.getText()) : 1;
             ped.setNroParcelas(parcelas);
             ped.setProdutos(gridProd.getItems());
+            Double lucro = 0.0;
+            for (Produto produto : gridProd.getItems()) {
+                lucro += produto.getLucro();
+            }
+            ped.setLucro(lucro);
+            ped.setStatus(StatusPedido.valueOf(cmbStatus.getValue()));
             ped.setValor(Double.valueOf(txtValor.getText()));
             ped.setObsPagamento(txtObsPag.getText());
             if (txtCodViagem.getText() != null && !txtCodViagem.getText().trim().isEmpty()) {
@@ -205,7 +232,6 @@ public class PedidosController implements Initializable {
                 BigDecimal res = new BigDecimal(ped.getValor()).divide(div);
                 Double r = res.setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 sync.setValor(r);
-
             }
             p.gotoPrincipal();
         } else {
@@ -300,25 +326,52 @@ public class PedidosController implements Initializable {
         gridProd.getItems().setAll(list.isEmpty() ? new ArrayList<Produto>() : list);
     }
 
-    private void refreshPedidos() {
-        final List<Produto> items = gridProd.getItems();
-        if (items == null || items.isEmpty()) {
-            return;
-        }
-
-        final Produto item = gridProd.getItems().get(0);
-        items.remove(0);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                items.add(0, item);
+    private void refreshValor() {
+        if (!gridProd.getItems().isEmpty()) {
+            Double valor = 0.0;
+            for (Produto produto : gridProd.getItems()) {
+                valor += produto.getPrecoVenda();
             }
-        });
+            txtValor.setText(valor.toString());
+            pedido.setValor(valor);
+            if (txtNParcelas.getText() != null && !txtNParcelas.getText().isEmpty()) {
+                Double parcelas = Double.parseDouble(txtNParcelas.getText());
+                txtValParcelas.setText(String.valueOf(valor / parcelas));
+                pedido.setNroParcelas(parcelas.intValue());
+            } else {
+                txtNParcelas.setText("1");
+                txtValParcelas.setText(valor.toString());
+                pedido.setNroParcelas(1);
+            }
+        } else {
+            txtValor.setText("");
+            txtValParcelas.setText("");
+            txtNParcelas.setText("");
+            pedido.setValor(null);
+            pedido.setNroParcelas(null);
+        }
+    }
+
+    public void onClickRemove(MouseEvent event) {
+        if (event.getClickCount() > 1) {
+            Produto prod = gridProd.getSelectionModel().getSelectedItem();
+            if (prod != null) {
+                System.out.println("Produto: " + prod.getId());
+                pedido.getProdutos().remove(prod);
+                gridProd.getItems().remove(prod);
+            }
+            refreshValor();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fill(pedido);
+        if (pedido != null && pedido.getCodigo() != null) {
+            fill(pedido);
+        } else if (pedido != null && !pedido.getProdutos().isEmpty()) {
+            fillPedidoGrid(pedido.getProdutos());
+            refreshValor();
+        }
 
         txtCod.focusedProperty().addListener(new ChangeListener() {
             @Override
@@ -348,10 +401,19 @@ public class PedidosController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String parcelas = txtNParcelas.getText();
                 if (!parcelas.isEmpty()) {
-                    if (Integer.valueOf(parcelas) > 1) {
+                    Double parc = Double.valueOf(parcelas);
+                    if (parc > 1) {
                         cmbFormaPag.setValue(FormaPagamento.APRAZO.name());
-                    } else if (Integer.valueOf(parcelas) == 1) {
+                        txtValParcelas.setText(!txtValor.getText().isEmpty() ? String.valueOf(Double.valueOf(txtValor.getText()) / parc) : "");
+                        pedido.setFormaPagamento(FormaPagamento.APRAZO);
+                    } else if (parc == 1) {
                         cmbFormaPag.setValue(FormaPagamento.AVISTA.name());
+                        txtValParcelas.setText(txtValor.getText());
+                        pedido.setFormaPagamento(FormaPagamento.AVISTA);
+                    }
+                    pedido.setNroParcelas(parc.intValue());
+                    if (!txtValor.getText().isEmpty()) {
+                        pedido.setValor(Double.valueOf(txtValor.getText()));
                     }
                 }
             }
@@ -362,7 +424,7 @@ public class PedidosController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCodCliente.getText();
                 if (!cod.isEmpty()) {
-                    Entidade ent = entDAO.find(Long.valueOf(cod));
+                    Entidade ent = entDAO.findCli(Long.valueOf(cod));
                     if (ent != null && ent.getTipoEntidade().isCliente()) {
                         txtCliente.setText(ent.getNome());
                     }
@@ -375,7 +437,7 @@ public class PedidosController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCodForn.getText();
                 if (!cod.isEmpty()) {
-                    Entidade ent = entDAO.find(Long.valueOf(cod));
+                    Entidade ent = entDAO.findForn(Long.valueOf(cod));
                     if (ent != null && !ent.getTipoEntidade().isCliente()) {
                         txtFornecedor.setText(ent.getNome());
                     }
@@ -388,7 +450,7 @@ public class PedidosController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 String cod = txtCodEncomenda.getText();
                 if (!cod.isEmpty()) {
-                    Encomenda enc = encDAO.find(Long.valueOf(cod));
+                    enc = encDAO.find(Long.valueOf(cod));
                     if (enc == null) {
                         FXOptionPane.showMessageDialog(null, "Encomenda Inexistente!", "Código Errado!");
                         txtCodEncomenda.setText("");

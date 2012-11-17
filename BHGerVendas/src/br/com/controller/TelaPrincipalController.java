@@ -31,6 +31,26 @@ public class TelaPrincipalController implements Initializable {
 
     private static Principal p = Principal.getInstance();
     @FXML
+    private TextField txtProdCod;
+    @FXML
+    private TextField txtProdDesc;
+    @FXML
+    private TextField txtViagCod;
+    @FXML
+    private TextField txtViagLocal;
+    @FXML
+    private TextField txtPedCod;
+    @FXML
+    private TextField txtPedCliNome;
+    @FXML
+    private TextField txtCliCod;
+    @FXML
+    private TextField txtCliNome;
+    @FXML
+    private TextField txtFornCod;
+    @FXML
+    private TextField txtFornNome;
+    @FXML
     private TabPane tabPane;
     //Cliente
     @FXML
@@ -100,6 +120,11 @@ public class TelaPrincipalController implements Initializable {
     private TableColumn<Viagem, String> colDtHrViag;
     @FXML
     private TableColumn<Viagem, String> colGuiaViag;
+    private EntidadeRest entDAO = new EntidadeRest();
+    private ViagemRest viagDAO = new ViagemRest();
+    private PedidoRest pedDAO = new PedidoRest();
+    private ProdutoRest prodDAO = new ProdutoRest();
+    private EncomendaRest encDAO = new EncomendaRest();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,12 +132,12 @@ public class TelaPrincipalController implements Initializable {
     }
 
     public void fill() {
-        fillCliente();
-        fillEncomendas();
-        fillFornecedor();
-        fillPedido();
-        fillProduto();
-        fillViagem();
+        fillCliente(parseClienteList());
+        fillEncomendas(parseEncomendaList());
+        fillFornecedor(parseFornecedorList());
+        fillPedido(parsePedidoList());
+        fillProduto(parseProdutoList());
+        fillViagem(parseViagemList());
     }
 
     private void openParam(Object obj) {
@@ -165,7 +190,7 @@ public class TelaPrincipalController implements Initializable {
             p.gotoEncomendaCad(null);
         }
     }
-    
+
     @FXML
     public void openCadKey(KeyEvent event) {
         if (event.getCode().equals(KeyCode.F2)) {
@@ -185,18 +210,17 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillCliente() {
+    private void fillCliente(List<Entidade> list) {
         colCodCliente.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("id"));
         colNomeCliente.setCellValueFactory(new PropertyValueFactory<Entidade, String>("Nome"));
         colTelCliente.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Telefone"));
         colCelCliente.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Celular"));
         colEndCliente.setCellValueFactory(new PropertyValueFactory<Entidade, Endereco>("Endereco"));
 
-        tbClientes.getItems().setAll(parseClienteList());
+        tbClientes.getItems().setAll(list);
     }
 
     private List<Entidade> parseClienteList() {
-        EntidadeRest entDAO = new EntidadeRest();
         List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.Cliente);
 
         if (!listaEnt.isEmpty()) {
@@ -221,8 +245,35 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
-//</editor-fold>
 
+    @FXML
+    public void buscaCli(ActionEvent event) {
+        List<Entidade> l = new ArrayList();
+        if (!txtCliCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtCliCod.getText());
+                l.add(entDAO.findCli(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillCliente(l);
+            }
+            fillCliente(l);
+        } else if (!txtCliNome.getText().isEmpty()) {
+            try {
+                for (Entidade entidade : entDAO.findCliNome(txtCliNome.getText() + "%")) {
+                    l.add(entidade);
+                }
+                fillCliente(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillCliente(l);
+            }
+        } else {
+            fillCliente(parseClienteList());
+        }
+    }
+
+//</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos do Fornecedor">
     @FXML
     public void onClickFornecedor(MouseEvent event) {
@@ -235,18 +286,17 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillFornecedor() {
+    private void fillFornecedor(List<Entidade> list) {
         colCodForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("id"));
         colNomeForn.setCellValueFactory(new PropertyValueFactory<Entidade, String>("Nome"));
         colTelForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Telefone"));
         colCelForn.setCellValueFactory(new PropertyValueFactory<Entidade, Long>("Celular"));
         colEndForn.setCellValueFactory(new PropertyValueFactory<Entidade, Endereco>("Endereco"));
 
-        tbFornecedor.getItems().setAll(parseFornecedorList());
+        tbFornecedor.getItems().setAll(list);
     }
 
     private List<Entidade> parseFornecedorList() {
-        EntidadeRest entDAO = new EntidadeRest();
         List<Entidade> listaEnt = entDAO.findAll(TipoEntidade.Fornecedor);
 
         if (!listaEnt.isEmpty()) {
@@ -271,6 +321,33 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
+
+    @FXML
+    public void buscaForn(ActionEvent event) {
+        List<Entidade> l = new ArrayList();
+        if (!txtFornCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtFornCod.getText());
+                l.add(entDAO.findForn(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillFornecedor(l);
+            }
+            fillFornecedor(l);
+        } else if (!txtFornNome.getText().isEmpty()) {
+            try {
+                for (Entidade entidade : entDAO.findFornNome(txtFornNome.getText() + "%")) {
+                    l.add(entidade);
+                }
+                fillFornecedor(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillCliente(l);
+            }
+        } else {
+            fillFornecedor(parseFornecedorList());
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Métodos da Encomenda">
@@ -285,15 +362,14 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillEncomendas() {
+    private void fillEncomendas(List<Encomenda> list) {
         colCodEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Long>("id"));
         colViagemEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Viagem>("viagem"));
 
-        tbEncomendas.getItems().setAll(parseEncomendaList());
+        tbEncomendas.getItems().setAll(list);
     }
 
     private List<Encomenda> parseEncomendaList() {
-        EncomendaRest encDAO = new EncomendaRest();
         List<Encomenda> listaEnc = encDAO.findAll();
 
         if (!listaEnc.isEmpty()) {
@@ -318,6 +394,33 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
+
+    @FXML
+    public void buscaViag(ActionEvent event) {
+        List<Viagem> l = new ArrayList();
+        if (!txtViagCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtViagCod.getText());
+                l.add(viagDAO.find(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillViagem(l);
+            }
+            fillViagem(l);
+        } else if (!txtViagLocal.getText().isEmpty()) {
+            try {
+                for (Viagem viagem : viagDAO.findLocal(txtViagLocal.getText() + "%")) {
+                    l.add(viagem);
+                }
+                fillViagem(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillViagem(l);
+            }
+        } else {
+            fillViagem(parseViagemList());
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Métodos do Pedido">
@@ -332,18 +435,17 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillPedido() {
+    private void fillPedido(List<Pedido> list) {
         colCodPed.setCellValueFactory(new PropertyValueFactory<Pedido, Long>("codigo"));
         colCliPed.setCellValueFactory(new PropertyValueFactory<Pedido, Entidade>("Cliente"));
         colValPed.setCellValueFactory(new PropertyValueFactory<Pedido, Double>("valor"));
         colFormaPed.setCellValueFactory(new PropertyValueFactory<Pedido, FormaPagamento>("formaPagamento"));
         colParcPed.setCellValueFactory(new PropertyValueFactory<Pedido, Integer>("nroParcelas"));
 
-        tbPedidos.getItems().setAll(parsePedidoList());
+        tbPedidos.getItems().setAll(list);
     }
 
     private List<Pedido> parsePedidoList() {
-        PedidoRest pedDAO = new PedidoRest();
         List<Pedido> listaPed = pedDAO.findAll();
 
         if (!listaPed.isEmpty()) {
@@ -368,6 +470,33 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
+
+    @FXML
+    public void buscaPed(ActionEvent event) {
+        List<Pedido> l = new ArrayList();
+        if (!txtPedCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtPedCod.getText());
+                l.add(pedDAO.find(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillPedido(l);
+            }
+            fillPedido(l);
+        } else if (!txtPedCliNome.getText().isEmpty()) {
+            try {
+                for (Pedido ped : pedDAO.findByCli(txtPedCliNome.getText() + "%")) {
+                    l.add(ped);
+                }
+                fillPedido(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillPedido(l);
+            }
+        } else {
+            fillPedido(parsePedidoList());
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Métodos do Produto">
@@ -382,17 +511,16 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillProduto() {
+    private void fillProduto(List<Produto> list) {
         colCodProd.setCellValueFactory(new PropertyValueFactory<Produto, Long>("id"));
         colDescProd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Descricao"));
         colTamProd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Tamanho"));
         colPrcProd.setCellValueFactory(new PropertyValueFactory<Produto, Double>("precoVenda"));
 
-        tbProdutos.getItems().setAll(parseProdutoList());
+        tbProdutos.getItems().setAll(list);
     }
 
     private List<Produto> parseProdutoList() {
-        ProdutoRest prodDAO = new ProdutoRest();
         List<Produto> listaProd = prodDAO.findAll();
 
         if (!listaProd.isEmpty()) {
@@ -417,6 +545,33 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
+
+    @FXML
+    public void buscaProd(ActionEvent event) {
+        List<Produto> l = new ArrayList();
+        if (!txtProdCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtProdCod.getText());
+                l.add(prodDAO.find(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillProduto(l);
+            }
+            fillProduto(l);
+        } else if (!txtProdDesc.getText().isEmpty()) {
+            try {
+                for (Produto ped : prodDAO.findDesc(txtProdDesc.getText() + "%")) {
+                    l.add(ped);
+                }
+                fillProduto(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillProduto(l);
+            }
+        } else {
+            fillProduto(parseProdutoList());
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Métodos da Viagem">
@@ -431,17 +586,16 @@ public class TelaPrincipalController implements Initializable {
         }
     }
 
-    private void fillViagem() {
+    private void fillViagem(List<Viagem> list) {
         colCodViag.setCellValueFactory(new PropertyValueFactory<Viagem, Long>("codigo"));
         colLocalViag.setCellValueFactory(new PropertyValueFactory<Viagem, String>("localizacao"));
         colDtHrViag.setCellValueFactory(new PropertyValueFactory<Viagem, String>("datahora"));
         colGuiaViag.setCellValueFactory(new PropertyValueFactory<Viagem, String>("guia"));
 
-        tbViagens.getItems().setAll(parseViagemList());
+        tbViagens.getItems().setAll(list);
     }
 
     private List<Viagem> parseViagemList() {
-        ViagemRest viagDAO = new ViagemRest();
         List<Viagem> listaViag = viagDAO.findAll();
 
         if (!listaViag.isEmpty()) {

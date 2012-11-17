@@ -1,6 +1,5 @@
 package br.com.controller;
 
-import br.com.ejb.bean.Encomenda;
 import br.com.ejb.bean.Entidade;
 import br.com.ejb.bean.Pedido;
 import br.com.ejb.bean.Viagem;
@@ -12,7 +11,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,8 +21,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,12 +29,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ViagemController implements Initializable {
 
     private static Principal p = Principal.getInstance();
-    @FXML
-    private Button btEncomenda;
+//    @FXML
+//    private Button btEncomenda;
     @FXML
     private TextField txtCod;
-    @FXML
-    private ChoiceBox<String> cmbStatus;
+//    @FXML
+//    private ChoiceBox<String> cmbStatus;
     @FXML
     private TextField txtData;
     @FXML
@@ -63,17 +59,17 @@ public class ViagemController implements Initializable {
     private TableColumn<Pedido, Entidade> colCliPed;
     @FXML
     private TableColumn<Pedido, Double> colValPed;
-    @FXML
-    private TableView<Encomenda> gridEncomenda;
-    @FXML
-    private TableColumn<Encomenda, Entidade> colCliEnc;
-    @FXML
-    private TableColumn<Encomenda, Long> colCodEnc;
-    @FXML
-    private TableColumn<Encomenda, Date> colDtEnc;
-    @FXML
-    private TableColumn<Encomenda, Pedido> colPedEnc;
-    private ViagemRest viagDAO;
+//    @FXML
+//    private TableView<Encomenda> gridEncomenda;
+//    @FXML
+//    private TableColumn<Encomenda, Entidade> colCliEnc;
+//    @FXML
+//    private TableColumn<Encomenda, Long> colCodEnc;
+//    @FXML
+//    private TableColumn<Encomenda, Date> colDtEnc;
+//    @FXML
+//    private TableColumn<Encomenda, Pedido> colPedEnc;
+    private ViagemRest viagDAO = new ViagemRest();
     private Viagem viagem;
 
     public ViagemController(Viagem viagem) {
@@ -91,27 +87,28 @@ public class ViagemController implements Initializable {
         txtLocal.setText(null);
         txtQtde.setText(null);
         txtValor.setText(null);
-        cmbStatus.setValue(null);
+//        cmbStatus.setValue(null);
     }
 
     public void saveCad(ActionEvent event) {
         if (valida()) {
             viagem = new Viagem();
             try {
-                viagem.setDataHora(new SimpleDateFormat("dd/MM/yyyy").parse(txtData.getText()));
+                viagem.setDataHora(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(txtData.getText() + " " + txtHora.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(ViagemController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            viagem.setEncomendas(gridEncomenda.getItems());
+//            viagem.setEncomendas(gridEncomenda.getItems());
             viagem.setPedidos(gridPed.getItems());
             viagem.setGuia(txtGuia.getText());
             viagem.setLocal(txtLocal.getText());
             viagem.setValor(Double.valueOf(txtValor.getText()));
             viagem.setQtdeProdutos(Integer.valueOf(txtQtde.getText()));
+            viagDAO.create(viagem);
+            p.gotoPrincipal();
         } else {
             System.out.println("Não foi possível salvar!");
         }
-        p.gotoPrincipal();
     }
 
     public void voltar(ActionEvent event) {
@@ -175,7 +172,7 @@ public class ViagemController implements Initializable {
             txtQtde.setText(viag.getQtdeProdutos().toString());
             txtValor.setText(viag.getValor().toString());
             fillPedidoGrid(viag.getPedidos());
-            fillEncomendaGrid(viag.getEncomendas());
+//            fillEncomendaGrid(viag.getEncomendas());
         }
     }
 
@@ -205,31 +202,30 @@ public class ViagemController implements Initializable {
         });
     }
 
-    private void fillEncomendaGrid(List<Encomenda> list) {
-        colCodEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Long>("codigo"));
-        colDtEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Date>("dataCadastro"));
-        colCliEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Entidade>("cliente"));
-        colPedEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Pedido>("pedido"));
-
-        gridEncomenda.getItems().setAll(list.isEmpty() ? new ArrayList<Encomenda>() : list);
-    }
-
-    private void refreshEncomenda() {
-        final List<Encomenda> items = gridEncomenda.getItems();
-        if (items == null || items.isEmpty()) {
-            return;
-        }
-
-        final Encomenda item = gridEncomenda.getItems().get(0);
-        items.remove(0);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                items.add(0, item);
-            }
-        });
-    }
-
+//    private void fillEncomendaGrid(List<Encomenda> list) {
+//        colCodEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Long>("codigo"));
+//        colDtEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Date>("dataCadastro"));
+//        colCliEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Entidade>("cliente"));
+//        colPedEnc.setCellValueFactory(new PropertyValueFactory<Encomenda, Pedido>("pedido"));
+//
+//        gridEncomenda.getItems().setAll(list.isEmpty() ? new ArrayList<Encomenda>() : list);
+//    }
+//
+//    private void refreshEncomenda() {
+//        final List<Encomenda> items = gridEncomenda.getItems();
+//        if (items == null || items.isEmpty()) {
+//            return;
+//        }
+//
+//        final Encomenda item = gridEncomenda.getItems().get(0);
+//        items.remove(0);
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                items.add(0, item);
+//            }
+//        });
+//    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fill(viagem);

@@ -1,6 +1,7 @@
 package br.com.controller;
 
 import br.com.ejb.bean.Usuario;
+import br.com.principal.Cripto;
 import br.com.principal.FXOptionPane;
 import br.com.principal.Principal;
 import br.com.ws.UsuarioRest;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,9 +22,9 @@ public class UsuarioController implements Initializable {
     @FXML
     private Button btSave;
     @FXML
-    private TextField txtSenha;
+    private PasswordField txtSenha;
     @FXML
-    private TextField txtSenhaConfirm;
+    private PasswordField txtSenhaConfirm;
     @FXML
     private TextField txtUser;
     private static UsuarioRest userDAO = new UsuarioRest();
@@ -45,7 +47,7 @@ public class UsuarioController implements Initializable {
         if (valida()) {
             Usuario user = new Usuario();
             user.setNome(txtUser.getText());
-            user.setSenha(txtSenha.getText());
+            user.setSenha(Cripto.encode(txtSenha.getText()));
 
             user = userDAO.create(user);
             if (user.getId() != null) {

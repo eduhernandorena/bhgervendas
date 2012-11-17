@@ -43,7 +43,6 @@ public class ViagemRest {
 //    public void edit(Object requestEntity) throws UniformInterfaceException {
 //        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
 //    }
-
     public void create(Object requestEntity) throws UniformInterfaceException {
         webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
     }
@@ -51,7 +50,26 @@ public class ViagemRest {
     public Viagem find(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Viagem.class);
+        Viagem v;
+        try {
+            v = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Viagem.class);
+        } catch (UniformInterfaceException ex) {
+            return null;
+        }
+        return v;
+    }
+
+    public List<Viagem> findLocal(String local) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path(java.text.MessageFormat.format("local/{0}", new Object[]{local}));
+        List<Viagem> v;
+        try {
+            v = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Viagem>>() {
+            });
+        } catch (UniformInterfaceException ex) {
+            return null;
+        }
+        return v;
     }
 
     public void close() {

@@ -57,6 +57,14 @@ public class UsuarioRest {
     public Usuario findByNome(String user) {
         WebResource resource = webResource;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{user}));
-        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Usuario.class);
+        Usuario us = null;
+        try {
+            us = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Usuario.class);
+        } catch (UniformInterfaceException ex) {
+            if (ex.getResponse().getStatus() == 404) {
+                System.out.println(404 + " vazio.");
+            }
+        }
+        return us;
     }
 }

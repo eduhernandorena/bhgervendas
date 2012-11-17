@@ -50,7 +50,11 @@ public class EncomendaController implements Initializable {
     private static EncomendaRest encDAO = new EncomendaRest();
     private static PedidoRest pedDAO = new PedidoRest();
     private static ViagemRest viagemDAO = new ViagemRest();
+    private static Encomenda encomenda = new Encomenda();
 
+    public EncomendaController(Encomenda enc){
+        encomenda = enc;
+    }
     public void clearCad(ActionEvent event) {
         txtCod.setText(null);
         txtCodPedido.setText(null);
@@ -163,6 +167,7 @@ public class EncomendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fill(encomenda);
         txtCod.focusedProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
