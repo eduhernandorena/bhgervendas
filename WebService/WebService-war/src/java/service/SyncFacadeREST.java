@@ -35,9 +35,9 @@ public class SyncFacadeREST {
     }
 
     @POST
-    @Path("atualiza/{syncs}")
+    @Path("atualiza/")
     @Consumes({"application/json"})
-    public void atualiza(@PathParam("atualiza/{syncs}") List<Sync> entity) {
+    public void atualiza(List<Sync> entity) {
         dao.atualiza(entity);
     }
 
