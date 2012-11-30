@@ -34,11 +34,6 @@ public class UsuarioFacadeREST {
         return dao.create(entity);
     }
 
-//    @PUT
-//    @Consumes({"application/xml", "application/json"})
-//    public void edit(Usuario entity) {
-//        dao.update(entity);
-//    }
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {

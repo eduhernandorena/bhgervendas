@@ -1,6 +1,7 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -11,16 +12,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "produto")
 @NamedQueries({
-    @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
+    @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p where p.esgotado=false"),
     @NamedQuery(name = "Produto.findByDesc", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
     @NamedQuery(name = "Produto.findByNota", query = "SELECT p FROM Produto p WHERE p.nroNota = :nroNota")
 })
 @SequenceGenerator(name = "seq_prod", sequenceName = "seq_prod", allocationSize = 1)
 @XmlRootElement
 public class Produto implements Serializable {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_prod")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_prod")
     private Long id;
     @Column(nullable = false)
     private Long nroNota;
@@ -36,6 +37,8 @@ public class Produto implements Serializable {
     private Double lucro;
     @Column(nullable = false)
     private String tamanho;
+    @Column(nullable = false)
+    private Boolean esgotado = false;
 
     public Long getId() {
         return id;
@@ -43,6 +46,14 @@ public class Produto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getNroNota() {
+        return nroNota;
+    }
+
+    public void setNroNota(Long nroNota) {
+        this.nroNota = nroNota;
     }
 
     public String getDescricao() {
@@ -53,20 +64,12 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public Double getLucro() {
-        return lucro;
+    public String getReferencia() {
+        return referencia;
     }
 
-    public void setLucro(Double lucro) {
-        this.lucro = lucro;
-    }
-
-    public Long getNroNota() {
-        return nroNota;
-    }
-
-    public void setNroNota(Long nroNota) {
-        this.nroNota = nroNota;
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
     public Double getPrecoCusto() {
@@ -85,12 +88,12 @@ public class Produto implements Serializable {
         this.precoVenda = precoVenda;
     }
 
-    public String getReferencia() {
-        return referencia;
+    public Double getLucro() {
+        return lucro;
     }
 
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
+    public void setLucro(Double lucro) {
+        this.lucro = lucro;
     }
 
     public String getTamanho() {
@@ -99,6 +102,24 @@ public class Produto implements Serializable {
 
     public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public Boolean getEsgotado() {
+        return esgotado;
+    }
+
+    public void setEsgotado(Boolean esgotado) {
+        this.esgotado = esgotado;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.nroNota);
+        hash = 53 * hash + Objects.hashCode(this.referencia);
+        hash = 53 * hash + Objects.hashCode(this.tamanho);
+        return hash;
     }
 
     @Override
@@ -110,33 +131,23 @@ public class Produto implements Serializable {
             return false;
         }
         final Produto other = (Produto) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (this.nroNota != other.nroNota && (this.nroNota == null || !this.nroNota.equals(other.nroNota))) {
+        if (!Objects.equals(this.nroNota, other.nroNota)) {
             return false;
         }
-        if ((this.referencia == null) ? (other.referencia != null) : !this.referencia.equals(other.referencia)) {
+        if (!Objects.equals(this.referencia, other.referencia)) {
             return false;
         }
-        if ((this.tamanho == null) ? (other.tamanho != null) : !this.tamanho.equals(other.tamanho)) {
+        if (!Objects.equals(this.tamanho, other.tamanho)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 97 * hash + (this.nroNota != null ? this.nroNota.hashCode() : 0);
-        hash = 97 * hash + (this.referencia != null ? this.referencia.hashCode() : 0);
-        hash = 97 * hash + (this.tamanho != null ? this.tamanho.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
     public String toString() {
-        return "Produto{" + "descricao=" + descricao + ", referencia=" + referencia + ", tamanho=" + tamanho + '}';
+        return "Produto{" + "descricao=" + descricao + ", precoVenda=" + precoVenda + ", tamanho=" + tamanho + ", esgotado=" + esgotado + '}';
     }
 }
