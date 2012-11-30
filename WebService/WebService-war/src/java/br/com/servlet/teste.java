@@ -1,12 +1,18 @@
 package br.com.servlet;
 
-import br.com.ejb.bean.Usuario;
-import br.com.ejb.ejb.CidadeDAORemote;
-import br.com.ejb.ejb.EnderecoDAORemote;
+import br.com.ejb.bean.Pedido;
+import br.com.ejb.bean.enumeration.FormaPagamento;
+import br.com.ejb.bean.enumeration.StatusPedido;
+import br.com.ejb.bean.enumeration.TipoEntidade;
 import br.com.ejb.ejb.EntidadeDAORemote;
+import br.com.ejb.ejb.PedidoDAORemote;
+import br.com.ejb.ejb.ProdutoDAO;
+import br.com.ejb.ejb.ProdutoDAORemote;
 import br.com.ejb.ejb.UfDAORemote;
 import br.com.ejb.ejb.UsuarioDAORemote;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,19 +34,26 @@ public class teste extends HttpServlet {
     @EJB
     UfDAORemote ufDAO;
     @EJB
-    CidadeDAORemote cidadeDAO;
+    PedidoDAORemote pedDAO;
     @EJB
-    EnderecoDAORemote enderecoDAO;
+    ProdutoDAORemote prodDAO;
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        Usuario us = new Usuario();
-        us.setNome("eduardo");
-        us.setSenha("teste");
-        us = dao.create(us);
-        System.out.println(us.getId());
 
+        Pedido ped = new Pedido();
+        ped.setValor(23.);
+        ped.setDataCompra(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        ped.setFormaPagamento(FormaPagamento.AVISTA);
+        ped.setFornecedor(entDAO.find(TipoEntidade.Fornecedor, 2));
+        ped.setLucro(0.);
+        ped.setNroParcelas(1);
+        ped.setObsPagamento("");
+        ped.setProdutos(prodDAO.findAll());
+        ped.setStatus(StatusPedido.PENDENTE);
+        ped.setCliente(entDAO.find(TipoEntidade.Cliente, 1));
+        pedDAO.create(ped);
 
 //        List<Entidade> list = entDAO.findAllCliente();
 //        if (!list.isEmpty()) {

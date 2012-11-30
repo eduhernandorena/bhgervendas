@@ -1,10 +1,19 @@
 package br.com.ejb.bean;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,20 +34,19 @@ public class Viagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_viagem")
     private Long id;
     @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dataHora;
+    private String dataV;
+    @Column(nullable = false)
+    private String Hora;
     @Column(nullable = false)
     private String localizacao;
     @Column
     private Integer qtdeProdutos;
     @Column
     private Double valor;
-    @Column
-    private String status;
     @Column(nullable = false)
     private String guia;
-    @JoinColumn(name = "pedidos")
-    @OneToMany
+    @JoinColumn(name = "viagemId")
+    @OneToMany(fetch= FetchType.EAGER)
     private List<Pedido> pedidos;
 
     public Long getId() {
@@ -49,20 +57,20 @@ public class Viagem implements Serializable {
         this.id = id;
     }
 
-    public String getDataHora() {
-        return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(dataHora);
+    public String getData() {
+        return dataV;
     }
 
-    public String getData() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(dataHora);
+    public void setData(String data) {
+        this.dataV = data;
     }
 
     public String getHora() {
-        return new SimpleDateFormat("HH:mm").format(dataHora);
+        return Hora;
     }
 
-    public void setDataHora(Date dataHora) {
-        this.dataHora = dataHora;
+    public void setHora(String Hora) {
+        this.Hora = Hora;
     }
 
     public String getGuia() {
@@ -105,14 +113,6 @@ public class Viagem implements Serializable {
         this.valor = valor;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -123,9 +123,6 @@ public class Viagem implements Serializable {
         }
         final Viagem other = (Viagem) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        if (this.dataHora != other.dataHora && (this.dataHora == null || !this.dataHora.equals(other.dataHora))) {
             return false;
         }
         if ((this.localizacao == null) ? (other.localizacao != null) : !this.localizacao.equals(other.localizacao)) {
@@ -144,7 +141,6 @@ public class Viagem implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 59 * hash + (this.dataHora != null ? this.dataHora.hashCode() : 0);
         hash = 59 * hash + (this.localizacao != null ? this.localizacao.hashCode() : 0);
         hash = 59 * hash + (this.valor != null ? this.valor.hashCode() : 0);
         hash = 59 * hash + (this.guia != null ? this.guia.hashCode() : 0);

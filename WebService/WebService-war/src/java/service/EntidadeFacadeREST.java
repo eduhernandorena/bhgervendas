@@ -51,28 +51,28 @@ public class EntidadeFacadeREST {
     }
 
     @GET
-    @Path("Cliente/{id}")
+    @Path("cliente/{id}")
     @Produces({"application/xml", "application/json"})
     public Entidade findCli(@PathParam("id") Long id) {
         return dao.find(TipoEntidade.Cliente, id);
     }
 
     @GET
-    @Path("Fornecedor/{id}")
+    @Path("fornecedor/{id}")
     @Produces({"application/xml", "application/json"})
     public Entidade findForn(@PathParam("id") Long id) {
         return dao.find(TipoEntidade.Fornecedor, id);
     }
     
     @GET
-    @Path("ClienteNome/{nome}")
+    @Path("clienteNome/{nome}")
     @Produces({"application/xml", "application/json"})
     public List<Entidade> findCliNome(@PathParam("nome") String nome) {
         return dao.findNome(TipoEntidade.Cliente, nome);
     }
 
     @GET
-    @Path("FornecedorNome/{nome}")
+    @Path("fornecedorNome/{nome}")
     @Produces({"application/xml", "application/json"})
     public List<Entidade> findFornNome(@PathParam("nome") String nome) {
         return dao.findNome(TipoEntidade.Fornecedor, nome);

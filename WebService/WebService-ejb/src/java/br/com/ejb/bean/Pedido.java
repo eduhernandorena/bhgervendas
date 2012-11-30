@@ -20,18 +20,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
     @NamedQuery(name = "Pedido.findByPrazo", query = "SELECT p FROM Pedido p WHERE p.formaPagamento = :formaPag"),
     @NamedQuery(name = "Pedido.findByCliente", query = "SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId"),
-    @NamedQuery(name = "Pedido.findByFornecedor", query = "SELECT p FROM Pedido p WHERE p.fornecedor.id = :entidadeId")
+    @NamedQuery(name = "Pedido.findByFornecedor", query = "SELECT p FROM Pedido p WHERE p.fornecedor.id = :fornecedorId")
 })
 @SequenceGenerator(name = "seq_ped", sequenceName = "seq_ped", allocationSize = 1)
 @XmlRootElement
-public class Pedido implements Serializable {
+public class Pedido implements Serializable, Comparable<Pedido> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_ped")
     private Long codigo;
-    @Temporal(javax.persistence.TemporalType.DATE)
     @Column
-    private Date dataCompra;
+    private String dataCompra;
     @Column
     private Double valor;
     @Column
@@ -47,14 +46,12 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "fornecedor", nullable = true)
     private Entidade fornecedor;
     @JoinColumn(name = "produtos")
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Produto> produtos;
     @Column
-    private String ObsPagamento;
+    private String obsPagamento;
     @Column
     private StatusPedido status;
-    @OneToOne
-    private Viagem viagem;
 
     public Long getCodigo() {
         return codigo;
@@ -73,10 +70,10 @@ public class Pedido implements Serializable {
     }
 
     public String getDataCompra() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(dataCompra);
+        return dataCompra;
     }
 
-    public void setDataCompra(Date dataCompra) {
+    public void setDataCompra(String dataCompra) {
         this.dataCompra = dataCompra;
     }
 
@@ -129,11 +126,11 @@ public class Pedido implements Serializable {
     }
 
     public String getObsPagamento() {
-        return ObsPagamento;
+        return obsPagamento;
     }
 
     public void setObsPagamento(String ObsPagamento) {
-        this.ObsPagamento = ObsPagamento;
+        this.obsPagamento = ObsPagamento;
     }
 
     public StatusPedido getStatus() {
@@ -144,12 +141,12 @@ public class Pedido implements Serializable {
         this.status = status;
     }
 
-    public Viagem getViagem() {
-        return viagem;
-    }
-
-    public void setViagem(Viagem viagem) {
-        this.viagem = viagem;
+    public String getEntidade() {
+        if (cliente!=null) {
+            return cliente.getNome();
+        }else{
+            return "PEDIDO ENTRADA";
+        }
     }
 
     @Override
@@ -158,7 +155,6 @@ public class Pedido implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.codigo);
         hash = 59 * hash + Objects.hashCode(this.cliente);
         hash = 59 * hash + Objects.hashCode(this.fornecedor);
-        hash = 59 * hash + Objects.hashCode(this.viagem);
         return hash;
     }
 
@@ -180,9 +176,10 @@ public class Pedido implements Serializable {
         if (!Objects.equals(this.fornecedor, other.fornecedor)) {
             return false;
         }
-        if (!Objects.equals(this.viagem, other.viagem)) {
-            return false;
-        }
         return true;
+    }
+
+    public int compareTo(Pedido t) {
+        return this.codigo.compareTo(t.codigo);
     }
 }

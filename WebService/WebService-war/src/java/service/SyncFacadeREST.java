@@ -2,8 +2,6 @@ package service;
 
 import br.com.ejb.bean.Sync;
 import br.com.ejb.ejb.SyncDAORemote;
-import com.google.gson.Gson;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,15 +28,15 @@ public class SyncFacadeREST {
     public SyncFacadeREST() {
     }
 
-    @POST
+    @PUT
     @Consumes({"application/xml", "application/json"})
     public Sync create(Sync entity) {
         return dao.create(entity);
     }
 
-    @PUT
+    @POST
     @Path("atualiza/{syncs}")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void atualiza(@PathParam("atualiza/{syncs}") List<Sync> entity) {
         dao.atualiza(entity);
     }
@@ -50,7 +48,7 @@ public class SyncFacadeREST {
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Sync> sincroniza() {
         return dao.sincroniza();
     }

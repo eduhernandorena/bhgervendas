@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,19 +23,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Sync implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sync")
     private Long id;
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false)
     private String dataPag;
     @Column(nullable = false)
-    private double valor;
+    private Double valor;
     @Column(nullable = false)
     private String tpMov;
     @Column(nullable = false)
     private String parc;
     @Column(nullable = false)
-    private boolean sincronizado;
+    private Boolean sincronizado;
 
     public Long getId() {
         return id;
@@ -55,8 +58,8 @@ public class Sync implements Serializable {
         return dataPag;
     }
 
-    public void setDataPag(Date dataPag) {
-        this.dataPag = new SimpleDateFormat("dd/MM/yyyy").format(dataPag);
+    public void setDataPag(String dataPag) {
+        this.dataPag = dataPag;
     }
 
     public double getValor() {
