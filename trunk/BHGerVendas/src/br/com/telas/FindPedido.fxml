@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" onKeyTyped="#keyExit" prefHeight="384.0" prefWidth="728.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.PedidosController">
+    <TextField fx:id="txtPedCod" layoutX="70.0" layoutY="351.0" onKeyTyped="#keyExit" prefWidth="89.0" promptText="" />
+    <Label layoutX="22.0" layoutY="354.0" text="Código" />
+    <Button defaultButton="true" layoutX="666.0" layoutY="351.0" mnemonicParsing="false" onAction="#buscaPed" onKeyTyped="#keyExit" text="Buscar" />
+    <Label fx:id="txtNomeCli" layoutX="176.0" layoutY="354.0" text="Nome" />
+    <TextField fx:id="txtCliNome" layoutX="224.0" layoutY="351.0" prefWidth="417.0" />
+    <TableView fx:id="gridPedidos" layoutX="0.0" layoutY="0.0" onMouseClicked="#onClickPedido" prefHeight="340.0" prefWidth="728.0" tableMenuButtonVisible="true">
+        <columns>
+            <TableColumn prefWidth="75.0" text="Código" fx:id="colCodPed" />
+            <TableColumn prefWidth="310.0" text="Fornecedor" fx:id="colFornPed" />
+            <TableColumn prefWidth="130.0" text="Valor" fx:id="colValPed" />
+            <TableColumn prefWidth="120.0" text="Forma Pag." fx:id="colFormaPed" />
+            <TableColumn prefWidth="80.0" text="Parcelas" fx:id="colParcPed" />
+        </columns>
+    </TableView>
+</AnchorPane>

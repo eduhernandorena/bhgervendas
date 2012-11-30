@@ -50,7 +50,7 @@ public class EntidadeRest {
 
     public Entidade findCli(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("Cliente/{0}", new Object[]{id}));
+        resource = resource.path(java.text.MessageFormat.format("cliente/{0}", new Object[]{id}));
         Entidade e;
         try {
             e = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Entidade.class);
@@ -62,7 +62,7 @@ public class EntidadeRest {
 
     public Entidade findForn(Long id) throws UniformInterfaceException {
         WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("Fornecedor/{0}", new Object[]{id}));
+        resource = resource.path(java.text.MessageFormat.format("fornecedor/{0}", new Object[]{id}));
         Entidade e;
         try {
             e = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(Entidade.class);
@@ -74,7 +74,7 @@ public class EntidadeRest {
 
     public List<Entidade> findCliNome(String nome) throws UniformInterfaceException {
         WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("ClienteNome/{0}", new Object[]{nome}));
+        resource = resource.path(java.text.MessageFormat.format("clienteNome/{0}", new Object[]{nome}));
         List<Entidade> e;
         try {
             e = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Entidade>>() {
@@ -87,7 +87,7 @@ public class EntidadeRest {
 
     public List<Entidade> findFornNome(String nome) throws UniformInterfaceException {
         WebResource resource = webResource;
-        resource = resource.path(java.text.MessageFormat.format("FornecedorNome/{0}", new Object[]{nome}));
+        resource = resource.path(java.text.MessageFormat.format("fornecedorNome/{0}", new Object[]{nome}));
         List<Entidade> e;
         try {
             e = resource.accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(new GenericType<List<Entidade>>() {

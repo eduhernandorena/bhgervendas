@@ -9,7 +9,7 @@ import org.jasypt.util.text.BasicTextEncryptor;
 public class Cripto {
 
     final BasicTextEncryptor bte = new BasicTextEncryptor();
-    private final String alg = "fInAlPaSsWoRd";
+    private final String alg = "fF1Nn4lLPp455Ww0RrdD";
     private static Cripto cript;
 
     private static Cripto getInstance() {

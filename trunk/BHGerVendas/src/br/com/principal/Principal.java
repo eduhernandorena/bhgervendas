@@ -1,17 +1,16 @@
 package br.com.principal;
 
 import br.com.controller.ClienteFornController;
-import br.com.controller.EncomendaController;
 import br.com.controller.PedidosController;
 import br.com.controller.ProdutoController;
 import br.com.controller.UsuarioController;
 import br.com.controller.ViagemController;
-import br.com.ejb.bean.Encomenda;
 import br.com.ejb.bean.Entidade;
 import br.com.ejb.bean.Pedido;
 import br.com.ejb.bean.Produto;
 import br.com.ejb.bean.Usuario;
 import br.com.ejb.bean.Viagem;
+import br.com.ejb.bean.enumeration.TipoEntidade;
 import br.com.ws.UsuarioRest;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.logging.Level;
@@ -30,7 +29,7 @@ import javafx.stage.Stage;
 public class Principal extends Application {
 
     private Stage stage;
-    private Usuario loggedUser;
+    private static Usuario loggedUser;
     private static Principal instance;
 
     public Principal() {
@@ -54,13 +53,12 @@ public class Principal extends Application {
                 gotoLogin();
             } else {
                 FXOptionPane.showMessageDialog(null, "Não há usuário cadastrado!", "Sem Usuario!");
-                gotoCadUser();
+                gotoCadUser(null);
             }
             primaryStage.show();
         } catch (UniformInterfaceException ex) {
             System.out.println(ex.getMessage());
-            FXOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados\nverifique sua conexão e o IP do banco!", "Erro Banco de dados!");
-
+            FXOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados\nverifique sua conexão e endereco IP no arquivo de configuracoes!", "Erro Banco de dados!");
         }
     }
 
@@ -111,6 +109,40 @@ public class Principal extends Application {
         }
     }
 
+    public void gotoFindCliente(Pedido ped, TipoEntidade ent) {
+        try {
+            new ClienteFornController(ped);
+            Parent page;
+            if (ent.isCliente()) {
+                page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/FindCliente.fxml"), null, new JavaFXBuilderFactory());
+                stage.setTitle("BHGerVendas -- Busca Cliente");
+            } else {
+                page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/FindForn.fxml"), null, new JavaFXBuilderFactory());
+                stage.setTitle("BHGerVendas -- Busca Fornecedor");
+            }
+            Scene scene = new Scene(page, 725, 384);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void gotoFindPedido(Viagem v) {
+        try {
+            new PedidosController(null, v);
+            Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/FindPedido.fxml"), null, new JavaFXBuilderFactory());
+            Scene scene = new Scene(page, 725, 384);
+            stage.setTitle("BHGerVendas -- Busca Pedido");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void gotoLogin() {
         try {
             Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/Login.fxml"), null, new JavaFXBuilderFactory());
@@ -124,15 +156,15 @@ public class Principal extends Application {
         }
     }
 
-    public void gotoCadUser() {
+    public void gotoCadUser(Usuario user) {
         try {
+            new UsuarioController(stage, user);
             Parent page = (Parent) FXMLLoader.load(Principal.class.getResource("../telas/UsuarioCad.fxml"), null, new JavaFXBuilderFactory());
-            Scene scene = new Scene(page, 240, 160);
+            Scene scene = new Scene(page, 296, 115);
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.setTitle("BHGerVendas -- Cadastro de Usuários");
+            stage.setTitle("BHGerVendas -- Config");
             stage.centerOnScreen();
-            new UsuarioController(stage);
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -188,19 +220,10 @@ public class Principal extends Application {
         }
     }
 
-    public void gotoPedidoCad(Pedido ped) {
+    public void gotoPedidoCad(Pedido ped, Viagem v) {
         try {
-            new PedidosController(ped);
+            new PedidosController(ped, v);
             replaceSceneContentCad("PedidosCad.fxml", "Cadastro de Pedidos");
-        } catch (Exception ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void gotoEncomendaCad(Encomenda enc) {
-        try {
-            new EncomendaController(enc);
-            replaceSceneContentCad("EncomendaCad.fxml", "Cadastro de Encomendas");
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }

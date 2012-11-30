@@ -1,6 +1,5 @@
 package br.com.controller;
 
-import br.com.ejb.bean.Entidade;
 import br.com.ejb.bean.Pedido;
 import br.com.ejb.bean.Produto;
 import br.com.principal.FXOptionPane;
@@ -20,23 +19,32 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class ProdutoController implements Initializable {
 
     private static Principal p = Principal.getInstance();
     @FXML
-    private Button btBusca;
+    private MenuItem mnClear;
+    @FXML
+    private MenuItem mnSave;
+    @FXML
+    private MenuItem mnVoltar;
     @FXML
     private Button btClear;
     @FXML
     private Button btSave;
     @FXML
     private Button btVoltar;
+    @FXML
+    private Button btBusca;
     @FXML
     private ComboBox<String> cmbTpLucro;
     @FXML
@@ -55,6 +63,10 @@ public class ProdutoController implements Initializable {
     private TextField txtValVenda;
     @FXML
     private TextField txtLucro;
+    @FXML
+    private TextField txtProdCod;
+    @FXML
+    private TextField txtProdDesc;
     @FXML
     private TableView<Produto> gridFindProd;
     @FXML
@@ -91,14 +103,49 @@ public class ProdutoController implements Initializable {
             Produto prod = gridFindProd.getSelectionModel().getSelectedItem();
             if (prod != null) {
                 System.out.println("Produto: " + prod.getId());
-                pedido.getProdutos().add(prod);
+                if (!pedido.getProdutos().contains(prod)) {
+                    pedido.getProdutos().add(prod);
+                }
             }
-            p.gotoPedidoCad(pedido);
+            p.gotoPedidoCad(pedido, null);
+        }
+    }
+
+    @FXML
+    public void buscaProd(ActionEvent event) {
+        List<Produto> l = new ArrayList();
+        if (!txtProdCod.getText().isEmpty()) {
+            try {
+                Long cod = Long.valueOf(txtProdCod.getText());
+                l.add(prodDAO.find(cod));
+            } catch (NumberFormatException numberFormatException) {
+                l.add(null);
+                fillProdutoGrid(l);
+            }
+            fillProdutoGrid(l);
+        } else if (!txtProdDesc.getText().isEmpty()) {
+            try {
+                for (Produto ped : prodDAO.findDesc(txtProdDesc.getText() + "%")) {
+                    l.add(ped);
+                }
+                fillProdutoGrid(l);
+            } catch (NullPointerException nullPointerException) {
+                l.add(null);
+                fillProdutoGrid(l);
+            }
+        } else {
+            fillProdutoGrid(prodDAO.findAll());
+        }
+    }
+
+    public void keyExit(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE) {
+            p.gotoPedidoCad(pedido, null);
         }
     }
 
     public void voltaFind(ActionEvent event) {
-        p.gotoPedidoCad(pedido);
+        p.gotoPedidoCad(pedido, null);
     }
 
     public void clearCad(ActionEvent event) {
@@ -110,12 +157,12 @@ public class ProdutoController implements Initializable {
         txtValCompra.setText("");
         txtValVenda.setText("");
         txtLucro.setText("");
-        cmbTpLucro.setValue("%");
+        cmbTpLucro.setValue(null);
     }
 
     public void saveCad(ActionEvent event) {
         if (valida()) {
-            Produto prod = new Produto();
+            Produto prod = prodt != null ? prodt : new Produto();
             prod.setDescricao(txtDesc.getText());
             prod.setNroNota(Long.valueOf(txtNfe.getText()));
             Double pVenda = Double.valueOf(txtValVenda.getText());
@@ -229,7 +276,6 @@ public class ProdutoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fill(prodt);
         if (pedido == null) {
             txtCod.focusedProperty().addListener(new ChangeListener() {
                 @Override
@@ -254,6 +300,8 @@ public class ProdutoController implements Initializable {
                     calculoLucro();
                 }
             });
+        } else if (prodt != null) {
+            fill(prodt);
         } else {
             fillProdutoGrid(prodDAO.findAll());
         }

@@ -7,26 +7,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
-  <children>
-    <Button fx:id="btClear" layoutX="384.0" layoutY="20.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="76.0" text="Limpar" />
-    <TextField fx:id="txtCod" layoutX="14.0" layoutY="20.0" prefWidth="93.0" promptText="Código" />
-    <TextField fx:id="txtDesc" layoutX="14.0" layoutY="49.0" prefWidth="446.0" promptText="Descriçao" />
-    <TextField fx:id="txtTam" layoutX="14.0" layoutY="77.0" prefWidth="126.0" promptText="Tamanho" />
-    <TextField fx:id="txtValCompra" layoutX="14.0" layoutY="105.0" prefWidth="126.0" promptText="Preço Compra" />
-    <TextField fx:id="txtValVenda" layoutX="152.0" layoutY="105.0" prefWidth="148.0" promptText="Preço Venda" />
-    <TextField fx:id="txtLucro" layoutX="313.0" layoutY="105.0" prefWidth="95.0" promptText="Lucro" />
-    <ComboBox fx:id="cmbTpLucro" layoutX="415.0" layoutY="106.0" minWidth="40.0" prefHeight="21.0" prefWidth="45.0" promptText="\%">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="%" />
-          <String fx:value="R$" />
-        </FXCollections>
-      </items>
-    </ComboBox>
-    <Button fx:id="btSave" defaultButton="true" layoutX="301.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="76.0" text="Salvar" textAlignment="CENTER" />
-    <Button fx:id="btVoltar" layoutX="216.0" layoutY="20.0" mnemonicParsing="false" onAction="#voltar" prefWidth="76.0" text="Voltar" />
-    <TextField fx:id="txtNfe" layoutX="114.0" layoutY="20.0" prefWidth="93.0" promptText="Nro NFe" />
-    <TextField fx:id="txtRef" layoutX="152.0" layoutY="77.0" prefWidth="147.99990000000253" promptText="Ref Nro" />
-  </children>
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.00009999999747" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
+    <children>
+        <MenuBar prefWidth="754.0">
+            <menus>
+               <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#clearCad" text="Novo" fx:id="mnClear"/>
+                        <MenuItem mnemonicParsing="false" onAction="#saveCad" text="Salvar" fx:id="mnSave"/>
+                        <MenuItem mnemonicParsing="false" onAction="#voltar" text="Voltar" fx:id="mnVoltar"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Button fx:id="btClear" layoutX="384.0" layoutY="31.0" mnemonicParsing="false" onAction="#clearCad" prefWidth="76.0" text="Limpar" />
+        <TextField fx:id="txtCod" layoutX="14.0" layoutY="31.0" prefWidth="93.0" promptText="Código" />
+        <TextField fx:id="txtNfe" layoutX="114.0" layoutY="31.0" prefWidth="93.0" promptText="Nro NFe" />
+        <TextField fx:id="txtDesc" layoutX="14.0" layoutY="60.0" prefWidth="446.0" promptText="Descriçao" />
+        <TextField fx:id="txtTam" layoutX="14.0" layoutY="88.0" prefWidth="126.0" promptText="Tamanho" />
+        <TextField fx:id="txtRef" layoutX="152.0" layoutY="88.0" prefWidth="147.99990000000253" promptText="Ref Nro" />
+        <TextField fx:id="txtValCompra" layoutX="14.0" layoutY="116.0" prefWidth="126.0" promptText="Preço Compra" />
+        <TextField fx:id="txtValVenda" layoutX="152.0" layoutY="116.0" prefWidth="148.0" promptText="Preço Venda" />
+        <TextField fx:id="txtLucro" layoutX="313.0" layoutY="116.0" prefWidth="95.0" promptText="Lucro" />
+        <ComboBox fx:id="cmbTpLucro" layoutX="415.0" layoutY="117.0" minWidth="40.0" prefHeight="21.0" prefWidth="45.0" promptText="\%">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="%" />
+                    <String fx:value="R$" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button fx:id="btSave" defaultButton="true" layoutX="301.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveCad" prefWidth="76.0" text="Salvar" textAlignment="CENTER" />
+        <Button fx:id="btVoltar" layoutX="216.0" layoutY="31.0" mnemonicParsing="false" onAction="#voltar" prefWidth="76.0" text="Voltar" />
+    </children>
 </AnchorPane>

@@ -12,11 +12,8 @@ import java.io.IOException;
  */
 public class ConfInicial {
 
-    private String ip;
-    private Integer porta;
-    private String user;
-    private String senha;
     private static String URL = "";
+    private static String IP = "";
 
     public static String getInstance() {
         if (URL.isEmpty()) {
@@ -26,35 +23,10 @@ public class ConfInicial {
     }
 
     public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Integer getPorta() {
-        return porta;
-    }
-
-    public void setPorta(Integer porta) {
-        this.porta = porta;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+        if (IP.isEmpty()) {
+            leitor();
+        }
+        return IP;
     }
 
     private void leitor() {
@@ -62,11 +34,9 @@ public class ConfInicial {
             BufferedReader lerArq = new BufferedReader(arq);
             String linha;
             if ((linha = lerArq.readLine()) != null) {
-                setIp(linha);
-                setPorta(Integer.valueOf(lerArq.readLine()));
-                setUser(lerArq.readLine());
-                setSenha(lerArq.readLine());
-                URL = "http://" + getIp() + ":8080/WebService-war/resources";
+//                URL = "https://" + linha + ":8181/WebService-war/resources";
+                URL = "http://" + linha + ":8080/WebService-war/resources";
+                IP = linha;
             }
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
@@ -74,19 +44,13 @@ public class ConfInicial {
         }
     }
 
-    private void gravar() {
+    public void gravar(String ip) {
         try (FileWriter arq = new FileWriter("conf.txt")) {
             BufferedWriter escreve = new BufferedWriter(arq);
             if (escreve != null) {
-                escreve.append(getIp());
-                escreve.newLine();
-                escreve.append(getPorta().toString());
-                escreve.newLine();
-                escreve.append(getUser());
-                escreve.newLine();
-                escreve.append(getSenha());
+                escreve.append(ip);
                 escreve.close();
-                URL = "http://" + getIp() + ":8080/WebService-war/resources";
+                URL = "http://" + ip + ":8080/WebService-war/resources";
             }
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n",

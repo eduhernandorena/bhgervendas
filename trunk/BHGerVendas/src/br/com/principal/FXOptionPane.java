@@ -8,12 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -63,7 +62,7 @@ public class FXOptionPane {
         VBox vb = new VBox();
         Scene scene = new Scene(vb);
         final Dialog dial = new Dialog(title, owner, scene, "");
-        Button yesButton = new Button("Yes");
+        Button yesButton = new Button("SIM");
         yesButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -71,7 +70,7 @@ public class FXOptionPane {
                 buttonSelected = Response.YES;
             }
         });
-        Button noButton = new Button("No");
+        Button noButton = new Button("NÃO");
         noButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -82,6 +81,8 @@ public class FXOptionPane {
         BorderPane bp = new BorderPane();
         HBox buttons = new HBox();
         buttons.setAlignment(Pos.CENTER);
+        buttons.setSpacing(20.0);
+        buttons.setPrefHeight(50.);
         buttons.getChildren().addAll(yesButton, noButton);
         bp.setCenter(buttons);
         HBox msg = new HBox();
@@ -100,6 +101,7 @@ public class FXOptionPane {
         Scene scene = new Scene(vb);
         final Dialog dial = new Dialog(title, owner, scene, "");
         Button okButton = new Button("OK");
+        vb.setPrefHeight(75.);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -109,6 +111,7 @@ public class FXOptionPane {
         });
         BorderPane bp = new BorderPane();
         bp.setCenter(okButton);
+        bp.autosize();
         HBox msg = new HBox();
         msg.getChildren().addAll(icon, message);
         vb.getChildren().addAll(msg, bp);

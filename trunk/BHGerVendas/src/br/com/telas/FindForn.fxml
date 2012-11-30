@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" onKeyTyped="#keyExit" prefHeight="384.0" prefWidth="728.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ClienteFornController">
+  <TableView fx:id="tbFornecedores" cache="true" cacheHint="SPEED" focusTraversable="false" layoutX="0.0" layoutY="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClickFornecedor" pickOnBounds="true" prefHeight="338.0" prefWidth="728.0" tableMenuButtonVisible="true">
+    <columns>
+      <TableColumn prefWidth="75.0" text="Código" fx:id="colCodForn" />
+      <TableColumn prefWidth="250.0" text="Nome" fx:id="colNomeForn" />
+      <TableColumn prefWidth="75.0" text="Telefone" fx:id="colTelForn" />
+      <TableColumn prefWidth="75.0" text="Celular" fx:id="colCelForn" />
+      <TableColumn prefWidth="280.0" text="Endereço" fx:id="colEndForn" />
+    </columns>
+  </TableView>
+  <TextField fx:id="txtFornCod" layoutX="69.0" layoutY="348.0" prefWidth="89.0" promptText="" />
+  <Label layoutX="21.0" layoutY="351.0" text="Código" />
+  <Button defaultButton="true" layoutX="666.0" layoutY="348.0" mnemonicParsing="false" onAction="#buscaForn" text="Buscar" />
+  <Label layoutX="175.0" layoutY="351.0" text="Nome" />
+  <TextField id="" fx:id="txtFornNome" layoutX="223.0" layoutY="348.0" prefWidth="417.0" />
+</AnchorPane>
