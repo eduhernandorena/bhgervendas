@@ -68,6 +68,8 @@ public class Relatorio extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v,
                     int position, long id) {
+                mesString = spinnerMes.getItemAtPosition(position).toString();
+                sincroniza();
             }
 
             @Override
@@ -90,6 +92,7 @@ public class Relatorio extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v,
                     int position, long id) {
+                anoString = spinnerAno.getItemAtPosition(position).toString();
                 sincroniza();
             }
 
@@ -106,17 +109,18 @@ public class Relatorio extends Activity {
 
     private void sincroniza() {
         try {
-            dao.deleteAll();
-            new SyncREST(dao, this).sincroniza();
+//            dao.deleteAll();
+            SyncREST rest = new SyncREST(dao, this);
+            rest.sincroniza();
             lista = new ArrayList<Sync>();
-//                List<Sync> sincronizar = new ArrayList<Sync>();
+            List<Sync> sincronizar = new ArrayList<Sync>();
             List<Sync> list = dao.getAll();
             for (Sync sync : list) {
-                if (!sync.isSincronizado()) {
+//                if (!sync.isSincronizado()) {
                     sync.setSincronizado(true);
                     dao.update(sync);
-//                        sincronizar.add(sync);
-                }
+                    sincronizar.add(sync);
+//                }
                 String anoSync, mesSync;
                 String[] ss = sync.getDataPag().split("/");
                 mesSync = getMes(ss[1]);
@@ -138,7 +142,7 @@ public class Relatorio extends Activity {
                     }
                 }
             }
-//                rest.atualiza(sincronizar);
+            rest.atualiza(sincronizar);
             Collections.sort(lista);
             ArrayAdapter<Sync> adapterSync = new ArrayAdapter<Sync>(this, R.layout.list_item, lista);
             txtView.setAdapter(adapterSync);

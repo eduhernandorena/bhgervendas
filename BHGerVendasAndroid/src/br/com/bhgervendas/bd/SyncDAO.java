@@ -40,6 +40,7 @@ public class SyncDAO {
 
     public Sync create(Sync sync) {
         ContentValues values = new ContentValues();
+        values.put(CustomSQLiteOpenHelper.COLUMN_ID, sync.getId());
         values.put(CustomSQLiteOpenHelper.COLUMN_NOME, sync.getNome());
         values.put(CustomSQLiteOpenHelper.COLUMN_DATA, sync.getDataPag());
         values.put(CustomSQLiteOpenHelper.COLUMN_VALOR, sync.getValor());

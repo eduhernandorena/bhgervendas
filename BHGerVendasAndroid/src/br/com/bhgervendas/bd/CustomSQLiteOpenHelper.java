@@ -19,7 +19,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     // Database creation sql statement
     private static final String DATABASE_CREATE = " create table if not exists "
             + TABLE_SYNCS + "(" + COLUMN_ID
-            + " integer primary key autoincrement , " + COLUMN_NOME
+            + " integer primary key , " + COLUMN_NOME
             + " text not null, " + COLUMN_DATA
             + " text not null, " + COLUMN_VALOR
             + " decimal not null, " + COLUMN_TPMOV
