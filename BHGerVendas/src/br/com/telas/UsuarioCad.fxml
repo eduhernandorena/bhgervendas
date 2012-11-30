@@ -3,15 +3,25 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="160.0" prefWidth="240.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.UsuarioController">
+<AnchorPane id="AnchorPane" prefHeight="115.0" prefWidth="296.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.UsuarioController">
     <children>
-        <Button fx:id="btSave" defaultButton="true" layoutX="50.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickSave" prefWidth="60.0" text="Salvar" />
-        <TextField fx:id="txtUser" layoutX="18.0" layoutY="23.0" prefWidth="200.0" promptText="Usuario" />
-        <PasswordField fx:id="txtSenha" layoutX="18.0" layoutY="58.0" prefWidth="200.0" promptText="Senha" />
-        <PasswordField id="txtSenhaConfirm" fx:id="txtSenhaConfirm" layoutX="18.0" layoutY="86.0" prefWidth="200.0" promptText="Confirme a senha" />
-        <Button fx:id="btClear" cancelButton="true" layoutX="135.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickClear" prefWidth="60.0" text="Limpar" />
+        <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="296.0">
+            <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickClear" text="Novo" fx:id="mnClear"/>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickSave" text="Salvar" fx:id="mnSave"/>
+                    </items>
+                </Menu>
+        </MenuBar>
+        <TextField fx:id="txtUser" layoutX="18.0" layoutY="34.0" prefWidth="124.0" promptText="Usuario" />
+        <PasswordField fx:id="txtSenha" layoutX="154.0" layoutY="34.0" prefWidth="124.0" promptText="Senha" />
+        <PasswordField fx:id="txtSenhaConfirm" layoutX="154.0" layoutY="58.0" prefWidth="124.0" promptText="Confirme a senha" />
+        <TextField fx:id="txtIp" layoutX="18.0" layoutY="58.0" prefWidth="124.0" promptText="IP" />
+        <Button fx:id="btSave" defaultButton="true" layoutX="80.0" layoutY="89.0" mnemonicParsing="false" onAction="#onClickSave" prefWidth="60.0" text="Salvar" />
+        <Button fx:id="btClear" cancelButton="true" layoutX="156.0" layoutY="89.0" mnemonicParsing="false" onAction="#onClickClear" prefWidth="60.0" text="Limpar" />
     </children>
 </AnchorPane>

@@ -26,20 +26,12 @@ public class UsuarioRest {
         webResource.path(java.text.MessageFormat.format("{0}", new Object[]{id})).delete();
     }
 
-//    public String count() throws UniformInterfaceException {
-//        WebResource resource = webResource;
-//        resource = resource.path("count");
-//        return resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
-//    }
     public Boolean isEmpty() throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path("/empty");
         return Boolean.valueOf(resource.accept(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class));
     }
 
-//    public void edit(Object requestEntity) throws UniformInterfaceException {
-//        webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(requestEntity);
-//    }
     public Usuario create(Usuario user) throws UniformInterfaceException {
         return webResource.type(javax.ws.rs.core.MediaType.APPLICATION_XML).put(Usuario.class, user);
     }

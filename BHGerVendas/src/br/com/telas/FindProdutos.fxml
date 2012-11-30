@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="725.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#keyExit" prefHeight="384.0" prefWidth="725.0" xmlns:fx="http://javafx.com/fxml" fx:controller="br.com.controller.ProdutoController">
   <children>
-    <TableView fx:id="gridFindProd" layoutX="0.0" layoutY="0.0" onMouseClicked="#onClick" prefHeight="337.0" prefWidth="725.0">
+    <TableView fx:id="gridFindProd" layoutX="0.0" layoutY="0.0" onMouseClicked="#onClick" prefHeight="344.0" prefWidth="725.0">
       <columns>
         <TableColumn prefWidth="90.0" text="Código" fx:id="colCodProd" />
         <TableColumn prefWidth="200.0" text="Descrição" fx:id="colDescProd" />
@@ -18,6 +18,10 @@
         <TableColumn prefWidth="150.0" text="Preço" fx:id="colPrecProd" />
       </columns>
     </TableView>
-    <Button fx:id="btVoltar" defaultButton="true" layoutX="337.0" layoutY="350.0" mnemonicParsing="false" text="Voltar" onAction="#voltaFind" />
+    <TextField fx:id="txtProdCod" layoutX="60.0" layoutY="352.0" prefWidth="89.0" promptText="" />
+    <Label layoutX="12.0" layoutY="355.0" text="Código" />
+    <Button defaultButton="true" layoutX="662.0" layoutY="353.0" mnemonicParsing="false" onAction="#buscaProd" text="Buscar" />
+    <Label layoutX="166.0" layoutY="355.0" text="Descrição" />
+    <TextField id="" fx:id="txtProdDesc" layoutX="228.0" layoutY="352.0" prefWidth="425.0" />
   </children>
 </AnchorPane>

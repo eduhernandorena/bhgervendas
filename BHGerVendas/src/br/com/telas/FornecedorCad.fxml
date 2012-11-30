@@ -11,9 +11,13 @@
     <children>
         <MenuBar prefWidth="754.0">
             <menus>
-                <Menu mnemonicParsing="false" onAction="#saveCad" text="Salvar" fx:id="saveCad" />
-                <Menu mnemonicParsing="false" onAction="#clearCad" text="Limpar" fx:id="clearCad" />
-                <Menu mnemonicParsing="false" onAction="#voltar" text="Voltar" fx:id="voltar" />
+                <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#clearCad" text="Novo" fx:id="mnClear"/>
+                        <MenuItem mnemonicParsing="false" onAction="#saveCad" text="Salvar" fx:id="mnSave"/>
+                        <MenuItem mnemonicParsing="false" onAction="#voltar" text="Voltar" fx:id="mnVoltar"/>
+                    </items>
+                </Menu>
             </menus>
         </MenuBar>
         <TextField fx:id="txtCod" layoutX="14.0" layoutY="33.0" prefWidth="83.0" promptText="Código" />
@@ -53,12 +57,12 @@
         <CheckBox fx:id="chkNew" layoutX="179.0" layoutY="124.0" mnemonicParsing="false" text="Fornecedor Novo" />
         <TableView fx:id="gridPedidos" focusTraversable="false" layoutX="15.0" layoutY="150.0" prefHeight="200.00009999999747" prefWidth="725.0">
             <columns>
-                <TableColumn prefWidth="85.0" resizable="false" text="Cod" />
-                <TableColumn prefWidth="120.0" resizable="false" text="Data do Pedido" />
-                <TableColumn prefWidth="100.0" resizable="false" text="Cod Viagem" />
-                <TableColumn prefWidth="120.0" resizable="false" text="Nro de Parcelas" />
-                <TableColumn prefWidth="150.0" resizable="false" text="Forma de Pagamento" />
-                <TableColumn prefWidth="149.0" resizable="false" text="Valor" />
+                <TableColumn prefWidth="85.0" resizable="false" text="Cod" fx:id="colCodPed" />
+                <TableColumn prefWidth="190.0" resizable="false" text="Cliente" fx:id="colCli" />
+                <TableColumn prefWidth="120.0" resizable="false" text="Data do Pedido" fx:id="colDtPed" />
+                <TableColumn prefWidth="120.0" resizable="false" text="Nro de Parcelas" fx:id="colParcPed" />
+                <TableColumn prefWidth="109.0" resizable="false" text="Forma de Pag." fx:id="colFormaPed" />
+                <TableColumn prefWidth="100.0" resizable="false" text="Valor" fx:id="colValPed" />
             </columns>
         </TableView>
         <TextField fx:id="txtCodEnd" layoutX="15.0" layoutY="359.0" prefWidth="106.0" promptText="Codigo Endereço" />
