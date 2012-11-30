@@ -12,16 +12,18 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_VALOR = "valor";
     public static final String COLUMN_TPMOV = "tipoMov";
+    public static final String COLUMN_PARC = "parc";
     public static final String COLUMN_SYNC = "sincronizado";
     private static final String DATABASE_NAME = "syncs.db";
     private static final int DATABASE_VERSION = 1;
     // Database creation sql statement
-    private static final String DATABASE_CREATE = " create table "
+    private static final String DATABASE_CREATE = " create table if not exists "
             + TABLE_SYNCS + "(" + COLUMN_ID
             + " integer primary key autoincrement , " + COLUMN_NOME
             + " text not null, " + COLUMN_DATA
             + " text not null, " + COLUMN_VALOR
             + " decimal not null, " + COLUMN_TPMOV
+            + " text not null, " + COLUMN_PARC
             + " text not null, " + COLUMN_SYNC
             + " bit not null);";
 

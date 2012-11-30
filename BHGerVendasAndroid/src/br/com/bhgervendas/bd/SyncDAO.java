@@ -21,6 +21,7 @@ public class SyncDAO {
         CustomSQLiteOpenHelper.COLUMN_DATA,
         CustomSQLiteOpenHelper.COLUMN_VALOR,
         CustomSQLiteOpenHelper.COLUMN_TPMOV,
+        CustomSQLiteOpenHelper.COLUMN_PARC,
         CustomSQLiteOpenHelper.COLUMN_SYNC};
     private CustomSQLiteOpenHelper sqliteOpenHelper;
 
@@ -43,6 +44,7 @@ public class SyncDAO {
         values.put(CustomSQLiteOpenHelper.COLUMN_DATA, sync.getDataPag());
         values.put(CustomSQLiteOpenHelper.COLUMN_VALOR, sync.getValor());
         values.put(CustomSQLiteOpenHelper.COLUMN_TPMOV, sync.getTpMov());
+        values.put(CustomSQLiteOpenHelper.COLUMN_PARC, sync.getParc());
         values.put(CustomSQLiteOpenHelper.COLUMN_SYNC, sync.isSincronizado());
         long insertId = database.insert(CustomSQLiteOpenHelper.TABLE_SYNCS, null,
                 values);
@@ -56,7 +58,8 @@ public class SyncDAO {
         newSync.setDataPag(cursor.getString(2));
         newSync.setValor(cursor.getDouble(3));
         newSync.setTpMov(cursor.getString(4));
-        newSync.setSincronizado(cursor.getInt(5) == 1);
+        newSync.setParc(cursor.getString(5));
+        newSync.setSincronizado(cursor.getInt(6) == 1);
         cursor.close();
         return newSync;
     }
@@ -74,6 +77,7 @@ public class SyncDAO {
         values.put(CustomSQLiteOpenHelper.COLUMN_DATA, sync.getDataPag());
         values.put(CustomSQLiteOpenHelper.COLUMN_VALOR, sync.getValor());
         values.put(CustomSQLiteOpenHelper.COLUMN_TPMOV, sync.getTpMov());
+        values.put(CustomSQLiteOpenHelper.COLUMN_PARC, sync.getParc());
         values.put(CustomSQLiteOpenHelper.COLUMN_SYNC, sync.isSincronizado());
         database.update(CustomSQLiteOpenHelper.TABLE_SYNCS, values, CustomSQLiteOpenHelper.COLUMN_ID + " = " + id, null);
     }
@@ -96,7 +100,8 @@ public class SyncDAO {
             Sync.setDataPag(cursor.getString(2));
             Sync.setValor(cursor.getDouble(3));
             Sync.setTpMov(cursor.getString(4));
-            Sync.setSincronizado(cursor.getInt(5) == 1);
+            Sync.setParc(cursor.getString(5));
+            Sync.setSincronizado(cursor.getInt(6) == 1);
             Syncs.add(Sync);
             cursor.moveToNext();
         }

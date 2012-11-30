@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+    android:id="@+id/widget0"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText
+        android:id="@+id/txtIP"
+        android:layout_width="320px"
+        android:layout_height="wrap_content"
+        android:hint="ex. 192.168.0.100"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_x="0px"
+        android:layout_y="52px" />
+    <TextView
+        android:id="@+id/widget33"
+        android:layout_width="197px"
+        android:layout_height="29px"
+        android:text="Digite seu IP e Porta"
+        android:textSize="18sp"
+        android:layout_x="10px"
+        android:layout_y="12px" />
+    <Button
+        android:id="@+id/btSalvar"
+        android:layout_width="128px"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:layout_x="90px"
+        android:layout_y="112px" />
+</AbsoluteLayout>
