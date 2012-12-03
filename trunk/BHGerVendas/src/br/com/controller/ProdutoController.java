@@ -81,10 +81,10 @@ public class ProdutoController implements Initializable {
     private TableColumn<Produto, String> colTamProd;
     @FXML
     private TableColumn<Produto, Double> colPrecProd;
-    private static List<Produto> gridProd;
+    private List<Produto> gridProd;
     private static Pedido pedido;
-    private static Produto prodt;
-    private static ProdutoRest prodDAO = new ProdutoRest();
+    private Produto prodt;
+    private ProdutoRest prodDAO = new ProdutoRest();
 
     public ProdutoController() {
     }
@@ -276,7 +276,11 @@ public class ProdutoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (pedido == null) {
+        if (prodt != null) {
+            fill(prodt);
+        } else if (prodt == null) {
+            fillProdutoGrid(prodDAO.findAll());
+        } else if (pedido == null) {
             txtCod.focusedProperty().addListener(new ChangeListener() {
                 @Override
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -300,10 +304,6 @@ public class ProdutoController implements Initializable {
                     calculoLucro();
                 }
             });
-        } else if (prodt != null) {
-            fill(prodt);
-        } else {
-            fillProdutoGrid(prodDAO.findAll());
         }
     }
 }
