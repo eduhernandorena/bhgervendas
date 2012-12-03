@@ -38,7 +38,9 @@ public class SyncFacadeREST {
     @Path("atualiza/")
     @Consumes({"application/json"})
     public void atualiza(List<Sync> entity) {
-        dao.atualiza(entity);
+        if (entity != null && !entity.isEmpty()) {
+            dao.atualiza(entity);
+        }
     }
 
     @DELETE
