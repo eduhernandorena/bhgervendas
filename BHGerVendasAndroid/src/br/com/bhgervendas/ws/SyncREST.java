@@ -41,7 +41,7 @@ public class SyncREST {
         ManageFile fileread = new ManageFile(cnt);
         String ip = fileread.ReadFile();
         if (ip != null && !ip.isEmpty()) {
-            BASE_URI = "http://" + ip + ":8080/WebService-war/resources/br.com.ejb.bean.sync";
+            BASE_URI = "http://10.13.3.255:8080/WebService-war/resources/br.com.ejb.bean.sync";
             System.out.println(BASE_URI);
         } else {
             BASE_URI = null;
@@ -143,10 +143,10 @@ public class SyncREST {
 //        }
 //    }
     public boolean sincroniza() {
-        if (BASE_URI == null) {
-            gerarToast("IP nulo ou inválido!");
-            return false;
-        } else {
+//        if (BASE_URI == null) {
+//            gerarToast("IP nulo ou inválido!");
+//            return false;
+//        } else {
             try {
                 HttpGet get = new HttpGet(BASE_URI);
                 ResponseHandler<String> handler = new BasicResponseHandler();
@@ -171,7 +171,7 @@ public class SyncREST {
                 Logger.getLogger(SyncREST.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
             }
-        }
+//        }
     }
 
     private void gerarToast(CharSequence message) {
