@@ -1,7 +1,13 @@
 package br.com.view;
 
 import br.com.bean.Usuario;
+import br.com.util.DBConnection;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.management.Query;
 import javax.swing.JOptionPane;
 
@@ -13,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class FormLogin extends javax.swing.JDialog {
 
-    
+    private Connection conn = DBConnection.getConnection();
 
     public FormLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -167,9 +173,11 @@ public class FormLogin extends javax.swing.JDialog {
      * @return Usuário do login, ou null se ele não existe
      */
     public Usuario findLogin(final String login) {
-        Query query = start.conLocal.createQuery("select o from UsuarioPDV o where o.login=:login");
-        query.setParameter("login", login);
-        return (Usuario) query.getSingleResult();
+        try {
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
