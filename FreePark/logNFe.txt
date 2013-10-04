@@ -1,0 +1,24 @@
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:02:39
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:03:56
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:05:49
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:08:41
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:09:24
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:12:19
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:13:33
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:14:15
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:15:29
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:16:15
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:16:35
+
+SO: Windows 7 -- Java: 1.7.0_40-b43 -- Data: 03/10/2013 22:16:44

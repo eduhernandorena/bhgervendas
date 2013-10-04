@@ -52,7 +52,7 @@ public class TicketTableModel extends AbstractTableModel {
     public int getColumnCount() {
         //quantidade de colunas
         //vamos exibir só Nome e Quantidade, então são 2 colunas
-        return 13;
+        return 4;
     }
 
     @Override
