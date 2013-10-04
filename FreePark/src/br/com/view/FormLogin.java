@@ -1,25 +1,13 @@
 package br.com.view;
 
-import br.com.bean.Usuario;
-import br.com.util.DBConnection;
+import br.com.dao.UsuarioDAO;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.management.Query;
-import javax.swing.JOptionPane;
-
-
 
 /**
  *
  * @author roger
  */
 public class FormLogin extends javax.swing.JDialog {
-
-    private Connection conn = DBConnection.getConnection();
 
     public FormLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -147,37 +135,7 @@ public class FormLogin extends javax.swing.JDialog {
      * @return true se usuário e senha conferem, false em caso contrário
      */
     public boolean autenticar(String login, String senha) {
-        try {
-            Usuario usuario = this.findLogin(login);
-            if (usuario != null && usuario.autentica(senha)) {
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(this, "Senha inválida", "Autentucação", JOptionPane.ERROR_MESSAGE);
-                txtSenha.setText("");
-                txtSenha.requestFocus();
-            }
-        } catch (NoResultException ex) {
-            JOptionPane.showMessageDialog(this, "Usuário incorreto", "Autentucação", JOptionPane.ERROR_MESSAGE);
-            txtSenha.setText("");
-            txtLogin.setText("");
-            txtLogin.requestFocus();
-        }
-        return false;
-    }
-
-    /**
-     * Busca no sistema o usuário pelo login. O login é sensível a maiuscúlas e
-     * minuscúlas.
-     *
-     * @param login string contendo o login
-     * @return Usuário do login, ou null se ele não existe
-     */
-    public Usuario findLogin(final String login) {
-        try {
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return new UsuarioDAO().validaUser(login, senha);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

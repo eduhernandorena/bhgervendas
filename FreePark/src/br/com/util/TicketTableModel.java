@@ -24,7 +24,7 @@ public class TicketTableModel extends AbstractTableModel {
     private final int COL_ENTRADA = 3;
     //lista dos produtos que serão exibidos
     private List<Ticket> listTicket;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm");
 
     public TicketTableModel() {

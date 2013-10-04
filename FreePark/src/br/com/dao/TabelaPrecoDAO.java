@@ -29,6 +29,18 @@ public class TabelaPrecoDAO {
         }
         return null;
     }
+    
+    public TabelaPreco find(long id) {
+        try {
+            PreparedStatement query = conn.prepareStatement("select * from tabelapreco o where o.id=?");
+            query.setLong(1, id);
+            ResultSet rs = query.executeQuery();
+            return fillTabelaPreco(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public TabelaPreco fillTabelaPreco(ResultSet rs) throws SQLException {
         TabelaPreco tab = null;
