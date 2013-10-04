@@ -10,6 +10,7 @@ import java.util.Date;
 public class Ticket {
 
     private Long id;
+    private String serie;
     private Date dataEnt;
     private Date horaEnt;
     private Date dataSai;
@@ -57,6 +58,14 @@ public class Ticket {
 
     public void setHoraSai(Date horaSai) {
         this.horaSai = horaSai;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
     }
 
     public StatusTicket getStatus() {

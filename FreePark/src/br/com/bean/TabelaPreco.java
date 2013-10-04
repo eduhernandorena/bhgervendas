@@ -7,11 +7,19 @@ import br.com.bean.enumeration.Modalidade;
  * @author Eduardo Hernandorena
  */
 public class TabelaPreco {
+
     private Long id;
     private Double prHora;
     private Double prFracao;
     private Double halfHora;
     private Modalidade mod;
+
+    public TabelaPreco() {
+    }
+
+    public TabelaPreco(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
