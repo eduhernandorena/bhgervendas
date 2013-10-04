@@ -1,6 +1,7 @@
 package br.com.dao;
 
 import br.com.bean.TabelaPreco;
+import br.com.bean.enumeration.Modalidade;
 import br.com.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +18,10 @@ public class TabelaPrecoDAO {
 
     Connection conn = DBConnection.getConnection();
 
-    public TabelaPreco find() {
+    public TabelaPreco find(int mod) {
         try {
-            PreparedStatement query = conn.prepareStatement("select * from tabelapreco");
+            PreparedStatement query = conn.prepareStatement("select * from tabelapreco o where o.mod=?");
+            query.setInt(1, mod);
             ResultSet rs = query.executeQuery();
             return fillTabelaPreco(rs);
         } catch (SQLException ex) {
@@ -33,14 +35,10 @@ public class TabelaPrecoDAO {
         if (rs.next()) {
             tab = new TabelaPreco();
             tab.setId(rs.getLong("id"));
-            tab.setPlaca(rs.getString("placa"));
-            tab.setTempo(rs.getString("tempo"));
-            tab.setDataEnt(rs.getDate("dataent"));
-            tab.setDataSai(rs.getDate("datasai"));
-            tab.setHoraEnt(rs.getTimestamp("horaent"));
-            tab.setHoraSai(rs.getTimestamp("horasai"));
-            tab.setStatus(TabelaPreco.value(rs.getInt("status")));
-            tab.setTabela(rs.getString("pass"));
+            tab.setHalfHora(rs.getDouble("halfhora"));
+            tab.setMod(Modalidade.value(rs.getInt("mod")));
+            tab.setPrFracao(rs.getDouble("prfracao"));
+            tab.setPrHora(rs.getDouble("prhora"));
         }
         return tab;
     }
