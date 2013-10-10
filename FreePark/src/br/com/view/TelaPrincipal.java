@@ -1,5 +1,6 @@
 package br.com.view;
 
+import br.com.bean.Ticket;
 import br.com.util.AllKeyIntercept;
 import br.com.util.TicketTableModel;
 import java.awt.KeyboardFocusManager;
@@ -14,6 +15,7 @@ import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingConstants;
@@ -139,6 +141,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
     }//GEN-LAST:event_formKeyPressed
 
+//    private void initTable(List<Ticket> list) {
+//        model = new FrenteTableModel(list);
+//        //atribui o modelo à tabela
+//        tbItem.setModel(model);
+//        tbItem.setAutoCreateRowSorter(true);
+//        ajustarColumns();
+//    }
     private void ajustarColumns() {
         TableColumnModel colModel = tbTicket.getColumnModel();
 
@@ -161,8 +170,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
         colModel.getColumn(3).setWidth(100);
         colModel.getColumn(3).setCellRenderer(alinhar(Align.CENTER));
         colModel.getColumn(3).setResizable(false);
-
-
     }
 
     private DefaultTableCellRenderer alinhar(Align align) {
@@ -192,11 +199,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
                 System.out.println("TABELA");
             }
         } else if (ke.getKeyCode() == KeyEvent.VK_F2) {
-            
-        } else{
+            FormTicket tk = new FormTicket(this, true);
+            tk.setVisible(true);
+        } else {
             if (txtPlaca.getText().isEmpty()) {
                 txtPlaca.setText(String.valueOf(ke.getKeyChar()));
             }
+            txtPlaca.setText(txtPlaca.getText().toUpperCase());
             txtPlaca.requestFocus();
         }
     }

@@ -47,7 +47,7 @@ public class TabelaPrecoDAO {
         if (rs.next()) {
             tab = new TabelaPreco();
             tab.setId(rs.getLong("id"));
-            tab.setHalfHora(rs.getDouble("halfhora"));
+            tab.setHalfHora(rs.getDouble("prhalfhora"));
             tab.setMod(Modalidade.value(rs.getInt("mod")));
             tab.setPrFracao(rs.getDouble("prfracao"));
             tab.setPrHora(rs.getDouble("prhora"));
