@@ -92,7 +92,7 @@ public class TicketTableModel extends AbstractTableModel {
         } else if (columnIndex == COL_MODELO) {
             return ticket.getTabela().getMod().name();
         } else if (columnIndex == COL_ENTRADA) {
-            return sdf.format(ticket.getDataEnt()) + " " + sdfHora.format(ticket.getHoraEnt());
+            return sdf.format(ticket.getDataEnt()) + "     " + sdfHora.format(ticket.getHoraEnt());
         }
         return "";
     }

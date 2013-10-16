@@ -67,7 +67,7 @@ public class TicketDAO {
 
     public List<Ticket> findAll() {
         try {
-            PreparedStatement query = conn.prepareStatement("select * from ticket");
+            PreparedStatement query = conn.prepareStatement("select * from ticket where status=0");
             ResultSet rs = query.executeQuery();
             return fillTicket(rs);
         } catch (SQLException ex) {

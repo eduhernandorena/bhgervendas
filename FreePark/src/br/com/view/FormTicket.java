@@ -5,6 +5,7 @@ import br.com.bean.Ticket;
 import br.com.bean.enumeration.StatusTicket;
 import br.com.dao.TabelaPrecoDAO;
 import br.com.dao.TicketDAO;
+import br.com.util.TicketTableModel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
@@ -18,6 +19,8 @@ import java.util.logging.Logger;
  * @author Roger
  */
 public class FormTicket extends javax.swing.JDialog implements KeyListener {
+
+    TicketTableModel model;
 
     /**
      * Creates new form NewJDialog
@@ -179,6 +182,9 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
             TabelaPreco tab = new TabelaPrecoDAO().find(Integer.parseInt(txtMod.getText()));
             if (tab != null) {
                 txtModDesc.setText(tab.getMod().name());
+            } else {
+                txtModDesc.setText("");
+                txtModDesc.requestFocus();
             }
         }
     }//GEN-LAST:event_txtModFocusLost
@@ -204,6 +210,7 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
             t.setStatus(StatusTicket.ATIVO);
             t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
             new TicketDAO().create(t);
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

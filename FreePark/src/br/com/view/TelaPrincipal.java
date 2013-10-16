@@ -1,6 +1,7 @@
 package br.com.view;
 
 import br.com.bean.Ticket;
+import br.com.dao.TicketDAO;
 import br.com.util.AllKeyIntercept;
 import br.com.util.TicketTableModel;
 import java.awt.KeyboardFocusManager;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,19 +30,14 @@ import javax.swing.table.TableColumnModel;
  */
 public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
 
+    TicketTableModel model = null;
     private static PrintStream ps;
     private static final Logger LOG = Logger.getLogger(TelaPrincipal.class.getName());
 
     public TelaPrincipal() {
         initComponents();
         logger();
-        //cria o modelo de NFe da tabela
-        TicketTableModel model = new TicketTableModel();
-
-        //atribui o modelo Ã  tabela
-        tbTicket.setModel(model);
-        tbTicket.setAutoCreateRowSorter(true);
-        txtTotal.setText(String.valueOf(model.getRowCount()));
+        initTable(new TicketDAO().findAll());
         ajustarColumns();
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(this));
     }
@@ -71,6 +68,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
         txtPlaca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         tbTicket.setAutoCreateRowSorter(true);
+        tbTicket.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         tbTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -80,8 +78,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
             }
         ));
         tbTicket.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tbTicket.setAutoscrolls(false);
         tbTicket.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tbTicket.setMaximumSize(new java.awt.Dimension(700, 64));
+        tbTicket.setShowHorizontalLines(false);
+        tbTicket.setShowVerticalLines(false);
         tbTicket.getTableHeader().setReorderingAllowed(false);
         spGrid.setViewportView(tbTicket);
 
@@ -141,13 +142,18 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
     }//GEN-LAST:event_formKeyPressed
 
-//    private void initTable(List<Ticket> list) {
-//        model = new FrenteTableModel(list);
-//        //atribui o modelo à tabela
-//        tbItem.setModel(model);
-//        tbItem.setAutoCreateRowSorter(true);
-//        ajustarColumns();
-//    }
+    private void initTable(List<Ticket> list) {
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        model = new TicketTableModel(list);
+        //atribui o modelo à tabela
+        tbTicket.setModel(model);
+        tbTicket.setAutoCreateRowSorter(true);
+        txtTotal.setText(String.valueOf(model.getRowCount()));
+        ajustarColumns();
+    }
+
     private void ajustarColumns() {
         TableColumnModel colModel = tbTicket.getColumnModel();
 
@@ -191,22 +197,25 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         System.out.println(ke.getKeyChar());
-        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("ENTER!");
-        } else if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            tbTicket.requestFocus();
-            if (tbTicket.isFocusOwner()) {
-                System.out.println("TABELA");
+        if (ke.getKeyCode() != KeyEvent.VK_UP && ke.getKeyCode() != KeyEvent.VK_DOWN) {
+            if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                System.out.println("ENTER!");
+            } else if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                tbTicket.requestFocus();
+                if (tbTicket.isFocusOwner()) {
+                    System.out.println("TABELA");
+                }
+            } else if (ke.getKeyCode() == KeyEvent.VK_F2) {
+                FormTicket tk = new FormTicket(this, true);
+                tk.setVisible(true);
+                initTable(new TicketDAO().findAll());
+            } else {
+                if (txtPlaca.getText().isEmpty()) {
+                    txtPlaca.setText(String.valueOf(ke.getKeyChar()));
+                }
+                txtPlaca.setText(txtPlaca.getText().toUpperCase());
+                txtPlaca.requestFocus();
             }
-        } else if (ke.getKeyCode() == KeyEvent.VK_F2) {
-            FormTicket tk = new FormTicket(this, true);
-            tk.setVisible(true);
-        } else {
-            if (txtPlaca.getText().isEmpty()) {
-                txtPlaca.setText(String.valueOf(ke.getKeyChar()));
-            }
-            txtPlaca.setText(txtPlaca.getText().toUpperCase());
-            txtPlaca.requestFocus();
         }
     }
 
