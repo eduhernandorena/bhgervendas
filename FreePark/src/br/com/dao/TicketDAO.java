@@ -27,7 +27,8 @@ public class TicketDAO {
         try {
             String sql = "INSERT INTO Ticket(id, dataent, horaent, status, idtabela, placa, serie)"
                     + " VALUES(NEXTVAL('seqticket'),?,?,?,?,?,?)";
-            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            try {
                 pst.setDate(1, new Date(tk.getDataEnt().getTime()));
                 pst.setTimestamp(2, new Timestamp(tk.getHoraEnt().getTime()));
                 pst.setInt(3, tk.getStatus().ordinal());
@@ -35,9 +36,11 @@ public class TicketDAO {
                 pst.setString(5, tk.getPlaca());
                 pst.setString(6, tk.getSerie());
                 pst.execute();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         return true;
     }

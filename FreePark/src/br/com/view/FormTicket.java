@@ -5,12 +5,15 @@ import br.com.bean.Ticket;
 import br.com.bean.enumeration.StatusTicket;
 import br.com.dao.TabelaPrecoDAO;
 import br.com.dao.TicketDAO;
-import br.com.util.TicketTableModel;
+import br.com.util.AllKeyIntercept;
+import java.awt.AWTKeyStroke;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,18 +23,21 @@ import java.util.logging.Logger;
  */
 public class FormTicket extends javax.swing.JDialog implements KeyListener {
 
-    TicketTableModel model;
+    TelaPrincipal tp = null;
 
-    /**
-     * Creates new form NewJDialog
-     */
     public FormTicket(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        tp = (TelaPrincipal) parent;
         initComponents();
+        HashSet backup = new HashSet(this.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        HashSet conj = (HashSet) backup.clone();
+        conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
+        this.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
         txtData.setText(sdf.format(new Date()));
         txtHora.setText(sdfH.format(new Date()));
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(this));
     }
 
     /**
@@ -50,7 +56,6 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
         jPanel1 = new javax.swing.JPanel();
         txtData = new javax.swing.JFormattedTextField();
         txtHora = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -72,7 +77,6 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
 
         txtModDesc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtModDesc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtModDesc.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,13 +142,6 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
                 .addContainerGap())
         );
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,10 +154,6 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
                 .addGap(49, 49, 49)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(61, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(128, 128, 128))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,11 +162,10 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(398, 252));
+        setSize(new java.awt.Dimension(398, 231));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,33 +180,7 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
             }
         }
     }//GEN-LAST:event_txtModFocusLost
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-            Ticket t = new Ticket();
-            t.setPlaca(txtPlaca.getText());
-            t.setSerie(sdf.format(new Date()));
-            try {
-                sdf = new SimpleDateFormat("dd/MM/yyyy");
-                t.setDataEnt(sdf.parse(txtData.getText()));
-            } catch (ParseException ex) {
-                Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                sdf = new SimpleDateFormat("HH:mm");
-                t.setHoraEnt(sdf.parse(txtHora.getText()));
-            } catch (ParseException ex) {
-                Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            t.setStatus(StatusTicket.ATIVO);
-            t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
-            new TicketDAO().create(t);
-            this.dispose();
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JFormattedTextField txtData;
@@ -230,27 +196,32 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-                Ticket t = new Ticket();
-                t.setPlaca(txtPlaca.getText());
-                t.setSerie(sdf.format(new Date()));
-                try {
-                    sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    t.setDataEnt(sdf.parse(txtData.getText()));
-                } catch (ParseException ex) {
-                    Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
+        if (!txtMod.getText().isEmpty() && !txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
+            if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (!txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                    Ticket t = new Ticket();
+                    t.setPlaca(txtPlaca.getText());
+                    t.setSerie(sdf.format(new Date()));
+                    try {
+                        sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        t.setDataEnt(sdf.parse(txtData.getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        sdf = new SimpleDateFormat("HH:mm");
+                        t.setHoraEnt(sdf.parse(txtHora.getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    t.setStatus(StatusTicket.ATIVO);
+                    t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
+                    if (new TicketDAO().create(t)) {
+                        tp.initTable();
+                        this.setVisible(false);
+                    }
                 }
-                try {
-                    sdf = new SimpleDateFormat("HH:mm");
-                    t.setHoraEnt(sdf.parse(txtHora.getText()));
-                } catch (ParseException ex) {
-                    Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                t.setStatus(StatusTicket.ATIVO);
-                t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
-                new TicketDAO().create(t);
             }
         }
     }
