@@ -218,7 +218,7 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
                     t.setStatus(StatusTicket.ATIVO);
                     t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
                     if (new TicketDAO().create(t)) {
-                        tp.initTable();
+                        tp.initTable(null);
                         this.setVisible(false);
                     }
                 }

@@ -153,11 +153,25 @@ public class TicketTableModel extends AbstractTableModel {
 
     public Ticket getTicket(String placa) {
         for (Ticket tick : listTicket) {
-            if (tick.getPlaca().equals(placa)) {
+            if (tick.getPlaca().startsWith(placa)) {
                 return tick;
             }
         }
 
         return null;
+    }
+
+    public List<Ticket> getTickets(String placa) {
+        if (placa.isEmpty()) {
+            return getListTicket();
+        }
+        List<Ticket> lista = new ArrayList<>();
+        for (Ticket tick : listTicket) {
+            if (tick.getPlaca().startsWith(placa.toUpperCase())) {
+                lista.add(tick);
+            }
+        }
+
+        return lista;
     }
 }
