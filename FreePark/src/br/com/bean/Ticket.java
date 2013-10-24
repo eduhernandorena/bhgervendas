@@ -19,6 +19,7 @@ public class Ticket {
     private String tempo;
     private TabelaPreco tabela;
     private String placa;
+    private Double valor;
 
     public Long getId() {
         return id;
@@ -98,5 +99,13 @@ public class Ticket {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 }
