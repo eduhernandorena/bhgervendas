@@ -1,6 +1,7 @@
 package br.com.view;
 
 import br.com.bean.Ticket;
+import br.com.calc.Calculo;
 import br.com.dao.TicketDAO;
 import br.com.util.AllKeyIntercept;
 import br.com.util.TicketTableModel;
@@ -201,6 +202,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
 
         switch (ke.getKeyCode()) {
             case KeyEvent.VK_ENTER:
+                Calculo.fechaTicket(model.getTicket(tbTicket.getSelectedRow()));
                 System.out.println(model.getTicket(tbTicket.getSelectedRow()).getPlaca());
                 break;
             case KeyEvent.VK_ESCAPE:
