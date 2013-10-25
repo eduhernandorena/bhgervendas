@@ -36,8 +36,14 @@ public class Moto {
                 } else {
                     total = 5 * ticket.getTabela().getPrHora();
                 }
-                JOptionPane.showMessageDialog(null, total);
+                long hora = time / 3600,
+                        minutos = (time - (3600 * hora)) / 60,
+                        seg = time - ((minutos * 60) + (3600 * hora));
+                String tempo = hora + ":" + minutos + ":" + seg;
+                JOptionPane.showMessageDialog(null, "Total: " + total);
+                JOptionPane.showMessageDialog(null, "Tempo: " + tempo);
                 ticket.setValor(total);
+                ticket.setTempo(tempo);
             }
         }
         return ticket;

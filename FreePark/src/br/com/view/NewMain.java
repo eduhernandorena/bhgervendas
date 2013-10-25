@@ -25,7 +25,7 @@ public class NewMain {
             t.setDataEnt(sdf.parse("24102013000000"));
             t.setDataSai(sdf.parse("24102013020000"));
             t.setHoraEnt(sdf.parse("24102013000000"));
-            t.setHoraSai(sdf.parse("24102013060000"));
+            t.setHoraSai(sdf.parse("24102013040459"));
             TabelaPreco tab = new TabelaPreco();
             tab.setPrHora(2.0);
             tab.setMod(Modalidade.MOTO);
