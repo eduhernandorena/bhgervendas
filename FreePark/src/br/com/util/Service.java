@@ -32,7 +32,6 @@ public class Service {
      * @return str com o seu valor sem os espaços ou null em caso de nula ou
      * vazia.
      */
-
     public static String value(Object str) {
         String value;
         if (str != null) {
@@ -174,7 +173,6 @@ public class Service {
         }
     }
 
-    
     /**
      * Log ERROR.
      *
@@ -193,7 +191,6 @@ public class Service {
         System.out.println("| INFO: " + info);
     }
 
-    
     public static boolean isValid(Object obj) {
         if (obj == null) {
             return false;
@@ -206,5 +203,20 @@ public class Service {
         }
 
         return true;
+    }
+
+    public static String getTime(long time) {
+        long hora = time / 3600,
+                minutos = (time - (3600 * hora)) / 60,
+                seg = time - ((minutos * 60) + (3600 * hora));
+        return hora + ":" + completaZero(minutos) + ":" + completaZero(seg);
+    }
+
+    private static String completaZero(long val) {
+        String valor = String.valueOf(val);
+        if (valor.length() == 1) {
+            return "0" + valor;
+        }
+        return valor;
     }
 }

@@ -1,7 +1,7 @@
 package br.com.calc;
 
 import br.com.bean.Ticket;
-import javax.swing.JOptionPane;
+import br.com.util.Service;
 
 /**
  *
@@ -29,22 +29,20 @@ public class Moto {
                     total = hora * ticket.getTabela().getPrHora();
                     //cobrar hora inteira                       
                     if (minuto >= toler) {
-                        if (hora(minuto)) {
+                        if (minuto < 1800 + toler) {
+                            total += ticket.getTabela().getPrFracao();
+                        } else {
                             total += ticket.getTabela().getPrHora();
                         }
                     }
                 } else {
                     total = 5 * ticket.getTabela().getPrHora();
                 }
-                long hora = time / 3600,
-                        minutos = (time - (3600 * hora)) / 60,
-                        seg = time - ((minutos * 60) + (3600 * hora));
-                String tempo = hora + ":" + minutos + ":" + seg;
-                JOptionPane.showMessageDialog(null, "Total: " + total);
-                JOptionPane.showMessageDialog(null, "Tempo: " + tempo);
                 ticket.setValor(total);
-                ticket.setTempo(tempo);
+                System.out.println("Total: " + total);
             }
+            ticket.setTempo(Service.getTime(time));
+            System.out.println("Tempo: " + ticket.getTempo());
         }
         return ticket;
     }

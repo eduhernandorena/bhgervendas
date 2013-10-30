@@ -1,7 +1,7 @@
 package br.com.calc;
 
 import br.com.bean.Ticket;
-import javax.swing.JOptionPane;
+import br.com.util.Service;
 
 /**
  *
@@ -42,9 +42,11 @@ public class Carro {
                 } else {
                     total = 5 * ticket.getTabela().getPrHora();
                 }
-                JOptionPane.showMessageDialog(null, total);
                 ticket.setValor(total);
+                System.out.println("Total: " + total);
             }
+            ticket.setTempo(Service.getTime(time));
+            System.out.println("Tempo: " + ticket.getTempo());
         }
         return ticket;
     }
