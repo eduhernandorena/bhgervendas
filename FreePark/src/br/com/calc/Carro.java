@@ -1,7 +1,6 @@
 package br.com.calc;
 
 import br.com.bean.Ticket;
-import br.com.util.Service;
 import javax.swing.JOptionPane;
 
 /**

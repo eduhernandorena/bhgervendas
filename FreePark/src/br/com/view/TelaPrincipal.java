@@ -202,8 +202,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
 
         switch (ke.getKeyCode()) {
             case KeyEvent.VK_ENTER:
-                Calculo.fechaTicket(model.getTicket(tbTicket.getSelectedRow()));
-                System.out.println(model.getTicket(tbTicket.getSelectedRow()).getPlaca());
+//                Calculo.fechaTicket(model.getTicket(tbTicket.getSelectedRow()));
+                model.getTicket(tbTicket.getSelectedRow());
                 break;
             case KeyEvent.VK_ESCAPE:
             case KeyEvent.VK_UP:
