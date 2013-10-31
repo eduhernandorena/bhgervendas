@@ -4,10 +4,10 @@ import br.com.bean.Ticket;
 import br.com.calc.Calculo;
 import br.com.dao.TicketDAO;
 import br.com.util.AllKeyIntercept;
+import br.com.util.EvtReader;
 import br.com.util.TicketTableModel;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,17 +28,20 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Eduardo Hernandorena
  */
-public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
+public class TelaPrincipal extends javax.swing.JFrame {
 
     private static PrintStream ps;
     private static final Logger LOG = Logger.getLogger(TelaPrincipal.class.getName());
     private TicketTableModel model = new TicketTableModel();
+    private Ticket ticket;
+    public static EvtReader evt;
 
     public TelaPrincipal() {
         initComponents();
+        evt = new EvtReader(this);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(evt));
 //        logger();
         initTable(null);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(this));
     }
 
     @SuppressWarnings("unchecked")
@@ -191,80 +194,67 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
         return alinha;
     }
 
-    @Override
-    public void keyTyped(KeyEvent ke) {
+    public Ticket fechaTick() {
+        if (tbTicket.getSelectedRow() != -1) {
+            ticket = model.getTicket(tbTicket.getSelectedRow());
+            ticket.setDataSai(new Date());
+            ticket.setHoraSai(new Date());
+            ticket = Calculo.fechaTicket(ticket);
+            return ticket;
+        }
+        return null;
     }
 
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        String texto = "";
-        System.out.println(ke.getKeyChar());
-
-        switch (ke.getKeyCode()) {
-            case KeyEvent.VK_ENTER:
-//                Calculo.fechaTicket(model.getTicket(tbTicket.getSelectedRow()));
-                model.getTicket(tbTicket.getSelectedRow());
-                break;
-            case KeyEvent.VK_ESCAPE:
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-                tbTicket.requestFocus();
-                break;
-            case KeyEvent.VK_F2:
-                FormTicket tk = new FormTicket(this, true);
-                tk.setVisible(true);
-                break;
-            case KeyEvent.VK_BACK_SPACE:
+    public void backSpace(String texto, KeyEvent ke) {
+        if (txtPlaca.getText().isEmpty()) {
+            initTable(null);
+        } else {
+            if (!txtPlaca.isFocusOwner()) {
+                txtPlaca.requestFocus();
                 if (txtPlaca.getText().isEmpty()) {
-                    initTable(null);
+                    txtPlaca.setText(String.valueOf(ke.getKeyChar()));
+                    texto = String.valueOf(ke.getKeyChar());
                 } else {
-                    if (!txtPlaca.isFocusOwner()) {
-                        txtPlaca.requestFocus();
-                        if (txtPlaca.getText().isEmpty()) {
-                            txtPlaca.setText(String.valueOf(ke.getKeyChar()));
-                            texto = String.valueOf(ke.getKeyChar());
-                        } else {
-                            texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                        }
-                    } else {
-                        if (txtPlaca.getText().isEmpty()) {
-                            texto = String.valueOf(ke.getKeyChar());
-                        } else {
-                            texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                        }
-                    }
+                    texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
+                }
+            } else {
+                if (txtPlaca.getText().isEmpty()) {
+                    texto = String.valueOf(ke.getKeyChar());
+                } else {
+                    texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
+                }
+            }
 
-                    if (texto.length() == 1) {
-                        initTable(null);
-                    } else {
-                        initTable(model.getTickets(texto));
-                    }
-                }
-                break;
-            default:
-                if (!txtPlaca.isFocusOwner()) {
-                    txtPlaca.requestFocus();
-                    if (txtPlaca.getText().isEmpty()) {
-                        txtPlaca.setText(String.valueOf(ke.getKeyChar()));
-                        texto = String.valueOf(ke.getKeyChar());
-                    } else {
-                        texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                    }
-                } else {
-                    if (txtPlaca.getText().isEmpty()) {
-                        texto = String.valueOf(ke.getKeyChar());
-                    } else {
-                        texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                    }
-                }
-
-                if (texto.length() == 1) {
-                    initTable(null);
-                } else {
-                    initTable(model.getTickets(texto));
-                }
+            if (texto.length() == 1) {
+                initTable(null);
+            } else {
+                initTable(model.getTickets(texto));
+            }
         }
-        System.out.println(texto);
+    }
+
+    public void defaultAct(String texto, KeyEvent ke) {
+        if (!txtPlaca.isFocusOwner()) {
+            txtPlaca.requestFocus();
+            if (txtPlaca.getText().isEmpty()) {
+                txtPlaca.setText(String.valueOf(ke.getKeyChar()));
+                texto = String.valueOf(ke.getKeyChar());
+            } else {
+                texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
+            }
+        } else {
+            if (txtPlaca.getText().isEmpty()) {
+                texto = String.valueOf(ke.getKeyChar());
+            } else {
+                texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
+            }
+        }
+
+        if (texto.length() == 1) {
+            initTable(null);
+        } else {
+            initTable(model.getTickets(texto));
+        }
     }
 
     private void logger() {
@@ -292,10 +282,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent ke) {
-    }
-
     public enum Align {
 
         LEFT, CENTER, RIGHT;
@@ -306,7 +292,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JMenu mnCad;
     private javax.swing.JMenu mnExit;
     private javax.swing.JScrollPane spGrid;
-    private javax.swing.JTable tbTicket;
+    public javax.swing.JTable tbTicket;
     private javax.swing.JTextField txtPlaca;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

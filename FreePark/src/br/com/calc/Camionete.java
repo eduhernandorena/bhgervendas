@@ -14,9 +14,8 @@ public class Camionete {
 
     public static Ticket fechaTicket(Ticket ticket) {
         double total;
-        if (ticket.getDataEnt().before(ticket.getDataSai())) {
-            long time, init = ticket.getHoraEnt().getTime(),
-                    end = ticket.getHoraSai().getTime();
+        if (ticket.getHoraEnt().before(ticket.getHoraSai())) {
+            long time, init = ticket.getHoraEnt().getTime(), end = ticket.getHoraSai().getTime();
             time = (end - init) / 1000;
             //ficou mais de dois minutos no estacionamento
             if (time > 119) {

@@ -5,11 +5,9 @@ import br.com.bean.Ticket;
 import br.com.bean.enumeration.StatusTicket;
 import br.com.dao.TabelaPrecoDAO;
 import br.com.dao.TicketDAO;
-import br.com.util.AllKeyIntercept;
 import java.awt.AWTKeyStroke;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,13 +19,14 @@ import java.util.logging.Logger;
  *
  * @author Roger
  */
-public class FormTicket extends javax.swing.JDialog implements KeyListener {
+public class FormTicket extends javax.swing.JDialog {
 
     TelaPrincipal tp = null;
 
     public FormTicket(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         tp = (TelaPrincipal) parent;
+        TelaPrincipal.evt.setWin(this);
         initComponents();
         HashSet backup = new HashSet(this.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
         HashSet conj = (HashSet) backup.clone();
@@ -37,7 +36,6 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
         SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
         txtData.setText(sdf.format(new Date()));
         txtHora.setText(sdfH.format(new Date()));
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(this));
     }
 
     /**
@@ -190,43 +188,29 @@ public class FormTicket extends javax.swing.JDialog implements KeyListener {
     private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void keyTyped(KeyEvent ke) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
+    public void lancaTick() {
         if (!txtMod.getText().isEmpty() && !txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
-            if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-                if (!txtPlaca.getText().isEmpty() && !txtModDesc.getText().isEmpty()) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-                    Ticket t = new Ticket();
-                    t.setPlaca(txtPlaca.getText());
-                    t.setSerie(sdf.format(new Date()));
-                    try {
-                        sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        t.setDataEnt(sdf.parse(txtData.getText()));
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                        sdf = new SimpleDateFormat("HH:mm");
-                        t.setHoraEnt(sdf.parse(txtHora.getText()));
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    t.setStatus(StatusTicket.ATIVO);
-                    t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
-                    if (new TicketDAO().create(t)) {
-                        tp.initTable(null);
-                        this.setVisible(false);
-                    }
-                }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+            Ticket t = new Ticket();
+            t.setPlaca(txtPlaca.getText());
+            t.setSerie(sdf.format(new Date()));
+            try {
+                sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+                t.setDataEnt(sdf.parse(txtData.getText() + txtHora.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                t.setHoraEnt(sdf.parse(txtData.getText() + txtHora.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(FormCad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            t.setStatus(StatusTicket.ATIVO);
+            t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
+            if (new TicketDAO().create(t)) {
+                tp.initTable(null);
+                this.setVisible(false);
             }
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {
     }
 }

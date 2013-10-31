@@ -19,7 +19,7 @@ public class Ticket {
     private String tempo;
     private TabelaPreco tabela;
     private String placa;
-    private Double valor;
+    private Double valor = 0d;
 
     public Long getId() {
         return id;

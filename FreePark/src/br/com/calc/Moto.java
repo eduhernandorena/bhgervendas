@@ -14,7 +14,7 @@ public class Moto {
 
     public static Ticket fechaTicket(Ticket ticket) {
         double total;
-        if (ticket.getDataEnt().before(ticket.getDataSai())) {
+        if (ticket.getHoraEnt().before(ticket.getHoraSai())) {
             long time, init = ticket.getHoraEnt().getTime(),
                     end = ticket.getHoraSai().getTime();
             time = (end - init) / 1000;
