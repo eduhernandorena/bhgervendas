@@ -79,7 +79,7 @@ public class TicketDAO {
         return null;
     }
 
-    private List<Ticket> fillTicket(ResultSet rs) throws SQLException {
+    public static List<Ticket> fillTicket(ResultSet rs) throws SQLException {
         List<Ticket> list = null;
         if (rs != null) {
             list = new ArrayList<>();
