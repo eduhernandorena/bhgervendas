@@ -41,7 +41,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         evt = new EvtReader(this);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(evt));
 //        logger();
-        initTable(null);
+//        initTable(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -67,6 +67,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        txtPlaca.setEditable(false);
         txtPlaca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         tbTicket.setAutoCreateRowSorter(true);
@@ -205,56 +206,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return null;
     }
 
-    public void backSpace(String texto, KeyEvent ke) {
-        if (txtPlaca.getText().isEmpty()) {
+    public String backSpace(String texto, KeyEvent ke) {
+        if (txtPlaca.getText().isEmpty() || txtPlaca.getText().length() == 1) {
+            txtPlaca.setText("");
             initTable(null);
+            return "";
         } else {
-            if (!txtPlaca.isFocusOwner()) {
-                txtPlaca.requestFocus();
-                if (txtPlaca.getText().isEmpty()) {
-                    txtPlaca.setText(String.valueOf(ke.getKeyChar()));
-                    texto = String.valueOf(ke.getKeyChar());
-                } else {
-                    texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                }
-            } else {
-                if (txtPlaca.getText().isEmpty()) {
-                    texto = String.valueOf(ke.getKeyChar());
-                } else {
-                    texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-                }
-            }
-
-            if (texto.length() == 1) {
-                initTable(null);
-            } else {
-                initTable(model.getTickets(texto));
-            }
+            texto = texto.substring(0, texto.length() - 1);
+            return defaultAct(texto, null);
         }
     }
 
-    public void defaultAct(String texto, KeyEvent ke) {
+    public String defaultAct(String texto, KeyEvent ke) {
         if (!txtPlaca.isFocusOwner()) {
             txtPlaca.requestFocus();
-            if (txtPlaca.getText().isEmpty()) {
-                txtPlaca.setText(String.valueOf(ke.getKeyChar()));
-                texto = String.valueOf(ke.getKeyChar());
-            } else {
-                texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-            }
-        } else {
-            if (txtPlaca.getText().isEmpty()) {
-                texto = String.valueOf(ke.getKeyChar());
-            } else {
-                texto = txtPlaca.getText() + String.valueOf(ke.getKeyChar());
-            }
         }
+        txtPlaca.setText("");
+        if (ke != null) {
+            texto += ke.getKeyChar();
+        }
+        txtPlaca.setText(texto);
 
-        if (texto.length() == 1) {
-            initTable(null);
-        } else {
-            initTable(model.getTickets(texto));
-        }
+        initTable(model.getTickets(texto));
+
+        return texto;
     }
 
     private void logger() {

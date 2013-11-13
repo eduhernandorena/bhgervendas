@@ -2,6 +2,7 @@ package br.com.util;
 
 import br.com.bean.Ticket;
 import br.com.view.FormFechaTicket;
+import br.com.view.FormRel;
 import br.com.view.FormTicket;
 import br.com.view.TelaPrincipal;
 import java.awt.Window;
@@ -18,6 +19,8 @@ public class EvtReader implements KeyListener {
     private FormTicket formTick = null;
     private FormFechaTicket formFecha = null;
     private TelaPrincipal principal = null;
+    private FormRel formRel = null;
+    private String texto = "";
 
     public EvtReader(Window w) {
         win = w;
@@ -43,7 +46,9 @@ public class EvtReader implements KeyListener {
             actFormTicket(e);
         } else if (win instanceof TelaPrincipal) {
             actFormPrincipal(e);
-        }
+        } else if (win instanceof FormRel){
+            actFormRel(e);
+    }
     }
 
     @Override
@@ -66,7 +71,6 @@ public class EvtReader implements KeyListener {
     public void actFormPrincipal(KeyEvent e) {
         if (win != null) {
             principal = (TelaPrincipal) win;
-            String texto = "";
             System.out.println(e.getKeyChar());
 
             switch (e.getKeyCode()) {
@@ -88,11 +92,17 @@ public class EvtReader implements KeyListener {
                     formTick = null;
                     setWin(principal);
                     break;
+                case KeyEvent.VK_F3:
+                    formRel = new FormRel(principal);
+                    formRel.setVisible(true);
+                    formRel = null;
+                    setWin(principal);
+                    break;
                 case KeyEvent.VK_BACK_SPACE:
-                    principal.backSpace(texto, e);
+                    texto = principal.backSpace(texto, e);
                     break;
                 default:
-                    principal.defaultAct(texto, e);
+                    texto = principal.defaultAct(texto, e);
             }
             System.out.println(texto);
         }
@@ -103,6 +113,15 @@ public class EvtReader implements KeyListener {
             formTick = (FormTicket) win;
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 formTick.lancaTick();
+            }
+        }
+    }
+    
+    public void actFormRel(KeyEvent e) {
+        if (win != null) {
+            formRel = (FormRel) win;
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                formRel.lancaRel();
             }
         }
     }

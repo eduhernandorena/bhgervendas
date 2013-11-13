@@ -30,13 +30,7 @@ public class NewMain {
 //        FormFechaTicket form = new FormFechaTicket(t);
 //        form.setVisible(true);
 //        new TelaPrincipal().setVisible(true);
-        new Impressora().imprime("" + (char) 27 + (char) 15);
-        new Impressora().imprime("===================================================\n"
-                + "ESTACIONAMENTO DE VEICULOS RS\n"
-                + "R. ANDRADE NEVES, 2012 - FONE: (53) 8439-0822\n"
-                + "===================================================\n"
-                + "\n\n\n\n");
-        new Impressora().acionarGuilhotina();
+        new FormRel(new TelaPrincipal()).setVisible(true);
 
     }
 }
