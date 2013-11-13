@@ -1,17 +1,11 @@
 package br.com.rel;
 
 import br.com.bean.Ticket;
-import br.com.dao.TicketDAO;
-import br.com.util.DBConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import br.com.rel.decorator.RelDecorator;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,45 +13,50 @@ import java.util.logging.Logger;
  */
 public class Relatorio {
 
-    private Connection conn = DBConnection.getConnection();
-
-    public List<Ticket> getAnalitico(Date dtInit, Date dtEnd) {
-        String sql = "select * from ticket where dataent>=? and datasai<=? "
-                + " and status=1";
-        //and horaent>=? and horasai<=? 
-        try {
-            PreparedStatement query = conn.prepareStatement(sql);
-            query.setDate(1, new java.sql.Date(dtInit.getTime()));
-            query.setDate(2, new java.sql.Date(dtEnd.getTime()));
-//            query.setDate(3, new java.sql.Date(horaInit.getTime()));;
-//            query.setDate(4, new java.sql.Date(horaEnd.getTime()));
-            ResultSet rs = query.executeQuery();
-            List<Ticket> list = TicketDAO.fillTicket(rs);
-            return list;
-        } catch (SQLException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+    public String relAnalitico(List<Ticket> list, Date dtIni, Date dtFin) {
+        SimpleDateFormat sdfPadrao = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+        SimpleDateFormat sdfPerson = new SimpleDateFormat("dd HH:mm");
+        String text = "==========================================\n"
+                + "ESTACIONAMENTO DE VEICULOS RS\n"
+                + "Movimento de Saída - Analítico\n"
+                + "Emissão: " + sdfPadrao.format(new Date()) + "\n"
+                + "==========================================\n"
+                + "Período: " + sdfPadrao.format(dtIni) + " a\n"
+                + "         " + sdfPadrao.format(dtFin) + "\n\n"
+                + "Placa   Dia  Entr Dia Saida Tempo Tb  Pago\n";
+        double total = 0;
+        for (Ticket reg : list) {
+            text += reg.getPlaca().replace("-", "") + "  " + sdfPerson.format(reg.getDataEnt()) + "  "
+                    + sdfPerson.format(reg.getDataSai()) + " " + reg.getTempo().substring(0, 5) + " "
+                    + "0" + (reg.getTabela().getMod().ordinal() + 1)
+                    + (reg.getValor() > 9 ? " " : "  ") + new BigDecimal(reg.getValor()).setScale(2) + "\n";
+            total += reg.getValor();
         }
-        return new ArrayList<>();
+        text += "\nTotal de Veículos.......: " + list.size() + "\n\n"
+                + "Tempo Total.............: \n\n"
+                + "Valor Total Pago........: " + total + " /Qtd.: " + list.size() + "\n\n"
+                + "Valor Médio p/ Veículo..: " + total / list.size() + "\n\n"
+                + "==========================================";
+        System.out.println(text);
+        return text;
     }
 
-    public String getSintetico(Date dtInit, Date dtEnd) {
-        String sql = "select count(*), sum(valor) from ticket where dataent>=? and datasai<=? "
-                + " and status=1";
-        //and horaent>=? and horasai<=? 
-        try {
-            PreparedStatement query = conn.prepareStatement(sql);
-            query.setDate(1, new java.sql.Date(dtInit.getTime()));
-            query.setDate(2, new java.sql.Date(dtEnd.getTime()));
-//            query.setDate(3, new java.sql.Date(horaInit.getTime()));;
-//            query.setDate(4, new java.sql.Date(horaEnd.getTime()));
-            ResultSet rs = query.executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getDouble(2));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "";
+    public String relSintetico(RelDecorator dec, Date dtIni, Date dtFin) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+        String text = "==========================================\n"
+                + "ESTACIONAMENTO DE VEICULOS RS\n"
+                + "Movimento de Saída - Sintético\n"
+                + "Emissão: " + sdf.format(new Date()) + "\n"
+                + "==========================================\n"
+                + "Período: " + sdf.format(dtIni) + " a\n"
+                + "         " + sdf.format(dtFin) + "\n\n"
+                + "Total de Veículos.......: " + dec.getTotalVeic() + "\n\n"
+                + "Tempo Total.............: \n\n"
+                + "Valor Total Pago........: " + new BigDecimal(dec.getTotalPago()).setScale(2) + " /Qtd.: " + dec.getTotalVeic() + "\n\n"
+                + "Valor Médio p/ Veículo..: " + new BigDecimal(dec.getValorMedioPorVeic()).setScale(2) + "\n\n"
+                + "Veículos p/ Hora........: \n"
+                + "==========================================";
+        System.out.println(text);
+        return text;
     }
 }

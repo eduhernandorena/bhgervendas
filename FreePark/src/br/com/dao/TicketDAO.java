@@ -95,6 +95,7 @@ public class TicketDAO {
                 ticket.setHoraSai(rs.getTimestamp("horasai"));
                 ticket.setStatus(StatusTicket.value(rs.getInt("status")));
                 ticket.setTabela(new TabelaPrecoDAO().find(rs.getLong("idtabela")));
+                ticket.setValor(rs.getDouble("valor"));
 
                 list.add(ticket);
             }
