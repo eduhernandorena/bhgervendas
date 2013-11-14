@@ -13,15 +13,70 @@ import java.util.List;
  */
 public class Relatorio {
 
+    /**
+     * Metodo que monta e retorna uma string com o ticket de entrada.
+     *
+     * @param ticket
+     * @return
+     */
+    public String ticketEntrada(Ticket ticket) {
+        SimpleDateFormat sdfDt = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHr = new SimpleDateFormat("HH:mm");
+        String text = "==========================================\n"
+                + "    ESTACIONAMENTO DE VEICULOS RS - 2\n"
+                + "         RUA ANDRADE NEVES, 2012\n"
+                + "    FONES: (53) 8439-0822 (53) 9911-7611\n"
+                + "==========================================\n\n"
+                + "              ---ENTRADA---               \n\n"
+                + "     PLACA: " + ticket.getPlaca() + "    Modelo: " + ticket.getTabela().getMod().name() + "\n\n"
+                + "      DATA: " + sdfDt.format(ticket.getDataEnt()) + "    HORA: " + sdfHr.format(ticket.getDataEnt()) + "\n\n"
+                + "------------------------------------------\n"
+                + "        SEG - SEXTA 08:00 AS 21:00\n"
+                + "------------------------------------------";
+        return text;
+    }
+
+    /**
+     * Metodo que monta e retorna uma string com o ticket de saida.
+     *
+     * @param ticket
+     * @return
+     */
+    public String ticketSaida(Ticket ticket) {
+        SimpleDateFormat sdfDt = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHr = new SimpleDateFormat("HH:mm");
+        String text = "==========================================\n"
+                + "    ESTACIONAMENTO DE VEICULOS RS - 2\n"
+                + "         RUA ANDRADE NEVES, 2012\n"
+                + "    FONES: (53) 8439-0822 (53) 9911-7611\n"
+                + "==========================================\n\n"
+                + "                ---SAIDA---               \n\n"
+                + "     PLACA: " + ticket.getPlaca() + "    Modelo: " + ticket.getTabela().getMod().name() + "\n\n"
+                + "   PERIODO: " + sdfDt.format(ticket.getDataEnt()) + " - " + sdfHr.format(ticket.getDataEnt())
+                + " AS " + sdfHr.format(ticket.getDataSai()) + "\n\n"
+                + "   PERMANENCIA: " + ticket.getTempo() + "    VALOR: " + new BigDecimal(ticket.getValor()).setScale(2) + "\n\n"
+                + "------------------------------------------\n"
+                + "        SEG - SEXTA 08:00 AS 21:00\n"
+                + "------------------------------------------";
+        return text;
+    }
+
+    /**
+     * Metodo que monta e retorna uma string com o relatorio detalhado de
+     * movimentos do estacionamento.
+     *
+     * @param ticket
+     * @return
+     */
     public String relAnalitico(List<Ticket> list, Date dtIni, Date dtFin) {
         SimpleDateFormat sdfPadrao = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         SimpleDateFormat sdfPerson = new SimpleDateFormat("dd HH:mm");
         String text = "==========================================\n"
-                + "ESTACIONAMENTO DE VEICULOS RS\n"
-                + "Movimento de Saída - Analítico\n"
-                + "Emissão: " + sdfPadrao.format(new Date()) + "\n"
+                + "ESTACIONAMENTO DE VEICULOS RS - 2\n"
+                + "Movimento de Saida - Analitico\n"
+                + "Emissao: " + sdfPadrao.format(new Date()) + "\n"
                 + "==========================================\n"
-                + "Período: " + sdfPadrao.format(dtIni) + " a\n"
+                + "Periodo: " + sdfPadrao.format(dtIni) + " a\n"
                 + "         " + sdfPadrao.format(dtFin) + "\n\n"
                 + "Placa   Dia  Entr Dia Saida Tempo Tb  Pago\n";
         double total = 0;
@@ -32,31 +87,36 @@ public class Relatorio {
                     + (reg.getValor() > 9 ? " " : "  ") + new BigDecimal(reg.getValor()).setScale(2) + "\n";
             total += reg.getValor();
         }
-        text += "\nTotal de Veículos.......: " + list.size() + "\n\n"
+        text += "\nTotal de Veiculos.......: " + list.size() + "\n\n"
                 + "Tempo Total.............: \n\n"
                 + "Valor Total Pago........: " + total + " /Qtd.: " + list.size() + "\n\n"
                 + "Valor Médio p/ Veículo..: " + ((total == 0.0 || list.isEmpty()) ? "0" : total / list.size()) + "\n\n"
                 + "==========================================";
-        System.out.println(text);
         return text;
     }
 
+    /**
+     * Metodo que monta e retorna uma string com o relatorio simplificado de
+     * movimentos do estacionamento.
+     *
+     * @param ticket
+     * @return
+     */
     public String relSintetico(RelDecorator dec, Date dtIni, Date dtFin) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         String text = "==========================================\n"
-                + "ESTACIONAMENTO DE VEICULOS RS\n"
-                + "Movimento de Saída - Sintético\n"
-                + "Emissão: " + sdf.format(new Date()) + "\n"
+                + "ESTACIONAMENTO DE VEICULOS RS - 2\n"
+                + "Movimento de Saida - Sintetico\n"
+                + "Emissao: " + sdf.format(new Date()) + "\n"
                 + "==========================================\n"
-                + "Período: " + sdf.format(dtIni) + " a\n"
+                + "Periodo: " + sdf.format(dtIni) + " a\n"
                 + "         " + sdf.format(dtFin) + "\n\n"
-                + "Total de Veículos.......: " + dec.getTotalVeic() + "\n\n"
+                + "Total de Veiculos.......: " + dec.getTotalVeic() + "\n\n"
                 + "Tempo Total.............: \n\n"
                 + "Valor Total Pago........: " + new BigDecimal(dec.getTotalPago()).setScale(2) + " /Qtd.: " + dec.getTotalVeic() + "\n\n"
-                + "Valor Médio p/ Veículo..: " + new BigDecimal(dec.getValorMedioPorVeic()).setScale(2) + "\n\n"
-                + "Veículos p/ Hora........: \n"
+                + "Valor Medio p/ Veiculo..: " + new BigDecimal(dec.getValorMedioPorVeic()).setScale(2) + "\n\n"
+                + "Veiculos p/ Hora........: \n"
                 + "==========================================";
-        System.out.println(text);
         return text;
     }
 }
