@@ -1,11 +1,5 @@
 package br.com.view;
 
-import br.com.bean.TabelaPreco;
-import br.com.bean.Ticket;
-import br.com.bean.enumeration.Modalidade;
-import br.com.impressora.Impressora;
-import java.util.Date;
-
 /**
  *
  * @author Eduardo Hernandorena

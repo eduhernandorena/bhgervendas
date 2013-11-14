@@ -52,7 +52,11 @@ public class RelatorioDAO {
                 RelDecorator dec = new RelDecorator();
                 dec.setTotalVeic(rs.getInt(1));
                 dec.setTotalPago(rs.getDouble(2));
-                dec.setValorMedioPorVeic(dec.getTotalPago() / dec.getTotalVeic());
+                if (dec.getTotalPago() == 0.0 || dec.getTotalVeic() == 0.0) {
+                    dec.setValorMedioPorVeic(0.0);
+                } else {
+                    dec.setValorMedioPorVeic(dec.getTotalPago() / dec.getTotalVeic());
+                }
                 return new Relatorio().relSintetico(dec, dtInit, dtEnd);
             }
         } catch (SQLException ex) {

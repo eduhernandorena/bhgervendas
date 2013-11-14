@@ -1,5 +1,6 @@
 package br.com.view;
 
+import br.com.dao.RelatorioDAO;
 import br.com.util.Service;
 import java.awt.AWTKeyStroke;
 import java.awt.KeyboardFocusManager;
@@ -50,9 +51,23 @@ public class FormRel extends javax.swing.JDialog {
 
     public void lancaRel() {
         if (valida()) {
+            Date ini = new Date();
+            Date fim = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm");
             String tipo = rdSintetico.isSelected() ? "Sintético" : "Analítico";
             if (JOptionPane.showConfirmDialog(this, "Tem certeza que deseja emitir o relatório " + tipo, "Emitir Relatório", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                //lanca rel
+                try {
+                    ini = sdf.parse(txtDataInicial.getText() + " " + txtHoraInicial.getText());
+                    fim = sdf.parse(txtDataFinal.getText() + " " + txtHoraFinal.getText());
+                    new RelatorioDAO().getSintetico(ini, fim);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FormRel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (rdSintetico.isSelected()) {
+                    new RelatorioDAO().getSintetico(ini, fim);
+                } else {
+                    new RelatorioDAO().getAnalitico(ini, fim);
+                }
                 this.dispose();
             }
         }

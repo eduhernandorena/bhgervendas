@@ -35,7 +35,7 @@ public class Relatorio {
         text += "\nTotal de Veículos.......: " + list.size() + "\n\n"
                 + "Tempo Total.............: \n\n"
                 + "Valor Total Pago........: " + total + " /Qtd.: " + list.size() + "\n\n"
-                + "Valor Médio p/ Veículo..: " + total / list.size() + "\n\n"
+                + "Valor Médio p/ Veículo..: " + ((total == 0.0 || list.isEmpty()) ? "0" : total / list.size()) + "\n\n"
                 + "==========================================";
         System.out.println(text);
         return text;
