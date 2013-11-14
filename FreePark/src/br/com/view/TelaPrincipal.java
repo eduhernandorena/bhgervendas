@@ -40,7 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         evt = new EvtReader(this);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(evt));
-//        logger();
+        logger();
         initTable(null);
     }
 
