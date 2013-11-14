@@ -41,7 +41,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         evt = new EvtReader(this);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(evt));
 //        logger();
-//        initTable(null);
+        initTable(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -145,7 +145,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
     }//GEN-LAST:event_formKeyPressed
 
-    protected void initTable(List<Ticket> list) {
+    public void initTable(List<Ticket> list) {
         if (list == null) {
             list = new TicketDAO().findAll();
         }

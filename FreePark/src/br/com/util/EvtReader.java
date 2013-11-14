@@ -1,6 +1,11 @@
 package br.com.util;
 
 import br.com.bean.Ticket;
+import br.com.bean.enumeration.StatusTicket;
+import br.com.calc.Calculo;
+import br.com.dao.RelatorioDAO;
+import br.com.dao.TicketDAO;
+import br.com.rel.Relatorio;
 import br.com.view.FormFechaTicket;
 import br.com.view.FormRel;
 import br.com.view.FormTicket;
@@ -8,6 +13,7 @@ import br.com.view.TelaPrincipal;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Date;
 
 /**
  *
@@ -60,6 +66,13 @@ public class EvtReader implements KeyListener {
             formFecha = (FormFechaTicket) win;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_ENTER: {
+                    Calculo.fechaTicket(formFecha.tick);
+                    formFecha.tick.setDataSai(new Date());
+                    formFecha.tick.setHoraSai(new Date());
+                    formFecha.tick.setStatus(StatusTicket.FINALIZADO);
+                    new TicketDAO().upDate(formFecha.tick);
+                    new Relatorio().ticketSaida(formFecha.tick);
+                    principal.initTable(null);
                     setWin(principal);
                     formFecha.dispose();
                     break;

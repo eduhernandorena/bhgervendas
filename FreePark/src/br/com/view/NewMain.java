@@ -23,8 +23,8 @@ public class NewMain {
 //        t.setTabela(tab);
 //        FormFechaTicket form = new FormFechaTicket(t);
 //        form.setVisible(true);
-//        new TelaPrincipal().setVisible(true);
-        new FormRel(new TelaPrincipal()).setVisible(true);
+        new TelaPrincipal().setVisible(true);
+        
 
     }
 }

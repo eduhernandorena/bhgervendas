@@ -88,7 +88,7 @@ public class Impressora {
         } else {
             try {
                 DocPrintJob dpj = impressora.createPrintJob();
-                InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes());
+                InputStream stream = new ByteArrayInputStream((texto + "\n\n\n\n").getBytes());
                 DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
                 Doc doc = new SimpleDoc(stream, flavor, null);
                 dpj.print(doc, null);

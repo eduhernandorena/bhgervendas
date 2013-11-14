@@ -5,6 +5,7 @@ import br.com.bean.Ticket;
 import br.com.bean.enumeration.StatusTicket;
 import br.com.dao.TabelaPrecoDAO;
 import br.com.dao.TicketDAO;
+import br.com.rel.Relatorio;
 import java.awt.AWTKeyStroke;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
@@ -209,6 +210,7 @@ public class FormTicket extends javax.swing.JDialog {
             t.setTabela((new TabelaPrecoDAO().find(Integer.valueOf(txtMod.getText()))));
             if (new TicketDAO().create(t)) {
                 tp.initTable(null);
+                new Relatorio().ticketEntrada(t);
                 this.setVisible(false);
             }
         }

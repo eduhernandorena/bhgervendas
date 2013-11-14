@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 
 public class FormFechaTicket extends javax.swing.JDialog {
 
+    public Ticket tick = null;
+
     public FormFechaTicket(TelaPrincipal princ, Ticket t) {
         super(princ, true);
         initComponents();
@@ -23,6 +25,7 @@ public class FormFechaTicket extends javax.swing.JDialog {
         txtModDesc.setText(ticket.getTabela().getMod().name());
         txtTotalTempo.setText(ticket.getTempo());
         txtTotalValor.setText(ticket.getValor().toString());
+        tick = ticket;
     }
 
     @SuppressWarnings("unchecked")

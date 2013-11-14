@@ -48,18 +48,19 @@ public class TicketDAO {
     public Boolean upDate(Ticket tk) {
         try {
             String sql = "UPDATE Ticket SET dataent=?, horaent=?, datasai=?, horasai=?, "
-                    + "status=?, tempo=?, idtabela=?, placa=?, serie=? WHERE id=?";
+                    + "status=?, tempo=?, idtabela=?, placa=?, serie=?, valor=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setDate(1, new Date(tk.getDataEnt().getTime()));
                 pst.setTimestamp(2, new Timestamp(tk.getHoraEnt().getTime()));
                 pst.setDate(3, new Date(tk.getDataSai().getTime()));
                 pst.setTimestamp(4, new Timestamp(tk.getHoraSai().getTime()));
                 pst.setInt(5, tk.getStatus().ordinal());
-                pst.setString(6, "12:20");
+                pst.setString(6, tk.getTempo());
                 pst.setLong(7, tk.getTabela().getId());
                 pst.setString(8, tk.getPlaca());
                 pst.setString(9, tk.getSerie());
-                pst.setLong(10, tk.getId());
+                pst.setDouble(10, tk.getValor());
+                pst.setLong(11, tk.getId());
                 pst.executeUpdate();
             }
         } catch (SQLException ex) {

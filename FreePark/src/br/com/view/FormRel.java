@@ -59,7 +59,6 @@ public class FormRel extends javax.swing.JDialog {
                 try {
                     ini = sdf.parse(txtDataInicial.getText() + " " + txtHoraInicial.getText());
                     fim = sdf.parse(txtDataFinal.getText() + " " + txtHoraFinal.getText());
-                    new RelatorioDAO().getSintetico(ini, fim);
                 } catch (ParseException ex) {
                     Logger.getLogger(FormRel.class.getName()).log(Level.SEVERE, null, ex);
                 }
