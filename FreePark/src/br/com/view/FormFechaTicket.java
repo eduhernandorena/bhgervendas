@@ -1,6 +1,7 @@
 package br.com.view;
 
 import br.com.bean.Ticket;
+import br.com.util.Service;
 import java.text.SimpleDateFormat;
 
 public class FormFechaTicket extends javax.swing.JDialog {

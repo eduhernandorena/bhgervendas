@@ -79,6 +79,17 @@ public class TicketDAO {
         }
         return null;
     }
+    
+    public List<Ticket> findAllFechados() {
+        try {
+            PreparedStatement query = conn.prepareStatement("select * from ticket where status=1");
+            ResultSet rs = query.executeQuery();
+            return fillTicket(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static List<Ticket> fillTicket(ResultSet rs) throws SQLException {
         List<Ticket> list = null;

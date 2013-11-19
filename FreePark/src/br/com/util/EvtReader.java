@@ -6,6 +6,7 @@ import br.com.calc.Calculo;
 import br.com.dao.RelatorioDAO;
 import br.com.dao.TicketDAO;
 import br.com.rel.Relatorio;
+import br.com.view.FormEstorno;
 import br.com.view.FormFechaTicket;
 import br.com.view.FormRel;
 import br.com.view.FormTicket;
@@ -26,6 +27,7 @@ public class EvtReader implements KeyListener {
     private FormFechaTicket formFecha = null;
     private TelaPrincipal principal = null;
     private FormRel formRel = null;
+    private FormEstorno formEst = null;
     private String texto = "";
 
     public EvtReader(Window w) {
@@ -52,9 +54,11 @@ public class EvtReader implements KeyListener {
             actFormTicket(e);
         } else if (win instanceof TelaPrincipal) {
             actFormPrincipal(e);
-        } else if (win instanceof FormRel){
+        } else if (win instanceof FormRel) {
             actFormRel(e);
-    }
+        } else if (win instanceof FormEstorno){
+            actFormEst(e);
+        }
     }
 
     @Override
@@ -76,6 +80,9 @@ public class EvtReader implements KeyListener {
                     setWin(principal);
                     formFecha.dispose();
                     break;
+                }
+                case KeyEvent.VK_ESCAPE: {
+                    formFecha.dispose();
                 }
             }
         }
@@ -99,7 +106,7 @@ public class EvtReader implements KeyListener {
                 case KeyEvent.VK_DOWN:
                     principal.tbTicket.requestFocus();
                     break;
-                case KeyEvent.VK_F2:
+                case KeyEvent.VK_INSERT:
                     formTick = new FormTicket(principal, true);
                     formTick.setVisible(true);
                     formTick = null;
@@ -126,15 +133,40 @@ public class EvtReader implements KeyListener {
             formTick = (FormTicket) win;
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 formTick.lancaTick();
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                formTick.dispose();
             }
         }
     }
-    
+
     public void actFormRel(KeyEvent e) {
         if (win != null) {
             formRel = (FormRel) win;
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 formRel.lancaRel();
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                formRel.dispose();
+            }
+        }
+    }
+    
+    public void actFormEst(KeyEvent e) {
+        if (win != null) {
+            formEst = (FormEstorno) win;
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_ENTER:
+                    formEst.estornaTicket();
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_DOWN:
+                    formEst.tbTicket.requestFocus();
+                    break;
+                case KeyEvent.VK_BACK_SPACE:
+                    texto = formEst.backSpace(texto, e);
+                    break;
+                default:
+                    texto = formEst.defaultAct(texto, e);
             }
         }
     }

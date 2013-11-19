@@ -42,6 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new AllKeyIntercept(evt));
         logger();
         initTable(null);
+        this.setExtendedState(TelaPrincipal.MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,9 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tbTicket = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
-        mbMenus = new javax.swing.JMenuBar();
-        mnCad = new javax.swing.JMenu();
-        mnExit = new javax.swing.JMenu();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FreePark - Gerenciador de Estacionamentos");
@@ -95,18 +94,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtTotal.setBackground(new java.awt.Color(240, 240, 240));
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtTotal.setBorder(null);
         txtTotal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotal.setEnabled(false);
         txtTotal.setFocusable(false);
 
-        mnCad.setText("Cadastros");
-        mbMenus.add(mnCad);
-
-        mnExit.setText("Sair");
-        mbMenus.add(mnExit);
-
-        setJMenuBar(mbMenus);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel2.setText("F2 - Abre Ticket    F3 - Relatórios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +108,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(spGrid, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,16 +120,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(spGrid, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spGrid, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1))
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
         pack();
@@ -263,9 +260,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar mbMenus;
-    private javax.swing.JMenu mnCad;
-    private javax.swing.JMenu mnExit;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane spGrid;
     public javax.swing.JTable tbTicket;
     private javax.swing.JTextField txtPlaca;
