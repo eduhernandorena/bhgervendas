@@ -15,13 +15,16 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Eduardo Hernandorena
  */
-public class FormEstorno extends javax.swing.JDialog {
+public class FormEstorno extends javax.swing.JDialog  {
 
     private TicketTableModel model = new TicketTableModel();
+    private TelaPrincipal princ;
 
     public FormEstorno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        princ = (TelaPrincipal) parent;
+        princ.evt.setWin(this);
         initTable(null);
     }
 
@@ -125,6 +128,7 @@ public class FormEstorno extends javax.swing.JDialog {
         txtTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Estorno de Ticket");
 
         tbTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,7 +166,8 @@ public class FormEstorno extends javax.swing.JDialog {
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(835, 515));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

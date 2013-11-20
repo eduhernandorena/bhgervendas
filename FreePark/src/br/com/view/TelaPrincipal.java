@@ -99,7 +99,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtTotal.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel2.setText("F2 - Abre Ticket    F3 - Relatórios");
+        jLabel2.setText("INSERT - Abre Ticket    F3 - Relatórios   F2 - Estorno");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
