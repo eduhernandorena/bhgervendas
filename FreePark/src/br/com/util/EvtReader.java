@@ -118,6 +118,12 @@ public class EvtReader implements KeyListener {
                     formRel = null;
                     setWin(principal);
                     break;
+                case KeyEvent.VK_F2:
+                    formEst = new FormEstorno(principal, true);
+                    formEst.setVisible(true);
+                    formEst = null;
+                    setWin(principal);
+                    break;
                 case KeyEvent.VK_BACK_SPACE:
                     texto = principal.backSpace(texto, e);
                     break;
