@@ -77,7 +77,7 @@ public class EvtReader implements KeyListener {
                     new TicketDAO().upDate(formFecha.tick);
                     new Relatorio().ticketSaida(formFecha.tick);
                     principal.initTable(null);
-                    setWin(principal);
+//                    setWin(principal);
                     formFecha.dispose();
                     break;
                 }

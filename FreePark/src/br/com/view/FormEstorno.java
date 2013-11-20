@@ -144,6 +144,8 @@ public class FormEstorno extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbTicket);
 
+        txtTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
