@@ -52,8 +52,8 @@ public class TicketDAO {
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setDate(1, new Date(tk.getDataEnt().getTime()));
                 pst.setTimestamp(2, new Timestamp(tk.getHoraEnt().getTime()));
-                pst.setDate(3, new Date(tk.getDataSai().getTime()));
-                pst.setTimestamp(4, new Timestamp(tk.getHoraSai().getTime()));
+                pst.setDate(3, tk.getDataSai() != null ? new Date(tk.getDataSai().getTime()) : null);
+                pst.setTimestamp(4, tk.getHoraSai() != null ? new Timestamp(tk.getHoraSai().getTime()) : null);
                 pst.setInt(5, tk.getStatus().ordinal());
                 pst.setString(6, tk.getTempo());
                 pst.setLong(7, tk.getTabela().getId());
@@ -79,7 +79,7 @@ public class TicketDAO {
         }
         return null;
     }
-    
+
     public List<Ticket> findAllFechados() {
         try {
             PreparedStatement query = conn.prepareStatement("select * from ticket where status=1");

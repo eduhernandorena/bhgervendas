@@ -6,7 +6,6 @@ import br.com.dao.TicketDAO;
 import br.com.util.TicketTableModel;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -15,7 +14,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Eduardo Hernandorena
  */
-public class FormEstorno extends javax.swing.JDialog  {
+public class FormEstorno extends javax.swing.JDialog {
 
     private TicketTableModel model = new TicketTableModel();
     private TelaPrincipal princ;
@@ -106,15 +105,17 @@ public class FormEstorno extends javax.swing.JDialog  {
 
     public void estornaTicket() {
         if (tbTicket.getSelectedRow() != -1) {
-            if (JOptionPane.showConfirmDialog(this, "Tem certeza que deseja estornar este cupom?", "Estorno", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                Ticket ticket = model.getTicket(tbTicket.getSelectedRow());
-                ticket.setHoraSai(null);
-                ticket.setDataSai(null);
-                ticket.setValor(null);
-                ticket.setTempo(null);
-                ticket.setStatus(StatusTicket.ATIVO);
-                new TicketDAO().upDate(ticket);
-            }
+//            if (JOptionPane.showConfirmDialog(this, "Tem certeza que deseja estornar este cupom?", "Estorno", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            Ticket ticket = model.getTicket(tbTicket.getSelectedRow());
+            ticket.setHoraSai(null);
+            ticket.setDataSai(null);
+            ticket.setValor(0d);
+            ticket.setTempo(null);
+            ticket.setStatus(StatusTicket.ATIVO);
+            new TicketDAO().upDate(ticket);
+            initTable(null);
+            princ.initTable(null);
+//            }
         }
     }
 

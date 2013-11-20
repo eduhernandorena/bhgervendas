@@ -143,7 +143,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="10" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="INSERT - Abre Ticket    F3 - Relat&#xf3;rios   F2 - Estorno"/>
+        <Property name="text" type="java.lang.String" value="INSERT - Abre Ticket     F2 - Estorno     F3 - Relat&#xf3;rios"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -56,7 +56,7 @@ public class EvtReader implements KeyListener {
             actFormPrincipal(e);
         } else if (win instanceof FormRel) {
             actFormRel(e);
-        } else if (win instanceof FormEstorno){
+        } else if (win instanceof FormEstorno) {
             actFormEst(e);
         }
     }
@@ -155,7 +155,7 @@ public class EvtReader implements KeyListener {
             }
         }
     }
-    
+
     public void actFormEst(KeyEvent e) {
         if (win != null) {
             formEst = (FormEstorno) win;
@@ -164,6 +164,7 @@ public class EvtReader implements KeyListener {
                     formEst.estornaTicket();
                     break;
                 case KeyEvent.VK_ESCAPE:
+                    formEst.dispose();
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_DOWN:
                     formEst.tbTicket.requestFocus();
